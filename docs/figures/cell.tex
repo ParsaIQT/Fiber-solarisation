@@ -1,0 +1,75 @@
+% Concept cross-section of a 3D-printed end-face atmosphere cell (input end shown).
+\begin{tikzpicture}[font=\sffamily\scriptsize,>=Stealth,x=1cm,y=1cm,
+    lab/.style={align=left,inner sep=1.5pt},
+    lead/.style={greydark,thin}]
+  % ------------------------------------------------------------ printed body
+  \fill[pattern=north east lines,pattern color=gray!55] (0,0) rectangle (9,4);
+  \draw[greydark,thick] (0,0) rectangle (9,4);
+  \fill[white] (0.45,0.45) rectangle (8.55,3.55);
+  \draw[greydark] (0.45,0.45) rectangle (8.55,3.55);
+  % ------------------------------------------------------------ absorber pocket (below cavity)
+  \fill[pattern=north east lines,pattern color=gray!55] (3.7,-1.1) rectangle (6.5,0);
+  \draw[greydark,thick] (3.7,-1.1) rectangle (6.5,0);
+  \fill[white] (4.05,-0.8) rectangle (6.15,0.45);
+  \draw[greydark] (4.05,-0.8) -- (4.05,0.45) (6.15,-0.8) -- (6.15,0.45) (4.05,-0.8) -- (6.15,-0.8);
+  \draw[tealdark,very thick,densely dashed] (4.05,0.45) -- (6.15,0.45);
+  \fill[amberdark!75,rounded corners=2pt] (4.35,-0.65) rectangle (5.85,-0.05);
+  \node[white] at (5.1,-0.35) {\textbf{absorber}};
+  \fill[black] (3.85,-1.1) circle (0.06) (6.35,-1.1) circle (0.06);
+  % ------------------------------------------------------------ front window + O-ring
+  \fill[white] (0,1.35) rectangle (0.45,2.65);
+  \fill[cyan!25] (0.12,1.25) rectangle (0.36,2.75);
+  \draw[cyan!50!gray] (0.12,1.25) rectangle (0.36,2.75);
+  \fill[black] (0.43,1.33) circle (0.07) (0.43,2.67) circle (0.07);
+  % ------------------------------------------------------------ viewing window + O2 sensor spot
+  \fill[white] (4.6,3.55) rectangle (5.6,4);
+  \fill[cyan!25] (4.5,3.62) rectangle (5.7,3.86);
+  \draw[cyan!50!gray] (4.5,3.62) rectangle (5.7,3.86);
+  \fill[orange] (4.85,3.56) rectangle (5.05,3.62);
+  \fill[green!50!black] (5.2,3.56) rectangle (5.4,3.62);
+  \draw[greydark,thick] (4.95,3.86) -- (4.95,4.55);
+  \node[draw=greydark,fill=white,rounded corners=1pt,lab] at (4.95,4.85) {optical \Oxy{} reader (outside)};
+  % ------------------------------------------------------------ lens and beam
+  \fill[uvviolet!20] (-2.8,1.45) -- (-1.25,1.45) -- (2.35,1.97) -- (2.35,2.03) -- (-1.25,2.55) -- (-2.8,2.55) -- cycle;
+  \draw[uvviolet!70] (-2.8,1.45) -- (-1.25,1.45) -- (2.35,1.97) (-2.8,2.55) -- (-1.25,2.55) -- (2.35,2.03);
+  \draw[greydark,fill=cyan!10] (-1.25,2.0) ellipse (0.13 and 0.75);
+  \draw[->,uvviolet,very thick] (-2.7,2.0) -- (-1.75,2.0);
+  % ------------------------------------------------------------ receptacle, ferrule, connector, cable
+  \fill[gray!70] (2.75,1.5) rectangle (3.35,2.5);
+  \fill[pattern=north east lines,pattern color=gray!55] (2.85,0.45) rectangle (3.25,1.5);
+  \draw[greydark] (2.85,0.45) rectangle (3.25,1.5);
+  \fill[gray!25] (2.35,1.9) rectangle (3.6,2.1);
+  \draw[gray!60!black] (2.35,1.9) rectangle (3.6,2.1);
+  \fill[uvviolet] (2.35,2.0) circle (0.055);
+  \fill[gray!55!black] (3.35,1.62) rectangle (5.3,2.38);
+  \fill[gray!45!black] (5.3,1.7) -- (6.5,1.88) -- (6.5,2.12) -- (5.3,2.3) -- cycle;
+  \draw[black!70,line width=1.6pt] (6.5,2.0) -- (10.3,2.0);
+  \fill[gray!80!black] (8.5,1.7) rectangle (9.15,2.3);
+  \fill[amberdark!40] (8.62,1.85) rectangle (9.03,2.15);
+  % ------------------------------------------------------------ gas ports
+  \fill[white] (1.0,3.55) rectangle (1.4,4.0);
+  \draw[greydark] (1.0,3.55) -- (1.0,4.35) (1.4,3.55) -- (1.4,4.35);
+  \draw[->,tealdark,thick] (1.2,4.55) -- (1.2,3.25) .. controls (1.25,2.7) .. (2.15,2.25);
+  \fill[white] (7.6,0) rectangle (8.0,0.45);
+  \draw[greydark] (7.6,0.45) -- (7.6,-0.35) (8.0,0.45) -- (8.0,-0.35);
+  \draw[->,tealdark,thick] (6.9,1.2) .. controls (7.7,0.9) .. (7.8,0.35) -- (7.8,-0.55);
+  % ------------------------------------------------------------ labels
+  \node[lab,anchor=south west] (lwin) at (-2.85,3.25) {UV fused-silica window,\\AR-coated at 370\,nm, wedged;\\O-ring seal};
+  \draw[lead] (lwin.south east) ++(-0.6,0) -- (0.24,2.75);
+  \node[lab,anchor=north] at (-1.25,1.15) {lens outside:\\$f\!\approx\!5$--8\,mm};
+  \node[lab,anchor=south west,tealdark] at (1.35,4.2) {\textbf{gas in} (sweeps the end face first)};
+  \node[lab,anchor=north west,tealdark] at (8.1,-0.15) {\textbf{gas out}\\(downstream)};
+  \node[lab,anchor=north east] (lfer) at (2.55,1.0) {end face under test};
+  \draw[lead] (lfer.north east) ++(-0.1,0) -- (2.33,1.93);
+  \node[lab,anchor=north west] (lrec) at (1.55,-0.25) {FC receptacle\\on internal post};
+  \draw[lead] (2.75,-0.25) -- (3.0,0.6);
+  \node[lab,anchor=north west] (lwall) at (-0.95,-0.25) {printed wall\\(sealed, baked)};
+  \draw[lead] (0.2,-0.25) -- (0.25,0.25);
+  \node[lab,anchor=north west] at (6.7,-1.0) {absorber pocket behind\\porous PTFE membrane};
+  \draw[lead] (6.7,-1.05) -- (6.2,-0.3);
+  \node[lab,anchor=south west] at (6.75,3.95) {\Oxy{} sensor spot and\\indicator behind a window};
+  \draw[lead] (6.75,4.15) -- (5.4,3.6);
+  \node[lab,anchor=south west] at (7.15,2.55) {cable gland,\\epoxy-potted};
+  \draw[lead] (8.3,2.6) -- (8.75,2.3);
+  \node[lab,anchor=north west] at (3.55,3.35) {free volume 10--30\,cm$^3$};
+\end{tikzpicture}

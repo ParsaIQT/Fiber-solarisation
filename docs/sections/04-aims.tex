@@ -1,0 +1,98 @@
+\section{Aim, research questions and hypotheses}\label{sec:aims}
+
+\subsection{Aim}
+The aim of the project is to \textbf{determine whether, and under which atmospheric conditions, the
+UV-induced degradation of single-mode fibre end faces carrying a few milliwatts of \SI{369.5}{nm}
+light can be stopped, and to demonstrate a low-cost, 3D-printed end-face enclosure that achieves this
+in routine use}. The working hypothesis of the group is that removing oxygen from the end faces halts
+the degradation. The project is designed so that it gives a clear answer whether this
+hypothesis is right or wrong. If oxygen turns out not to be the culprit, the same
+measurements identify what is (\cref{tab:predictions}).
+
+\subsection{Research questions}
+\begin{enumerate}[label=\textbf{RQ\arabic*},leftmargin=3.2em]
+  \item \textbf{Where and what?} Is the throughput loss located at the input face, the output face or in
+        the fibre, and what is its physical nature (deposit, surface damage, colour centres, or
+        misalignment)?
+  \item \textbf{Is oxygen the cause?} At fixed (low) humidity and contaminant levels, does removing
+        \Oxy{} change the degradation rate, by how much, and is there a threshold \Oxy{}
+        concentration below which the rate is negligible?
+  \item \textbf{What else matters?} What are the separate roles of water vapour, organic and siloxane
+        vapours (including those emitted by 3D-printed parts, adhesives and cable jackets), airborne
+        particles and, optionally, hydrogen?
+  \item \textbf{Does it work in practice?} Can a passive, sealed 3D-printed cell containing an oxygen
+        absorber hold the required atmosphere for months, and does it stop the degradation of a
+        working \SI{369.5}{nm} fibre link in one of the group's experiments?
+\end{enumerate}
+
+\subsection{Competing hypotheses}
+The observations available so far (high throughput after re-polishing, decline at a rate that
+increases with power, decline at \emph{both} ends) constrain the possible mechanisms considerably. Because
+re-polishing removes only a few micrometres to tens of micrometres of glass and fully restores the
+throughput, the damage must sit at, or within micrometres of, the end faces. Bulk colour-centre
+formation along the fibre would not be undone by polishing. The guided intensity is nearly the same at
+both faces, so a process driven by the local optical intensity at a glass surface explains why the output
+face degrades too. Mechanical misalignment of the input coupling does not. Six hypotheses are retained
+(\cref{fig:mechanisms}):
+
+\begin{description}[leftmargin=2.6em,style=nextline,itemsep=3pt]
+  \item[H1 -- oxygen-driven surface photochemistry] UV light (most likely via two-photon excitation at
+        \SI{6.7}{eV}) creates reactive sites on the polished silica surface. Gas-phase \Oxy{} reacts with them
+        to form absorbing or scattering oxygen-excess defects or oxidised layers. \emph{Prediction:}
+        removing \Oxy{} stops the degradation, whatever the humidity or contaminant level.
+  \item[H2 -- laser-induced contamination (LIC)] Molecules adsorbed from the gas phase (hydrocarbons,
+        siloxanes, plasticisers) are photo-polymerised or photo-decomposed into an absorbing film that
+        grows with dose. In the LIC literature oxygen \emph{suppresses} deposit growth by photo-oxidising
+        the deposit~\cite{Riede2011,Kokkinos2017}. \emph{Prediction:} clean gas slows degradation. Removing \Oxy{}
+        while organics remain (e.g.\ outgassing from printed parts) makes it \emph{worse}.
+  \item[H3 -- water-assisted surface damage] Adsorbed water takes part in the surface photochemistry
+        (hydroxylation, etching, roughening). \emph{Prediction:} dry gas helps whether or not
+        \Oxy{} is present. Humidified \Ntwo{} degrades the face.
+  \item[H4 -- particle accumulation] Airborne particles are pulled into the high-intensity spot by
+        optical and photophoretic forces and then burn in. \emph{Prediction:} any filtered gas helps,
+        and particles are visible on the end face.
+  \item[H5 -- intrinsic glass damage] Colour centres form in the core within the polished-away depth
+        (for example a defect-rich layer left by polishing). \emph{Prediction:} no atmosphere effect,
+        except a possible reduction in hydrogen-containing gas~\cite{Colombe2014}.
+  \item[H6 -- mechanical or thermal artefact] Drift of the coupling optics, epoxy creep or ferrule movement.
+        \emph{Prediction:} no atmosphere effect, and throughput is recovered by re-peaking the alignment without
+        touching the fibre.
+\end{description}
+Several mechanisms may act together. In particular, H1 and H2 are not exclusive. Any absorbing film
+also heats the end face (\cref{app:estimates}), which can turn a slow process into a runaway one. The
+experiment is therefore designed to measure the effect of each atmospheric factor separately, not just
+to compare ``with'' and ``without'' oxygen.
+
+\begin{table}[t]
+\centering\small
+\caption{Predicted degradation rate in each test atmosphere relative to the ambient-air control, for
+each hypothesis. \arm{AIR}: ambient lab air; \arm{CDA}: clean, dry synthetic air; \arm{N2}: clean, dry
+nitrogen; \arm{ABS}: sealed printed cell with \Oxy{} absorber; \arm{WET-N2}: humidified \Ntwo{};
+\arm{FG}: forming gas (\SI{5}{\percent} \Htwo{} in \Ntwo{}); \arm{N2+P}: nitrogen with a sample of printing
+polymer in the cell. Symbols: $\bullet$ similar to \arm{AIR}; $\circ$ strongly reduced;
+$\uparrow$ faster than \arm{AIR}; -- no clear prediction. The comparison \arm{CDA}~vs~\arm{N2} is the
+decisive test of H1 versus H2.}
+\label{tab:predictions}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}l ccccccc l@{}}
+\toprule
+ & \arm{AIR} & \arm{CDA} & \arm{N2} & \arm{ABS} & \arm{WET-N2} & \arm{FG} & \arm{N2+P} & extra signature \\
+\midrule
+H1 \Oxy{} photochemistry   & $\bullet$ & $\bullet$ & $\circ$   & $\circ$         & $\circ$   & $\circ$   & $\circ$     & rate rises with \Oxy{} fraction \\
+H2 contamination (LIC)     & $\bullet$ & $\circ$   & $\bullet$/$\circ$ & $\bullet$/$\uparrow$ & --  & --        & $\uparrow$  & C/Si-rich film; removed by \Oxy{} plasma \\
+H3 water                   & $\bullet$ & $\circ$   & $\circ$   & $\circ$         & $\bullet$ & $\circ$   & $\circ$     & correlates with lab RH \\
+H4 particles               & $\bullet$ & $\circ$   & $\circ$   & $\circ$         & $\circ$   & $\circ$   & $\circ$     & discrete particles on core \\
+H5 glass damage            & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$       & $\bullet$ & $\circ$?  & $\bullet$   & no surface film; PL bands \\
+H6 mechanical/thermal      & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$       & $\bullet$ & $\bullet$ & $\bullet$   & recovered by re-peaking \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{keybox}[Why oxygen can only act at the surface]
+At room temperature molecular oxygen is practically immobile in silica glass. With literature diffusion
+data it penetrates far less than a nanometre in a year (\cref{app:estimates}), so the external
+atmosphere cannot change bulk solarisation of the core. Hydrogen is different: it diffuses through a
+\SI{125}{\micro m} fibre within days~\cite{Lemaire1991}. Any oxygen effect must therefore act at the end
+faces. The observed behaviour of the group's fibres (restored by re-polishing, both ends affected) points
+to exactly such surface processes, which makes the project well motivated.
+\end{keybox}

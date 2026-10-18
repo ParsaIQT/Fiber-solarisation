@@ -1,0 +1,193 @@
+\part*{Part II -- Guide for the student}
+\addcontentsline{toc}{part}{Part II -- Guide for the student}
+\section{How to use this guide}\label{sec:guide}
+Part~I describes \emph{what} the project should find out and \emph{why}. This part is about
+\emph{how}: what to do first, which skills to build, how to keep records that will still make sense
+in month eleven, and which mistakes cost other people months. Treat it as a starting point and
+improve it. If something here turns out to be wrong for our lab, write that down. Corrections like
+that belong in your thesis.
+
+\begin{keybox}[Three habits that decide the outcome]
+\begin{enumerate}[leftmargin=1.2em]
+  \item \textbf{Look before you touch.} Image every end face \emph{before} cleaning or polishing it. A
+        cleaned-off film is evidence you can never get back.
+  \item \textbf{Log every intervention.} Every re-peak, swap, cleaning, gas-cylinder change and
+        power cut goes into the event log with a timestamp. Weeks-long runs are only interpretable
+        if you know what happened to them.
+  \item \textbf{Write as you go.} Draft the methods chapter while you build. By month~9 you will
+        have forgotten why you chose a \SI{5}{mm} lens or a \SI{3}{nm} filter.
+\end{enumerate}
+\end{keybox}
+
+\section{Your first four weeks}
+\begin{table}[h]
+\centering\small
+\caption{Suggested onboarding plan. Adapt it with your supervisor in the first meeting.}
+\label{tab:onboarding}
+\begin{tabularx}{\textwidth}{@{}l Y L{4.0cm}@{}}
+\toprule
+Week & Activities & Output \\
+\midrule
+1 & Departmental, laser, gas and chemical inductions; accounts (lab notebook, repository, data storage);
+    read the five starred papers in \cref{sec:reading}; watch an experienced group member polish and
+    inspect a connector & reading notes (one paragraph per paper); induction certificates \\
+2 & Practise cleaning, inspection and coupling with a visible laser and a spare fibre; measure
+    coupling efficiency properly (\cref{sec:skills}); collect degraded fibres and their histories
+    from the group & first coupling measurements; inventory of used fibres \\
+3 & Phase~0 forensics on the used fibres (imaging, low-power throughput); draft risk assessments;
+    first CAD model and a test print with an O-ring groove; Python logger reading one photodiode &
+    image set; draft risk assessments; logger prototype \\
+4 & Write the project plan (2--3 pages: aims, first experiments, parts list with prices and
+    lead times); present it in the group meeting (10 minutes); place orders &
+    MS1: plan and risk assessments signed off, orders placed \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Core skills}\label{sec:skills}
+
+\subsection{Handling, cleaning and inspecting fibre end faces}
+\begin{itemize}
+  \item Never touch an end face, and cap every connector as soon as it is unplugged. Store fibres with
+        caps on, in a clean box.
+  \item Always \emph{inspect first}. If the face is clean, do not clean it. Cleaning tools can leave
+        residues and scratch the face.
+  \item For cleaning, go from dry to wet: filtered gas or a dry cleaning cassette first, then a
+        lint-free wipe moistened with reagent-grade isopropanol, followed immediately by a dry wipe.
+        Inspect again.
+  \item Use the same microscope, magnification, illumination and focus for every image and save the
+        raw files with the fibre ID, end (A/B), date and step in the file name. Use the core and cladding
+        zones of IEC~61300-3-35 as the vocabulary for describing defects.
+\end{itemize}
+
+\subsection{Polishing}
+Learn the group's procedure from an experienced member and then write it down as an SOP with all
+parameters (films, grit sequence, times, pressure, lubricant, rinsing). Keep a polishing log for every
+end. Variability between polishes is one of the largest uncontrolled factors in this project. Make
+polishing boring and reproducible, and measure its outcome (inspection images, coupling efficiency,
+end-face geometry if an interferometer is available).
+
+\subsection{Coupling near-UV light into a single-mode fibre}
+\begin{itemize}
+  \item \textbf{Mode matching.} For a collimated Gaussian beam of $1/e^2$ radius $w_\text{in}$, a lens of
+        focal length $f$ produces a waist $w_0=\lambda f/(\pi w_\text{in})$. Choose $f$ so that $w_0$
+        equals the fibre mode-field radius. With a mode-field diameter of \SI{\approx2.3}{\micro m} at
+        \SI{369.5}{nm}, an $f=\SI{5}{mm}$ asphere needs a \SI{\approx1.0}{mm} diameter beam
+        (\cref{app:estimates}).
+  \item \textbf{Alignment.} Start with a visible alignment beam if the optics allow it. Make the
+        output of the fibre visible, then walk the beam with two mirrors (translation and angle) before
+        touching focus. Optimise the focus last and re-walk.
+  \item \textbf{PM fibre.} Align the input polarisation to the slow axis: rotate the input half-wave
+        plate while measuring the output polarisation extinction ratio, and confirm by gently warming or
+        stressing the fibre (the output polarisation should not change).
+  \item \textbf{Measure coupling efficiency correctly.} Measure the power directly before the fibre
+        (after all optics, including the cell window) and directly after the output, with the same
+        calibrated sensor. Correct for the Fresnel loss at each face if you report an ``internal''
+        efficiency, and state clearly which definition you use.
+\end{itemize}
+
+\subsection{Measuring UV power reliably}
+\begin{itemize}
+  \item Silicon photodiodes slowly lose responsivity under UV exposure, and photodiodes and amplifiers
+        drift with temperature. Keep the intensity on detectors low, prefer integrating spheres or
+        diffusers, and consider SiC photodiodes for the long runs.
+  \item Check the zero (laser off) and the linearity (calibrated attenuator) at the start of every run.
+  \item Avoid interference fringes: use wedged optics and tilt surfaces slightly, otherwise
+        etalons turn tiny temperature drifts into apparent power changes.
+  \item Cross-check all detectors weekly against one reference power meter that is otherwise kept in a
+        drawer (so it does not age).
+\end{itemize}
+
+\subsection{Gas handling and leak testing}
+\begin{itemize}
+  \item Get trained on regulators and cylinder handling. Use compression fittings correctly (do not
+        over-tighten; replace ferrules) and leak-check every new joint with a leak-detection liquid or a
+        helium or hydrogen sniffer.
+  \item For ppm-level oxygen, the tubing matters. Polyurethane and fluoropolymer tubes are permeable
+        to \Oxy; stainless steel, copper or short nylon lines are better (\cref{app:estimates}).
+  \item Leak-test every cell before use: pressurise to about \SI{+100}{mbar} with \Ntwo, log pressure
+        \emph{and} temperature for 12 hours, and compute the leak rate $Q=V\,\mathrm{d}p/\mathrm{d}t$ after
+        correcting for temperature (\cref{app:sops}).
+\end{itemize}
+
+\subsection{CAD and 3D printing of gas-tight parts}
+\begin{itemize}
+  \item FDM prints are porous unless printed with \SI{100}{\percent} infill, several perimeters, slight
+        over-extrusion and good layer adhesion. Even then, seal the inside with a thin low-outgassing epoxy
+        for the static cells. Resin (SLA) prints are denser but release residual monomer unless fully
+        post-cured. Bake parts (at a temperature safely below the glass transition of the polymer) under
+        \Ntwo{} purge before use.
+  \item Design O-ring grooves to standard proportions (squeeze and gland fill as in a sealing handbook)
+        and print the sealing faces flat and smooth, or face them with a thin epoxy layer. Use heat-set
+        metal inserts for screws.
+  \item Print a test coupon with every new material or setting, and keep coupons for the \arm{N2+P}
+        outgassing test.
+\end{itemize}
+
+\subsection{Data acquisition and analysis}
+\begin{itemize}
+  \item Write the logger so that it never loses data. Write to a new file every day, flush after each
+        write, use UTC timestamps, and save a metadata file with fibre IDs, arm assignment, calibration
+        factors and the software version (git commit). Make it restart automatically after a power cut.
+  \item Keep raw data read-only. All corrections (detector temperature, flagged intervals) are applied
+        by analysis scripts, never by editing data files.
+  \item Make every figure in the thesis reproducible from raw data with one script. A notebook is fine
+        for exploration, but the final analysis should be a script in the repository.
+  \item Learn enough statistics to defend an upper limit: regression with autocorrelated residuals,
+        block bootstrap, and mixed-effects models (\cref{sec:analysis}).
+\end{itemize}
+
+\section{Working practices}
+\begin{description}[style=nextline,leftmargin=1.2em,itemsep=3pt]
+  \item[Lab notebook] Use the group's electronic notebook. Create one entry per day with the plan,
+        what was done, observations, and links to data and images. Note surprises immediately, even if
+        they seem unimportant.
+  \item[Repository] Keep code, CAD files, SOPs, and the thesis source in version control. Commit small
+        and often with meaningful messages. Store large raw data on the group's storage, not in git, and
+        put the paths in the metadata.
+  \item[Meetings] Meet the daily supervisor weekly for 30 minutes with a short written agenda (done,
+        problems, plan, decisions needed). Meet the PI monthly, together with a one-page progress
+        report that also reviews the risk register (\cref{tab:risks}). Present in the group meeting
+        about every two months.
+  \item[Asking for help] If you are stuck for more than a day on something that someone in the group
+        has done before, ask. Experienced colleagues can often solve fibre-coupling and vacuum or gas
+        problems in minutes.
+\end{description}
+
+\section{Common pitfalls}
+\begin{pitfallbox}[Lessons from long-term optical measurements]
+\begin{itemize}[leftmargin=1em]
+  \item \textbf{Confusing alignment drift with degradation.} Always record throughput before
+        \emph{and} after re-peaking.
+  \item \textbf{Cleaning away the evidence.} Image and, if possible, analyse before cleaning.
+  \item \textbf{Comparing runs done at different times.} Run conditions in parallel; if you must
+        compare runs, keep a reference arm common to both.
+  \item \textbf{Trusting a gas cell you have not measured.} A cell with an indicator that has turned
+        colour, or an \Oxy{} reading that drifts up, means the run is compromised. Log \Oxy{}, RH and
+        flow continuously.
+  \item \textbf{Introducing contamination with the fix.} Silicone grease, fresh resin prints, adhesive tapes
+        and cable jackets near the end face can all release organics. Keep them out of the cell or
+        test them (\arm{N2+P}).
+  \item \textbf{Changing two things at once.} New fibre batch, new polish and new atmosphere in the same
+        run cannot be untangled.
+  \item \textbf{Leaving the thesis until the end.} Writing always takes longer than planned, and writing
+        early also shows where data are missing while you can still take them.
+\end{itemize}
+\end{pitfallbox}
+
+\section{Writing the thesis}
+A suggested structure (adapt it to the departmental regulations):
+\begin{enumerate}
+  \item Introduction: UV light delivery for trapped ions, the problem, aims.
+  \item Background: optical fibres and coupling; defects and solarisation in silica; surface
+        photochemistry and laser-induced contamination; gas transport and controlled atmospheres.
+  \item Methods: testbed, cells and their qualification, procedures, data analysis.
+  \item Results I: forensics of used fibres and the baseline degradation law.
+  \item Results II: the atmosphere campaigns and the cleaning sequence; surface analysis.
+  \item Results III: demonstration on a \SI{369.5}{nm} link.
+  \item Discussion: mechanism, comparison with the literature, design guidelines.
+  \item Conclusions and outlook.
+\end{enumerate}
+Appendices: CAD drawings and bill of materials, SOPs, logger documentation, data-availability statement.
+Plan for at least eight weeks of focused writing, and give your supervisor complete chapter drafts
+early enough for a round of feedback.

@@ -1,0 +1,15 @@
+# LaTeX build products (the finished PDFs are kept in pdf/)
+docs/*.aux
+docs/*.bbl
+docs/*.bcf
+docs/*.blg
+docs/*.fdb_latexmk
+docs/*.fls
+docs/*.log
+docs/*.out
+docs/*.run.xml
+docs/*.toc
+docs/*.synctex.gz
+docs/proposal.pdf
+docs/summary.pdf
+__pycache__/

@@ -1,0 +1,107 @@
+% fsproposal.sty -- shared layout for the fibre-solarisation proposal and summary
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fsproposal}[2026/10/18 Fibre solarisation MSc proposal style]
+
+% ---------------------------------------------------------------- fonts & language
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[british]{babel}
+\RequirePackage{libertinus}
+\RequirePackage[scaled=0.83]{beramono}
+\RequirePackage{microtype}
+\RequirePackage{csquotes}
+
+% ---------------------------------------------------------------- page layout
+\RequirePackage[a4paper,top=24mm,bottom=26mm,left=24mm,right=24mm,headheight=15pt]{geometry}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{enumitem}
+\setlist{itemsep=2pt,topsep=4pt,parsep=0pt}
+\setlength{\parskip}{3pt plus 1pt}
+\setlength{\parindent}{0pt}
+
+% ---------------------------------------------------------------- colours
+\RequirePackage[dvipsnames,table]{xcolor}
+\definecolor{uvviolet}{RGB}{72,40,140}     % accent (near-UV theme)
+\definecolor{uvlight}{RGB}{238,234,248}
+\definecolor{tealdark}{RGB}{0,110,120}
+\definecolor{teallight}{RGB}{226,243,244}
+\definecolor{amberdark}{RGB}{165,95,0}
+\definecolor{amberlight}{RGB}{253,243,224}
+\definecolor{reddark}{RGB}{160,30,40}
+\definecolor{redlight}{RGB}{251,231,232}
+\definecolor{greydark}{RGB}{70,70,78}
+\definecolor{greylight}{RGB}{243,243,246}
+
+% ---------------------------------------------------------------- headings
+\titleformat{\section}{\sffamily\Large\bfseries\color{uvviolet}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\sffamily\large\bfseries\color{uvviolet!85!black}}{\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}{\sffamily\normalsize\bfseries\color{greydark}}{\thesubsubsection}{0.6em}{}
+\titleformat{\paragraph}[runin]{\sffamily\normalsize\bfseries\color{greydark}}{}{}{}[.]
+\titlespacing*{\section}{0pt}{16pt plus 4pt minus 2pt}{6pt plus 2pt}
+\titlespacing*{\subsection}{0pt}{12pt plus 3pt minus 2pt}{4pt plus 2pt}
+\titlespacing*{\subsubsection}{0pt}{9pt plus 2pt minus 2pt}{3pt plus 1pt}
+\titlespacing*{\paragraph}{0pt}{6pt plus 2pt}{0.6em}
+
+% ---------------------------------------------------------------- maths, units, chemistry
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{siunitx}
+\sisetup{separate-uncertainty=true,per-mode=symbol,range-phrase=\,--\,,range-units=single,
+         list-units=single,product-units=single,mode=match,propagate-math-font=true,
+         reset-math-version=false,reset-text-family=false,reset-text-series=false,
+         reset-text-shape=false,text-family-to-math=true,text-series-to-math=true}
+\DeclareSIUnit\sccm{sccm}
+\DeclareSIUnit\ppm{ppm}
+\DeclareSIUnit\ppb{ppb}
+\DeclareSIUnit\barrer{Barrer}
+\DeclareSIUnit\mbar{mbar}
+\RequirePackage[version=4]{mhchem}
+
+% ---------------------------------------------------------------- tables & figures
+\RequirePackage{graphicx}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{longtable}
+\RequirePackage{multirow}
+\RequirePackage{makecell}
+\RequirePackage{array}
+\RequirePackage[font=small,labelfont={bf,sf,color=uvviolet},format=plain,margin=4pt]{caption}
+\RequirePackage{float}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\renewcommand{\arraystretch}{1.15}
+
+% ---------------------------------------------------------------- graphics
+\RequirePackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,shapes.misc,decorations.pathmorphing,
+                decorations.pathreplacing,patterns,fit,backgrounds,shadows}
+\RequirePackage{pgfgantt}
+
+% ---------------------------------------------------------------- boxes
+\RequirePackage[most]{tcolorbox}
+\tcbset{fsbox/.style={enhanced,breakable,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt,
+        fonttitle=\sffamily\bfseries\small,coltitle=white,before skip=8pt,after skip=8pt}}
+\newtcolorbox{keybox}[1][Key point]{fsbox,colback=uvlight,colframe=uvviolet,title={#1}}
+\newtcolorbox{decisionbox}[1][Decision point]{fsbox,colback=teallight,colframe=tealdark,title={#1}}
+\newtcolorbox{tipbox}[1][Tip]{fsbox,colback=greylight,colframe=greydark,title={#1}}
+\newtcolorbox{pitfallbox}[1][Pitfall]{fsbox,colback=amberlight,colframe=amberdark,title={#1}}
+\newtcolorbox{safetybox}[1][Safety]{fsbox,colback=redlight,colframe=reddark,title={#1}}
+
+% ---------------------------------------------------------------- misc helpers
+\newcommand{\Oxy}{\ce{O2}}
+\newcommand{\Ntwo}{\ce{N2}}
+\newcommand{\Htwo}{\ce{H2}}
+\newcommand{\water}{\ce{H2O}}
+\newcommand{\Ybion}{\ce{^{171}Yb+}}
+\newcommand{\arm}[1]{\textsf{\small\bfseries #1}}
+\newcommand{\todo}[1]{\textcolor{reddark}{\textsf{[#1]}}}
+\newcommand{\fillin}[1]{\textcolor{greydark}{\textsf{$\langle$#1$\rangle$}}}
+
+% ---------------------------------------------------------------- links (load late)
+\RequirePackage{xurl}
+\RequirePackage[colorlinks=true,linkcolor=uvviolet,citecolor=tealdark,urlcolor=uvviolet,
+                pdfusetitle,bookmarksnumbered=true]{hyperref}
+\RequirePackage[capitalise,noabbrev]{cleveref}
+
+\endinput

@@ -1,0 +1,62 @@
+% Candidate degradation processes at a UV-illuminated fibre end face (input end shown).
+\begin{tikzpicture}[font=\sffamily\scriptsize,>=Stealth,x=1cm,y=1cm]
+  % --- ferrule, cladding, core
+  \fill[gray!22] (0,-1.25) rectangle (6.6,1.25);
+  \fill[cyan!7] (0,-0.55) rectangle (6.6,0.55);
+  \draw[cyan!45!gray,thin] (0,-0.55) -- (6.6,-0.55) (0,0.55) -- (6.6,0.55);
+  \fill[uvviolet!40] (0,-0.11) rectangle (6.6,0.11);
+  \draw[gray!65!black,thick] (6.6,-1.25) -- (6.6,1.25);
+  \draw[gray!55] (0,-1.25) -- (6.6,-1.25) (0,1.25) -- (6.6,1.25);
+  \node[gray!50!black,anchor=west] at (0.1,0.92) {zirconia ferrule};
+  \node[gray!50!black,anchor=west] at (0.1,0.36) {silica cladding};
+  \node[white,anchor=west] at (0.1,0) {\textbf{core}};
+  \draw[decorate,decoration={snake,amplitude=0.6mm,segment length=3mm},gray!60] (-0.02,-1.25) -- (-0.02,1.25);
+  % --- converging UV beam
+  \fill[uvviolet!22] (6.6,0.10) -- (10.9,1.2) -- (10.9,-1.2) -- (6.6,-0.10) -- cycle;
+  \draw[uvviolet!70,thin] (6.6,0.10) -- (10.9,1.2) (6.6,-0.10) -- (10.9,-1.2);
+  \draw[->,uvviolet,very thick] (10.75,0) -- (8.9,0);
+  \node[uvviolet!80!black,anchor=west] at (9.0,0.24) {\textbf{369.5\,nm}};
+  \node[uvviolet!80!black,anchor=west] at (9.0,-0.26) {$\sim\!10^{5}$\,W\,cm$^{-2}$};
+  % --- H2: deposit on the core region
+  \fill[amberdark!70] (6.6,-0.30) .. controls (6.74,-0.22) and (6.76,0.22) .. (6.6,0.30) -- cycle;
+  % --- H5: colour centres in the glass
+  \foreach \x in {4.7,5.25,5.7,6.05,6.32}{\node[reddark,inner sep=0] at (\x,0.0) {$\ast$};}
+  % --- H1: O2 molecules
+  \foreach \x/\y in {7.35/1.55,8.05/1.85,7.0/1.95}{
+    \begin{scope}[shift={(\x,\y)}]
+      \fill[tealdark] (0,0) circle (0.07); \fill[tealdark] (0.13,0) circle (0.07);
+    \end{scope}}
+  \draw[->,tealdark,thin] (7.3,1.45) .. controls (6.95,1.1) .. (6.67,0.2);
+  % --- H3: adsorbed water
+  \foreach \x/\y in {7.25/-1.65,7.9/-1.9}{
+    \begin{scope}[shift={(\x,\y)}]
+      \fill[cyan!60!blue] (0,0) circle (0.075);
+      \fill[gray!60] (-0.09,0.07) circle (0.04); \fill[gray!60] (0.09,0.07) circle (0.04);
+    \end{scope}}
+  \draw[->,cyan!60!blue,thin] (7.2,-1.55) .. controls (6.9,-1.1) .. (6.66,-0.25);
+  % --- H4: particle drawn into the beam
+  \fill[black!75] (9.4,-1.55) circle (0.09);
+  \draw[->,black!75,thin,densely dashed] (9.3,-1.48) .. controls (8.2,-0.9) .. (6.75,-0.08);
+  % --- H6: mechanical drift
+  \draw[<->,greydark,thick] (3.2,-1.55) -- (4.4,-1.55);
+  % --- annotation boxes
+  \tikzset{ann/.style={draw=#1,fill=white,rounded corners=1.5pt,text width=3.55cm,align=left,inner sep=3pt}}
+  \node[ann=tealdark,anchor=south west] (h1) at (6.95,2.35)
+     {\textbf{\color{tealdark}H1} \Oxy{} reacts with photo-activated surface sites $\to$ absorbing or scattering oxide defects};
+  \node[ann=amberdark,anchor=south west] (h2) at (2.95,2.35)
+     {\textbf{\color{amberdark}H2} adsorbed organics / siloxanes photo-fixed into a film (oxygen may \emph{protect})};
+  \node[ann=reddark,anchor=south west] (h5) at (-1.05,2.35)
+     {\textbf{\color{reddark}H5} colour centres in the glass (atmosphere-independent, except \Htwo)};
+  \node[ann=cyan!60!blue,anchor=north west] (h3) at (6.95,-2.3)
+     {\textbf{\color{cyan!60!blue}H3} adsorbed water assists surface photochemistry or roughening};
+  \node[ann=black!75,anchor=north west] (h4) at (2.95,-2.3)
+     {\textbf{H4} airborne particles pulled into the high-intensity spot};
+  \node[ann=greydark,anchor=north west] (h6) at (-1.05,-2.3)
+     {\textbf{\color{greydark}H6} mechanical/thermal drift, epoxy creep (no surface change)};
+  \draw[amberdark,thin] (h2.south) -- (6.72,0.27);
+  \draw[reddark,thin] (h5.south) -- (5.25,0.09);
+  \draw[tealdark,thin] (h1.south) -- (7.55,1.95);
+  \draw[cyan!60!blue,thin] (h3.north) -- (7.6,-1.8);
+  \draw[black!75,thin] (h4.north) -- (9.35,-1.62);
+  \draw[greydark,thin] (h6.north) -- (3.8,-1.62);
+\end{tikzpicture}

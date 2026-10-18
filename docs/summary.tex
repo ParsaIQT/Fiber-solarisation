@@ -1,0 +1,37 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage{fsproposal}
+\geometry{top=18mm,bottom=20mm,left=18mm,right=18mm}
+\usepackage[backend=biber,style=numeric-comp,sorting=none,maxbibnames=3,minbibnames=1,
+            giveninits=true,doi=false,isbn=false,url=false,eprint=false]{biblatex}
+\addbibresource{references.bib}
+\renewcommand*{\bibfont}{\footnotesize}
+\AtEveryBibitem{\clearfield{title}\clearfield{note}\clearfield{month}\clearfield{pages}}
+
+\hypersetup{pdftitle={Summary: Experimental demonstration of reduced fibre solarisation in an oxygen-free atmosphere},
+            pdfsubject={Summary of the MSc thesis project proposal}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\sffamily\footnotesize\color{greydark}Summary -- MSc project: reduced fibre solarisation in an oxygen-free atmosphere}
+\fancyfoot[C]{\sffamily\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{uvviolet!40}\leaders\hrule height \headrulewidth\hfill}}
+\titlespacing*{\section}{0pt}{10pt plus 2pt minus 2pt}{4pt plus 1pt}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[uvviolet] (current page.north west) rectangle ([yshift=-3.1cm]current page.north east);
+  \node[anchor=north west,text=white,font=\sffamily\small,inner sep=0] at ([xshift=1.8cm,yshift=-0.9cm]current page.north west)
+    {MSc thesis project \textbullet{} Summary of the proposal and student guide \textbullet{} October 2026};
+  \node[anchor=north west,text=white,font=\sffamily\LARGE\bfseries,inner sep=0,text width=17.4cm] at ([xshift=1.8cm,yshift=-1.55cm]current page.north west)
+    {Experimental demonstration of reduced fibre solarisation in an oxygen-free atmosphere};
+\end{tikzpicture}
+\vspace*{2.05cm}
+
+\input{sections/s-body}
+
+\section*{Key references}
+\printbibliography[heading=none]
+
+\end{document}

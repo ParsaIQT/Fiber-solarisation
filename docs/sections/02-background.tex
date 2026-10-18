@@ -1,0 +1,45 @@
+\section{Background and motivation}\label{sec:background}
+
+\subsection{Near-UV light delivery in trapped-ion experiments}
+In \Ybion{} experiments, light at \SI{369.5}{nm} drives the \ce{^2S_{1/2}}--\ce{^2P_{1/2}} transition used for
+Doppler cooling, optical pumping and state detection. Light at \SI{399}{nm} is used for isotope-selective
+photoionisation of neutral Yb. Delivering this light through single-mode fibres has clear advantages.
+The fibre acts as a spatial filter that produces a clean Gaussian mode. It decouples the laser table
+from the vacuum system and keeps beam pointing at the ion stable. With polarisation-maintaining (PM)
+fibre, it also delivers a well-defined polarisation. Scalable architectures with many ion-trap modules
+depend even more on fibre delivery, so the long-term reliability of near-UV fibres is a practical
+concern for the whole field.
+
+\subsection{The problem in the group}
+The group uses Thorlabs PM patch cables designed for the near UV (referred to in the lab as
+``375PM''; \cref{sec:sota-fibres}) at powers of a few milliwatts. The behaviour observed is:
+\begin{itemize}
+  \item directly after the end faces have been polished, the coupling efficiency is excellent;
+  \item it then declines over time, faster when more power is used;
+  \item both the input and the output end are affected;
+  \item polishing the end faces again restores the throughput.
+\end{itemize}
+The practical consequences are frequent re-polishing (person-hours and risk of damaging the connector),
+slow drifts of the power delivered to the ions, the need for spare laser power, and occasionally
+sudden failures during measurements.
+
+\paragraph{What these observations already tell us} Re-polishing removes only micrometres to tens of
+micrometres of glass. Colour centres formed along the length of the fibre would survive it. The
+restoration therefore places the damage at, or within micrometres of, the end faces. The power dependence
+shows that the process is driven by light. The degradation of the \emph{output} face, which sees almost the
+same guided intensity as the input face but no focusing optics, argues against simple misalignment of the
+input coupling and for a process driven by local intensity at a glass--gas interface. At \SI{3}{mW} in a
+\SI{2.3}{\micro m} mode-field diameter, the peak intensity is \SI{\approx1.4e5}{W/cm^2}, and each
+square centimetre of the core region receives about \num{3e23} photons per second (\cref{app:estimates}).
+At such photon fluxes even very weak absorption by surface sites or adsorbed molecules leads to
+photochemistry within seconds.
+
+\subsection{Terminology and scope}
+In the lab, ``solarisation'' is used for any UV-induced loss of fibre throughput. Strictly, solarisation
+means the formation of colour centres in the glass (\cref{sec:sota-bulk}). In this document,
+\emph{end-face degradation} denotes the observed phenomenon and \emph{solarisation} denotes colour-centre
+formation. Finding out which of the two is happening, or whether both are, is part of the project (RQ1).
+The scope is the atmosphere at the end faces of the fibre type used in the group, at \SI{369.5}{nm} and
+a nearby testbed wavelength (\SI{375}{nm}). Developing new fibres is out of scope, but alternative fibre
+technologies are reviewed (\cref{sec:sota-fibres}) because they are the fall-back if the atmosphere turns
+out not to be the cause.

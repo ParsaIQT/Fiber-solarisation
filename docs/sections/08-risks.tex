@@ -1,0 +1,49 @@
+\section{Risks and mitigation}\label{sec:risks}
+
+\begin{longtable}{@{}L{4.4cm} c c L{8.0cm}@{}}
+\caption{Risk register (L = likelihood, I = impact; H/M/L). To be reviewed at each monthly
+meeting.}\label{tab:risks}\\
+\toprule
+Risk & L & I & Mitigation \\
+\midrule
+\endfirsthead
+\toprule
+Risk & L & I & Mitigation \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Testbed does not reproduce the lab degradation, or it is too slow & M & H &
+Phase~0 forensics first; increase power or intensity (D1); run one arm next to the experiments
+to compare environments; treat the difference as a result. \\
+Alignment drift masks end-face changes & H & M &
+Daily re-peak protocol with logged before/after values; stable mounts; temperature-stable enclosure
+around the testbed; back-reflection and output-image monitors; sentinel arm. \\
+Detector or reference drift (UV ageing of Si photodiodes, temperature) & M & M &
+Low intensity on detectors, integrating spheres or diffusers, SiC photodiodes, weekly cross-check with a
+reference power meter, temperature logging and correction. \\
+Laser instability, mode hops, shutdowns & M & L &
+Ratio measurement $P_\text{out}/P_\text{ref}$; uninterruptible supply for laser and logger; automatic
+restart and alert e-mail. \\
+Cells leak, or printed walls are permeable & M & M &
+Pressure-decay test of every cell; purge mode as fallback; epoxy sealing; metal or nylon gas lines;
+continuous \Oxy{} monitoring. \\
+Printed parts, absorber or sealants contaminate the end face & M & H &
+\arm{N2+P} test arm; low-outgassing materials and bake-out; absorber behind a membrane; no silicone
+grease; machined aluminium cells as fallback. \\
+Fibre-to-fibre variability (polish, epoxy) larger than the atmosphere effect & M & H &
+Single batch, one polishing procedure, acceptance criteria, randomised assignment, replicates in Campaign~II,
+mixed-effects analysis. \\
+Lead times or budget for parts & M & M &
+Order in month~1; borrow from the group's stock; the core arms need little special equipment. \\
+Access to surface-analysis facilities & M & L &
+Contact facilities in month~2; keep uncleaned ends in clean, \Ntwo{}-filled containers until analysed. \\
+Negative result: oxygen not the cause & M & L &
+The design identifies the actual cause (\cref{tab:predictions}); this is a valuable result for the group
+and for publication. \\
+Student overloaded by scope & M & M &
+Minimum viable thesis defined (\cref{sec:workplan}); extended arms optional; weekly priorities agreed
+with the supervisor. \\
+Safety incident (UV exposure, gas, chemicals) & L & H &
+Risk assessments before work starts, enclosed beams, interlocks, training (\cref{sec:safety}). \\
+\end{longtable}

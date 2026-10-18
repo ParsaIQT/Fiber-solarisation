@@ -1,0 +1,71 @@
+\section{Work plan}\label{sec:workplan}
+
+The plan assumes a full-time, 12-month project (\cref{fig:gantt}). Items that need ordering are listed
+in \cref{sec:resources} and should be ordered in month~1, because optics, gas fittings and sensors
+can have lead times of several weeks. A compressed 6-month version is given at the end of this section.
+
+\begin{figure}[t]
+  \centering
+  \input{figures/gantt.tex}
+  \caption{Work packages (WP) and milestones (MS) for a 12-month project in half-month resolution. The
+  methods chapter is drafted while the testbed is being built; the analysis and thesis writing overlap
+  with the demonstration phase.}
+  \label{fig:gantt}
+\end{figure}
+
+\begin{table}[t]
+\centering\small
+\caption{Work packages, main outputs and milestones.}
+\label{tab:wps}
+\begin{tabularx}{\textwidth}{@{}l Y L{5.0cm}@{}}
+\toprule
+WP & Content & Output / milestone \\
+\midrule
+WP0 & inductions (laser, gas, chemical, workshop), literature, project plan & MS1: plan, risk assessments
+      and order list agreed (end of month~1) \\
+WP1 & forensics of degraded fibres from the lab (\cref{sec:forensics}) & MS2: short forensic report with
+      images; choice of extended arms \\
+WP2 & testbed: source, splitting, 4--6 arms, detectors, logger, sentinel arm & MS3: testbed qualified
+      (drift of sentinel $<\SI{0.3}{\percent}$/day; logging robust for one week) \\
+WP3 & end-face cells: CAD, printing, sealing, leak and \Oxy{} hold tests, material screening
+    & MS4: cells qualified ($<\SI{100}{ppm}$ \Oxy{} for two weeks, leak rate $<\SI{1e-5}{mbar.L/s}$) \\
+WP4 & Phase 1 baseline in air: power and dose dependence, fibre scatter & degradation law; run length
+      for later campaigns \\
+WP5 & Phase 2 / Campaign I: \arm{AIR}, \arm{CDA}, \arm{N2}, \arm{ABS} & MS5: decision on Campaign~II
+      (decision box in \cref{sec:campaigns}) \\
+WP6 & Phase 3 / Campaign II: replicates, extended arms, crossed input/output & MS6: confirmatory result
+      against pre-registered criteria \\
+WP7 & ex-situ surface analysis of selected ends & identification of films or damage \\
+WP8 & Phase 4: cells on a working \SI{369.5}{nm} link for $\geq 8$ weeks & demonstration result,
+      practical guidelines \\
+WP9 & methods chapter (months 4--6), analysis, thesis, paper draft & MS7: thesis submitted \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Decision points}
+\begin{description}[style=nextline,leftmargin=1.2em,itemsep=3pt]
+  \item[D1, end of WP4: is the degradation fast enough to study?] If \arm{AIR} at \SI{3}{mW} loses less
+        than about \SI{5}{\percent} in two weeks, the campaigns run at \SI{10}{mW}. If necessary the
+        intensity is raised further with a smaller mode-field fibre or by running two arms in series on
+        one source. If the testbed does not reproduce the lab degradation at all, the difference
+        between testbed and lab (wavelength, contaminant sources near the experiments, cleaning
+        practice) becomes a research question in itself, and the forensic results guide the next steps.
+  \item[D2, end of WP5: which mechanism?] Follow the branches of the decision box in \cref{sec:campaigns}.
+  \item[D3, end of WP6: what is deployed?] The cell type (purged or static, with or without oxygen) for
+        the Phase~4 demonstration follows from the confirmatory result.
+\end{description}
+
+\subsection{Compressed 6-month variant}
+If the project has to fit into six months, keep the logic but drop breadth:
+month~1: inductions, forensics, ordering; month~2: two to four arms and simple purged cells
+(no static cell yet); month~3: short baseline at \SI{10}{mW}; months~4--5: one campaign with \arm{AIR},
+\arm{CDA}, \arm{N2} (plus \arm{ABS} if ready); month~6: cleaning sequence, analysis, writing. The
+demonstration on a working link and the extended arms become recommendations for a follow-up project.
+
+\begin{keybox}[Minimum viable thesis]
+Even if the full testbed is delayed, the following is enough for a good thesis: the forensic analysis
+of used fibres, plus one well-controlled parallel comparison of ambient air, clean dry air and dry
+\Ntwo{} at the end faces, with the cleaning sequence at the end. The extended arms, the static absorber
+cells and the demonstration are the parts that turn it into an excellent thesis and a paper.
+\end{keybox}

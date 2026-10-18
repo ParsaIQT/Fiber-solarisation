@@ -1,0 +1,83 @@
+\section{Draft standard operating procedures}\label{app:sops}
+These drafts are a starting point. The student turns them into the group's SOPs during WP0--WP3, with
+the actual equipment, part numbers and parameters.
+
+\subsection*{SOP-1: End-face inspection and cleaning}
+\begin{enumerate}
+  \item Wear gloves; work on a clean mat; have caps ready.
+  \item Inspect the end face with the inspection microscope at the standard settings. Save the image as
+        \texttt{<fibreID>\_<end>\_<YYYYMMDD>\_<step>.png}.
+  \item If clean (no defects in the core zone, nothing loose in the cladding zone): stop and cap.
+  \item Dry clean (filtered gas, then a dry cleaning cassette or click cleaner); inspect and image.
+  \item If still contaminated: wet--dry clean with reagent-grade isopropanol on a lint-free wipe, then
+        immediately a dry wipe; inspect and image. Repeat at most twice.
+  \item Record every step in the fibre's log. Never clean a fibre that is scheduled for surface analysis.
+\end{enumerate}
+
+\subsection*{SOP-2: Polishing and acceptance of a test end}
+\begin{enumerate}
+  \item Polish with the group's procedure (films, sequence, times, pressure, lubricant written down) and
+        log all parameters.
+  \item Clean and inspect (SOP-1). Measure end-face geometry if an interferometer is available.
+  \item Measure the coupling efficiency at low power (\SI{\le 0.3}{mW}) with the standard launch.
+  \item Accept if the core zone is defect-free and the efficiency is within the agreed band around the
+        batch median; otherwise re-polish. Cap and store the fibre in a clean container until use.
+\end{enumerate}
+
+\subsection*{SOP-3: Cell qualification (leak and oxygen hold test)}
+\begin{enumerate}
+  \item Clean all parts (isopropanol wipe, no silicone grease), bake printed parts under \Ntwo{} purge,
+        assemble with a dummy connector.
+  \item Pressure decay: pressurise to \SI{+100}{mbar} with \Ntwo, close the valves, log pressure and
+        temperature for \SI{12}{h}. Correct for temperature ($\Delta p/p=\Delta T/T$) and compute
+        $Q=V\,\mathrm{d}p/\mathrm{d}t$. Accept if $Q<\SI{1e-5}{mbar.L/s}$.
+  \item Oxygen hold (static cells): purge with \Ntwo{} to $\lesssim\SI{1}{\percent}$ \Oxy, insert the
+        absorber, seal, and log the \Oxy{} sensor spot reading for at least \SI{7}{days}. Accept if \Oxy{}
+        stays below \SI{100}{ppm} after the initial absorption period.
+  \item Record the cell ID, material, print settings, sealing and test results in the cell log.
+\end{enumerate}
+
+\subsection*{SOP-4: Start of a run}
+\begin{enumerate}
+  \item Fibres accepted (SOP-2), IDs and ends assigned to arms by randomisation, assignment saved in the
+        run metadata.
+  \item Cells qualified (SOP-3); purge flows set and logged; \Oxy, RH and VOC readings stable.
+  \item Detectors zeroed; reference power meter cross-check recorded.
+  \item Couple each arm at low power, then raise to the test power and set equal powers; record the
+        initial values.
+  \item Start the logger; write the run plan (duration, re-peak schedule, stop criteria) into the notebook.
+\end{enumerate}
+
+\subsection*{SOP-5: End of a run}
+\begin{enumerate}
+  \item Record the final throughput before and after re-peaking at the test power, then at low power.
+  \item Switch off the laser. Inspect both ends without touching (SOP-1, imaging only).
+  \item Either run the cleaning sequence of \cref{sec:ladder} (output end first) with a low-power
+        measurement after each step, or cap the fibre and store it in an \Ntwo-filled, labelled container
+        for surface analysis.
+  \item Archive the data, images and notebook entries of the run and write a one-page run summary.
+\end{enumerate}
+
+\section{Data-logging specification}\label{app:logging}
+\begin{table}[h]
+\centering\small
+\caption{Minimum channel list for the logger. Raw sampling at \SI{1}{Hz}; stored as 1-minute means
+with standard deviations; one file per day plus a metadata file per run.}
+\label{tab:channels}
+\begin{tabularx}{\textwidth}{@{}l Y l@{}}
+\toprule
+Channel & Description & Units \\
+\midrule
+\texttt{t\_utc} & timestamp (ISO 8601, UTC) & -- \\
+\texttt{arm<k>\_ref}, \texttt{arm<k>\_out}, \texttt{arm<k>\_back} & photodiode voltages of arm $k$ & V \\
+\texttt{arm<k>\_O2}, \texttt{arm<k>\_RH}, \texttt{arm<k>\_VOC} & atmosphere of arm $k$ (cell or outlet) & ppm, \%, index \\
+\texttt{arm<k>\_flow}, \texttt{arm<k>\_T} & purge flow, temperature at the cell & sccm, \si{\celsius} \\
+\texttt{laser\_I}, \texttt{laser\_T}, \texttt{laser\_P} & diode current, temperature, monitor & mA, \si{\celsius}, V \\
+\texttt{lab\_T}, \texttt{lab\_RH}, \texttt{lab\_p} & lab environment & \si{\celsius}, \%, hPa \\
+\texttt{event} & free-text event log entries (re-peak, swap, cleaning, outage) & -- \\
+\bottomrule
+\end{tabularx}
+\end{table}
+The run metadata (JSON or YAML) contains: run ID, start and end time, fibre IDs and ends per arm,
+atmosphere per arm, gas cylinder IDs and certificates, cell IDs, test power, detector calibration
+factors, software version (git commit) and the analysis plan version.

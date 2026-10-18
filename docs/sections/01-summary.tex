@@ -1,0 +1,33 @@
+\section{Summary}\label{sec:summary}
+
+Trapped-ion experiments with \Ybion{} deliver their \SI{369.5}{nm} cooling and detection light through
+single-mode, polarisation-maintaining optical fibres. In the group, these fibres show a characteristic
+failure. Directly after the connector end faces are polished, the coupling efficiency is excellent. It
+then falls over days to weeks, faster at higher power, and both the input and the output end are
+affected. Re-polishing restores the throughput, so the damage must sit at, or within micrometres of, the
+end faces rather than in the bulk of the fibre. At a few milliwatts in a mode-field diameter of
+about \SI{2.3}{\micro m}, the end faces see \SIrange{e5}{e6}{W/cm^2} of near-UV light, an
+intensity at which photochemistry of the glass surface and of anything adsorbed on it becomes
+important.
+
+This project tests the hypothesis that \textbf{removing oxygen from the end faces halts the degradation},
+and develops a practical way of doing so with \textbf{3D-printed enclosures} that are either purged with
+inert gas or sealed with an \textbf{oxygen absorber}. The literature does not settle the question in advance. Oxygen
+could drive the damage through reactions with photo-activated surface sites. In the laser-induced
+contamination of UV optics in space lasers, however, oxygen is known to \emph{suppress} the growth of
+absorbing deposits from organic vapours. Water vapour and airborne particles are further candidates.
+The experiment is therefore designed to separate these factors. A multi-arm testbed exposes identical
+fibres \emph{simultaneously} to ambient air, clean dry synthetic air, clean dry nitrogen and sealed
+absorber cells, and later to controlled oxygen, humidity and contaminant levels. Throughput,
+back-reflection and the atmosphere in every cell are logged continuously. At the end of each run a fixed
+cleaning and re-polishing sequence, together with surface analysis, shows where the loss is and what
+it consists of.
+
+The project runs over 12 months (a 6-month variant is included). It starts with a forensic study of
+fibres already degraded in the lab, builds and qualifies the testbed and cells, runs two atmosphere
+campaigns, and ends with a demonstration on a working \SI{369.5}{nm} link. Success means a quantitative
+answer to whether oxygen matters (with confidence intervals), and a qualified cell design that holds
+$<\SI{100}{ppm}$ \Oxy{} for months. If the atmosphere is the key, the degradation should fall below
+\SI{1}{\percent} per \SI{1000}{h} at \SI{3}{mW}. Part~II of this document is a practical guide for the
+student: onboarding plan, core skills, working practices, pitfalls, a prioritised reading list and
+draft procedures.

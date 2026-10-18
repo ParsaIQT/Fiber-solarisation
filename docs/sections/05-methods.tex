@@ -1,0 +1,290 @@
+\section{Methodology and experimental design}\label{sec:methods}
+
+\subsection{Design principles}
+Fibre degradation experiments are slow, and many things can change in a lab over several weeks. The design
+therefore follows five rules:
+\begin{enumerate}[label=\textbf{P\arabic*}]
+  \item \textbf{Parallel, not sequential.} All test atmospheres run \emph{at the same time} from
+        one light source, in identical optical arms. Laser drifts, lab humidity and seasonal
+        effects then affect all arms equally and cancel in the comparison.
+  \item \textbf{Change one factor at a time.} The decisive pair of arms differs \emph{only} in
+        the presence of \Oxy{}: clean dry synthetic air versus clean dry \Ntwo{}, both passed through the
+        same purifier and particle filter (\cref{tab:arms}).
+  \item \textbf{Separate the surface from the alignment.} Throughput is recorded before and after
+        re-peaking the input coupling, and the back-reflection from the input face is logged
+        continuously. Alignment drift (H6) can then be told apart from changes of the end face.
+  \item \textbf{Locate the loss.} At the end of every run a fixed sequence of non-destructive
+        and destructive steps (\cref{sec:ladder}) splits the loss between input face, output face
+        and fibre.
+  \item \textbf{Decide in advance.} Metrics, the analysis and the decision thresholds
+        (\cref{sec:analysis}) are written down before the confirmatory campaign starts. This
+        guards against reading patterns into noisy data after the fact.
+\end{enumerate}
+
+\subsection{Phase 0: forensics of fibres already degraded in the lab}\label{sec:forensics}
+The cheapest information is already in the lab. In the first two months the student collects
+degraded fibres from the group's experiments (ideally 3--6, with as much history as possible:
+power, hours of use, wavelength, environment, cleaning and polishing history, PC or APC ends) and:
+\begin{enumerate}
+  \item images both end faces \emph{before any cleaning} with the fibre inspection microscope (core
+        zone, standard magnification and illumination, \cref{app:sops});
+  \item measures throughput at low power (\SI{\le 0.3}{mW}) to avoid changing the surfaces further;
+  \item runs the cleaning sequence of \cref{sec:ladder} on half of the fibres and keeps the others
+        uncleaned for surface analysis (optical and fluorescence microscopy, SEM/EDX, AFM or
+        white-light interferometry, Raman, and where available ToF-SIMS or XPS).
+\end{enumerate}
+Within weeks this shows whether the damage is a \emph{deposit} (removable or not), a
+\emph{surface modification} or \emph{nothing visible}. That result already favours some hypotheses
+over others and decides which test atmospheres are most informative.
+
+\subsection{Test fibres and end-face preparation}
+\begin{itemize}
+  \item \textbf{Fibre type.} The same polarisation-maintaining UV fibre type as used in the experiments
+        (the Thorlabs fibre referred to in the group as ``375PM'', \cref{sec:sota-fibres}), from a single
+        batch, so that the results transfer directly. If budget allows, a second, pure-silica-core
+        fibre type is included later as a comparison.
+  \item \textbf{Format.} \SIrange{1}{2}{m} lengths, connectorised and polished in-house with one
+        documented procedure and one epoxy (or bought as identical patch cables). The fibre is coiled
+        loosely (bend radius well above the specified minimum) and taped to the table, so that bend
+        loss cannot change.
+  \item \textbf{Acceptance.} Every end face is inspected and imaged after polishing, and its geometry
+        is measured if an end-face interferometer is available. Its initial coupling efficiency is measured
+        at low power. Ends that miss the acceptance criteria (no defects in the core zone; coupling
+        within a few per cent of the batch median) are re-polished before use.
+  \item \textbf{Traceability.} Each fibre gets an ID. Each end has its own polishing record and image
+        set. The assignment of fibres to arms is randomised, and arm positions are swapped between
+        runs so that any arm-specific optical problem cannot look like an atmosphere effect.
+\end{itemize}
+
+\subsection{Light source and multi-arm testbed}\label{sec:testbed}
+\Cref{fig:testbed} shows the testbed. Its main elements are:
+
+\paragraph{Source} A dedicated \SI{375}{nm} single-mode laser diode (\cref{sec:sota-hardware}) with
+an optical isolator and anamorphic beam shaping. It frees the group's \SI{369.5}{nm} lasers for
+experiments and allows long, uninterrupted runs. The photon energies at \SI{375}{nm} and
+\SI{369.5}{nm} differ by only \SI{1.5}{\percent}, and no known silica absorption band lies between them.
+Equivalent behaviour is therefore expected, but this assumption is \emph{tested} in Phase~4, which
+runs at \SI{369.5}{nm}. If no diode is available, a pick-off of a few tens of milliwatts from an
+existing \SI{369.5}{nm} system can feed the testbed.
+
+\paragraph{Power distribution} A cascade of half-wave plates and polarising beam splitters divides the
+beam into 4--6 arms with adjustable and equal powers. A further half-wave plate in each arm aligns the
+polarisation to the slow axis of the PM fibre. The operational test power is \SI{3}{mW} guided; the
+accelerated condition is \SI{10}{mW}. A sentinel arm at \SI{\le 0.1}{mW} in \Ntwo{} measures the
+drift of the measurement system itself.
+
+\paragraph{Coupling} An aspheric lens with UV anti-reflection coating ($f\approx\SIrange{5}{8}{mm}$,
+chosen for mode matching, \cref{app:estimates}) focuses the beam through the cell window onto the
+fibre end face. The lens, or the cell, sits on a stable XYZ mount. Automated peak-up with motorised mirror
+mounts is a stretch goal; the baseline is a manual re-peak once a day with a fixed procedure.
+
+\paragraph{Detection} A wedged pick-off in each arm feeds a reference photodiode ($P_\text{ref}$) and a
+second photodiode that records light reflected back from the input face ($P_\text{back}$; with FC/APC
+connectors this detector is placed in the specularly reflected beam). The output power $P_\text{out}$
+is measured with an integrating-sphere or diffuser-fronted photodiode, which is insensitive to small
+changes of the output beam. Silicon photodiodes lose UV responsivity under prolonged exposure. All
+detectors are therefore operated at low intensity (attenuated or diffused), UV-stable SiC photodiodes are
+preferred, and a reference power meter cross-checks them weekly.
+
+\paragraph{Logging} All photodiodes, laser current and temperature, lab and arm temperatures, humidity,
+pressure, flows and \Oxy{} readings are logged at \SI{1}{Hz} (stored as 1-minute means) by a Python
+data logger (\cref{app:logging}). Every manual intervention is recorded in an event log with a
+timestamp.
+
+\subsection{Test atmospheres}\label{sec:atmospheres}
+\begin{table}[t]
+\centering\small
+\caption{Test atmospheres. Core arms run in Campaign~I; extended arms are selected for Campaign~II
+on the basis of Campaign~I and the Phase~0 forensics.}
+\label{tab:arms}
+\begin{tabularx}{\textwidth}{@{}l L{4.2cm} Y@{}}
+\toprule
+Arm & Atmosphere at both end faces & Purpose \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Core arms}}\\
+\arm{AIR}  & ambient lab air, ends open as in the experiments & control; reproduces the problem \\
+\arm{CDA}  & synthetic air (\SI{20.9}{\percent} \Oxy{} in \Ntwo{}, zero grade), purified, filtered, dry
+           & contains \Oxy{} but no contaminants, particles or water \\
+\arm{N2}   & \Ntwo{} (grade 5.0 or LN$_2$ boil-off), same purifier and filter, dry
+           & identical to \arm{CDA} except for \Oxy{} $\Rightarrow$ decisive test of H1 vs H2 \\
+\arm{ABS}  & sealed printed cell, pre-purged with \Ntwo{}, iron-based \Oxy{} absorber, no flow
+           & the low-cost, passive solution to be deployed \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Extended arms}}\\
+\arm{O2-x} & \Ntwo{} with $x=$ 10, 100, \num{1000}, \num{10000}\,ppm \Oxy{}
+           & dose--response, sets the \Oxy{} specification for the cells \\
+\arm{WET-N2}  & \Ntwo{} humidified to \SIrange{30}{50}{\percent} RH & effect of water without \Oxy{} (H3) \\
+\arm{WET-CDA} & synthetic air at lab-like RH, filtered & lab air minus contaminants and particles (H2, H4) \\
+\arm{FG}   & forming gas, \SI{5}{\percent} \Htwo{} in \Ntwo{} & hydrogen passivation of defects (H5) \\
+\arm{N2+P} & \Ntwo{} cell containing a coupon of the printing material
+           & are printed parts a contamination source? (H2) \\
+\arm{VAC}  & vacuum (optional, if a chamber with fibre feedthrough is free) & link to in-vacuum fibre ends \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\Cref{tab:arms} lists the atmospheres. Purged arms receive \SIrange{5}{20}{sccm} per cell through a
+common chain of regulator, oxygen and moisture purifier and \SI{3}{nm} particle filter. Short runs of
+stainless-steel or nylon tubing are used, because polyurethane and fluoropolymer tubing let enough
+oxygen through to matter at the ppm level (\cref{app:estimates}). Each outlet passes a humidity sensor, a
+VOC sensor and (for \Oxy{}-free arms) an \Oxy{} sensor before reaching an oil bubbler or a long thin
+exhaust line that stops back-diffusion. \Oxy{} mixtures for \arm{O2-x} are made by adding synthetic
+air to \Ntwo{} with two flow controllers, or are bought as certified mixtures. Humidified arms use a
+water bubbler in a split stream. The terms ``getter'' and ``absorber'' are used carefully. Vacuum
+non-evaporable getters are not suitable at atmospheric pressure. The cells use iron-based oxygen
+absorbers of the kind used in food and museum conservation (\cref{sec:sota-atmosphere}).
+
+\subsection{End-face cells}\label{sec:cells}
+Each fibre end that is not in ambient air sits in a small cell (\cref{fig:cell}). The requirements are:
+\begin{enumerate}
+  \item \textbf{Optical access} through a UV fused-silica window, AR-coated near \SI{370}{nm} and
+        slightly wedged and tilted to avoid etalons and back-reflections into the fibre. The window lies
+        in the converging beam well away from the focus, so the intensity on it is low. For a
+        \SI{1}{mm} window at NA~0.1 the added spherical aberration is negligible
+        (\cref{app:estimates}).
+  \item \textbf{A small, swept volume} (\SIrange{10}{30}{cm^3}). Gas enters next to the end face and
+        leaves downstream, so that anything released by the connector, epoxy or cable is carried
+        \emph{away} from the face.
+  \item \textbf{Tightness.} The whole connector sits inside the cell and the cable leaves through an
+        epoxy-potted gland. Otherwise air diffuses along the jacket to the ferrule. Each cell must pass a
+        pressure-decay leak test (target $<\SI{1e-5}{mbar.L/s}$, \cref{app:sops}); at that leak rate a
+        typical absorber sachet lasts for months (\cref{app:estimates}).
+  \item \textbf{Static variant (\arm{ABS}).} The absorber sits in a pocket behind a porous PTFE
+        membrane, out of line of sight of the end face, so that no dust or vapour from the sachet
+        reaches it. The cell is first purged with \Ntwo{} to about \SI{1}{\percent} \Oxy{}. The absorber
+        then only has to remove a small residue, and the pressure in the sealed cell drops by about
+        \SI{10}{mbar} instead of \SI{210}{mbar}, which would otherwise draw air in through any leak.
+  \item \textbf{Verification.} An optical \Oxy{} sensor spot (read through a window, so that no
+        electronics sit inside the cell) and a colour \Oxy{} indicator monitor the atmosphere.
+  \item \textbf{Clean materials.} Printed parts are a possible source of organic vapour (H2). Prototypes
+        are printed in PETG or ASA with \SI{100}{\percent} infill and several perimeters, sealed with a
+        low-outgassing epoxy and baked under \Ntwo{} purge. The \arm{N2+P} arm tests directly whether the
+        material harms the end face. O-rings are fitted dry or with a minimal film of PFPE grease, and
+        silicone grease is banned because of siloxane contamination. The gland is potted with a
+        low-outgassing epoxy.
+\end{enumerate}
+The student designs the cells in CAD with the dimensions of the group's fibre mounts. Two designs are
+worth prototyping early: (a) a cap that encloses the connector and screws onto a standard
+fibre-launch receptacle, and (b) a box that encloses the whole launch (lens included). Design (a) has a
+smaller volume; design (b) is easier to seal.
+
+\subsection{Diagnostics}
+\begin{table}[t]
+\centering\small
+\caption{Measurements, their purpose and cadence.}
+\label{tab:diagnostics}
+\begin{tabularx}{\textwidth}{@{}L{4.1cm} Y L{2.6cm}@{}}
+\toprule
+Measurement & What it tells us & When \\
+\midrule
+$\eta = P_\text{out}/P_\text{ref}$ (normalised) & total throughput change of each arm & continuous, \SI{1}{Hz}\\
+re-peak gain $\eta_\text{after}/\eta_\text{before}$ & alignment drift (H6) vs end-face change & daily or automated \\
+$P_\text{back}/P_\text{ref}$ & optical change of the input face (film, roughness) & continuous \\
+\Oxy, RH, VOC index, $T$, $p$, flow & that each atmosphere is what it should be & continuous \\
+output beam image (camera, optional) & scattering or distortion from the output face & every \SI{30}{min} \\
+visible luminescence from the input face (spectrometer, optional) & fluorescence of growing organic films; defect PL bands & every \SI{30}{min} \\
+end-face microscopy (bright field, fluorescence) & deposits, particles, damage & start and end of each run \\
+cleaning sequence (\cref{sec:ladder}) & splits the loss between faces and bulk & end of each run \\
+SEM/EDX, AFM or interferometry, Raman, ToF-SIMS/XPS & composition and thickness of films & selected ends \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\Cref{tab:diagnostics} summarises the measurements. Two of them are cheap but very useful. First, the
+\emph{back-reflected power} from an FC/PC input face is about \SI{3.7}{\percent} of the incident power.
+Even a thin film changes it through thin-film interference and scattering, so it is a sensitive in-situ
+monitor of the input face. Second, \emph{organic films fluoresce} under near-UV excitation, while clean silica
+hardly does. A long-pass filter and a small spectrometer that looks back through the coupling lens can
+therefore see a film start to grow long before the throughput drops noticeably.
+
+\subsubsection{End-of-run cleaning sequence}\label{sec:ladder}
+At the end of each run the transmission is measured at low power after each of the following steps,
+always with a re-peak and first at the output end, then at the input end:
+\begin{enumerate}
+  \item no-touch inspection and imaging (preserves evidence);
+  \item dry clean (filtered gas jet, then a dry cleaning tool);
+  \item solvent clean (reagent-grade isopropanol, lint-free wipe; acetone as a second solvent);
+  \item oxidative clean (\Oxy{} plasma or UV/ozone, if available), which removes organic but not
+        inorganic (e.g.\ siloxane-derived \ce{SiO_x}) films;
+  \item re-polish, recording the removed length.
+\end{enumerate}
+The loss recovered at each step assigns the damage to a face and to a category (loose particles,
+soluble film, oxidisable film, bonded or structural damage). Any loss left after both ends have been
+re-polished is attributed to the fibre itself (H5). Where an arm has two fibres, one goes through
+this sequence and the other is kept uncleaned for surface analysis.
+
+\subsection{Experimental campaigns}\label{sec:campaigns}
+\begin{description}[style=nextline,leftmargin=1.2em,itemsep=4pt]
+\item[Phase 1 -- baseline in ambient air (months 4--5)] Three to four \arm{AIR} arms at \SI{1}{mW},
+  \SI{3}{mW} and \SI{10}{mW}, plus the sentinel. Outputs: (i) proof that the testbed reproduces the
+  degradation seen in the lab; (ii) the power law $r\propto P^{n}$ of the initial degradation rate. An
+  exponent $n\approx2$ points to a two-photon process; (iii) fibre-to-fibre scatter; (iv) the run length
+  needed in the later campaigns.
+\item[Phase 2 -- Campaign I, atmosphere screening (months 6--7)] \arm{AIR}, \arm{CDA}, \arm{N2} and
+  \arm{ABS} in parallel at the accelerated power (or \SI{3}{mW} if Phase~1 shows that \SI{10}{mW} changes
+  the mechanism, e.g.\ thermal runaway). Each run lasts until \arm{AIR} has lost \SI{\sim30}{\percent} or
+  for three weeks, whichever comes first. If time allows, a second run with permuted arm positions follows.
+\item[Phase 3 -- Campaign II, confirmation and mechanism (months 8--9)] Repeat the key contrast at
+  \SI{3}{mW} with at least two fibres per condition, and add the most informative extended arms
+  (\cref{tab:arms}): the \Oxy{} dose--response if \Oxy{} matters, \arm{WET-N2}/\arm{WET-CDA} and \arm{N2+P}
+  if it does not. A crossed configuration (input in \Ntwo{}, output in air, and vice versa) tests whether
+  both faces respond in the same way.
+\item[Phase 4 -- demonstration at 369.5\,nm (months 9--11)] The best cell design is fitted to both ends
+  of a working \SI{369.5}{nm} fibre in one of the group's experiments, with a control fibre or the fibre's
+  own history as reference, for at least eight weeks. This phase also checks the transfer from
+  \SI{375}{nm} to \SI{369.5}{nm} and whether the cell is practical in use (alignment stability, access,
+  window losses).
+\end{description}
+
+\begin{decisionbox}[How the outcome of Campaign I steers the project]
+\begin{itemize}[leftmargin=1em]
+  \item \textbf{\arm{N2} and \arm{ABS} stable, \arm{CDA} degrades like \arm{AIR}}: oxygen is the culprit
+        (H1). Measure the \Oxy{} dose--response, specify the cell atmosphere, deploy \arm{ABS} cells.
+  \item \textbf{\arm{CDA} and \arm{N2} both stable, \arm{AIR} degrades}: something in lab air other than
+        \Oxy{} is responsible (contaminants, particles or water). Campaign~II separates them. A sealed or purged
+        \emph{clean} cell solves the practical problem, with or without oxygen.
+  \item \textbf{\arm{CDA} stable, \arm{N2} or \arm{ABS} degrade}: contamination with oxygen as a protective
+        agent (H2). Oxygen absorbers would be counter-productive, and the recommendation becomes a clean, dry,
+        oxygen-containing purge. This is the outcome the space-laser literature would predict.
+  \item \textbf{No atmosphere helps}: intrinsic damage or an artefact (H5/H6). Shift the effort to fibre
+        and end-face engineering: pure-silica core, hydrogen-loaded and UV-cured fibre, end caps,
+        hollow-core fibre (\cref{sec:sota-fibres}).
+\end{itemize}
+Every branch gives a publishable answer and a concrete recommendation for the group.
+\end{decisionbox}
+
+\subsection{Data analysis and decision rules}\label{sec:analysis}
+\paragraph{Metrics} The primary quantity is the normalised, re-peaked throughput
+$\eta(t)=[P_\text{out}/P_\text{ref}](t)/[P_\text{out}/P_\text{ref}](t_0)$, corrected for detector
+temperature coefficients, with flagged intervals (interventions, outages) excluded. The \emph{primary
+endpoint} is the initial degradation rate $r=-\mathrm{d}\eta/\mathrm{d}t$ in \si{\percent} per
+\SI{1000}{h} at \SI{3}{mW}. Secondary endpoints are the time to \SI{10}{\percent} loss, the fit
+parameters of a phenomenological model (e.g.\ a stretched exponential
+$\eta=1-A\{1-\exp[-(t/\tau)^{\beta}]\}$ in time or dose), the change of $P_\text{back}$, and the outcome of
+the cleaning sequence.
+
+\paragraph{Statistics} Confidence intervals come from a block bootstrap, which allows for
+autocorrelated data. Conditions are compared through rate ratios. With replicate fibres, a
+mixed-effects model with fibre as random effect separates the atmosphere effect from fibre-to-fibre
+scatter. Phase~1 provides the scatter needed to choose the number of replicates.
+
+\paragraph{Decision rules (fixed before Campaign II)}
+\begin{itemize}
+  \item \textbf{\Oxy{} effect established:} $r_\text{N2}/r_\text{CDA}$ differs from 1 by at least a factor of
+        two, with the 95\,\% confidence interval excluding 1, in two independent runs.
+  \item \textbf{Degradation halted:} the 95\,\% upper limit on $|r|$ is below \SI{1}{\percent} per
+        \SI{1000}{h} at \SI{3}{mW} (equivalent to $<\SI{10}{\percent}$ loss per year of continuous use),
+        at least twenty times below \arm{AIR}, with no visible change of either end face. With a daily
+        scatter of \SI{0.3}{\percent} this limit can be reached in three to six weeks (\cref{app:estimates}).
+\end{itemize}
+
+\subsection{Success criteria and deliverables}
+\begin{enumerate}[label=\textbf{S\arabic*}]
+  \item The location and physical nature of the degradation are established for the group's fibres (RQ1).
+  \item The effect of \Oxy{} on the degradation rate is measured with a stated confidence interval, or
+        excluded at the level above (RQ2), and the roles of water, contaminants and particles are tested (RQ3).
+  \item A cell design is qualified: \Oxy{} $<\SI{100}{ppm}$ (target $<\SI{10}{ppm}$) and RH
+        $<\SI{5}{\percent}$ for at least eight weeks without maintenance. It is tested on a working
+        \SI{369.5}{nm} link (RQ4). If the atmosphere helps, the degradation-halted criterion is met.
+  \item Open deliverables: CAD files and bill of materials of the cells, standard operating procedures, the
+        data set with analysis code, the MSc thesis, and (if the results allow) a short paper.
+\end{enumerate}

@@ -1,0 +1,38 @@
+% 12-month work plan in half-month units (1 unit = ~2 weeks).
+\begin{ganttchart}[
+    x unit=0.43cm, y unit chart=0.5cm, y unit title=0.5cm,
+    hgrid={*1{draw=gray!20}}, vgrid={*1{draw=gray!12},*1{draw=gray!35}},
+    time slot format=simple, canvas/.append style={draw=none},
+    title/.append style={fill=uvviolet!12,draw=gray!40}, title label font=\sffamily\scriptsize\bfseries,
+    bar/.append style={fill=uvviolet!55,draw=uvviolet!80!black}, bar height=0.55,
+    bar label font=\sffamily\scriptsize, bar label node/.append style={align=right},
+    group/.append style={fill=tealdark,draw=tealdark}, group label font=\sffamily\scriptsize\bfseries,
+    group right shift=0, group top shift=0.35, group height=0.3, group peaks height=0.15,
+    milestone/.append style={fill=amberdark,draw=amberdark!70!black}, milestone height=0.55,
+    milestone label font=\sffamily\scriptsize\itshape\color{amberdark!80!black},
+    milestone label node/.append style={align=right},
+    link/.style={-Stealth,draw=gray!60}
+  ]{1}{24}
+  \gantttitle{Month}{24} \\
+  \gantttitlelist{1,...,12}{2} \\
+  \ganttgroup{Set-up}{1}{10} \\
+  \ganttbar{WP0 Induction, safety, reading}{1}{3} \\
+  \ganttbar{WP1 Forensics of used fibres}{2}{4} \\
+  \ganttbar{WP2 Testbed + data logging}{3}{8} \\
+  \ganttbar{WP3 End-face cells: design, print, qualify}{4}{10} \\
+  \ganttmilestone{MS1 Plan + risk assessments signed off}{2} \\
+  \ganttmilestone{MS2 Forensic report; MS3 testbed qualified}{8} \\
+  \ganttgroup{Experiments}{7}{22} \\
+  \ganttbar{WP4 Baseline in air: power + dose law}{7}{10} \\
+  \ganttbar{WP5 Campaign I: atmosphere screening}{11}{14} \\
+  \ganttbar{WP6 Campaign II: confirmation + dose-response}{15}{18} \\
+  \ganttbar{WP7 Ex-situ surface analysis}{12}{20} \\
+  \ganttbar{WP8 Demonstration on the 369.5\,nm system}{17}{22} \\
+  \ganttmilestone{MS4 Cells qualified ($<\!100$\,ppm \Oxy{} for 2 weeks)}{10} \\
+  \ganttmilestone{MS5 Campaign I decision}{14} \\
+  \ganttmilestone{MS6 Campaign II result}{18} \\
+  \ganttgroup{Write-up}{8}{24} \\
+  \ganttbar[bar/.append style={fill=uvviolet!25}]{WP9 Methods chapter (while building)}{8}{12} \\
+  \ganttbar{WP9 Analysis, thesis, paper draft}{18}{24} \\
+  \ganttmilestone{MS7 Thesis submitted}{24}
+\end{ganttchart}

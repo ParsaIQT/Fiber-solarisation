@@ -1,0 +1,138 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{fsproposal}
+\usepackage[backend=biber,style=numeric-comp,sorting=none,maxbibnames=6,minbibnames=3,
+            giveninits=true,doi=true,isbn=false,url=true,eprint=true]{biblatex}
+\addbibresource{references.bib}
+\AtEveryBibitem{\ifentrytype{article}{\clearfield{url}\clearfield{urldate}}{}}
+
+\hypersetup{pdftitle={Experimental demonstration of reduced fibre solarisation in an oxygen-free atmosphere},
+            pdfsubject={MSc thesis project proposal and student guide},
+            pdfkeywords={fibre solarisation, UV, 369.5 nm, ytterbium ion, end-face degradation,
+                         laser-induced contamination, oxygen absorber, 3D printing}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\sffamily\footnotesize\color{greydark}Reduced fibre solarisation in an oxygen-free atmosphere}
+\fancyhead[R]{\sffamily\footnotesize\color{greydark}MSc proposal \& guide}
+\fancyfoot[C]{\sffamily\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{uvviolet!40}\leaders\hrule height \headrulewidth\hfill}}
+
+\begin{document}
+
+% =============================================================== title page
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[uvviolet] (current page.north west) rectangle ([yshift=-5.2cm]current page.north east);
+  \fill[uvviolet!70] ([yshift=-5.2cm]current page.north west) rectangle ([yshift=-5.45cm]current page.north east);
+  \node[anchor=north west,text=white,font=\sffamily\large,inner sep=0] at ([xshift=2.4cm,yshift=-1.6cm]current page.north west)
+    {MSc thesis project};
+  \node[anchor=north west,text=white,font=\sffamily\Large\bfseries,inner sep=0] at ([xshift=2.4cm,yshift=-2.4cm]current page.north west)
+    {Research proposal and student guide};
+  \node[anchor=north west,text=white!85!uvviolet,font=\sffamily\small,inner sep=0] at ([xshift=2.4cm,yshift=-3.4cm]current page.north west)
+    {Trapped-ion quantum technology \textbullet{} UV fibre delivery at 369.5\,nm};
+\end{tikzpicture}
+\vspace*{4.6cm}
+
+{\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000\sffamily\bfseries\fontsize{24}{29}\selectfont\color{uvviolet}
+Experimental demonstration of reduced fibre solarisation in an oxygen-free atmosphere\par}
+\vspace{6mm}
+{\sffamily\large\color{greydark}
+Can a 3D-printed controlled-atmosphere enclosure stop the UV-induced degradation of single-mode fibre
+end faces carrying milliwatts of \SI{369.5}{nm} light?\par}
+\vspace{12mm}
+
+{\sffamily\small
+\begin{tabular}{@{}>{\color{greydark}}l l@{}}
+Student & \fillin{name} \\
+Supervisor & \fillin{name} \\
+Daily supervisor & \fillin{name} \\
+Duration & 12 months full time (6-month variant in \cref{sec:workplan}) \\
+Version & 1.0 -- 18 October 2026, draft for discussion \\
+\end{tabular}\par}
+
+\vfill
+\begin{keybox}[Project at a glance]
+\begin{itemize}[leftmargin=1.1em]
+  \item \textbf{Problem.} Thorlabs polarisation-maintaining UV fibres carrying a few mW of
+        \SI{369.5}{nm} light (the \Ybion{} cooling and detection wavelength) couple very well after a
+        fresh polish, then lose throughput at a rate that grows with power, at both ends.
+  \item \textbf{Idea.} Keep the end faces in an oxygen-free atmosphere, using 3D-printed cells with oxygen
+        absorbers or an inert-gas purge, and show that the degradation stops.
+  \item \textbf{Approach.} A multi-arm accelerated-ageing testbed runs ambient air, clean dry air, dry
+        \Ntwo{} and sealed absorber cells \emph{in parallel} from one UV source. A fixed cleaning sequence
+        and surface analysis locate the damage. The best solution is then demonstrated on a working
+        \SI{369.5}{nm} link.
+  \item \textbf{Why it is a good project.} Every outcome is useful. Either oxygen is the culprit and the
+        fix is cheap, or the experiment identifies the real cause (contamination, water, particles or
+        intrinsic glass damage) and what to do about it.
+\end{itemize}
+\end{keybox}
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+
+\part*{Part I -- Research proposal}
+\addcontentsline{toc}{part}{Part I -- Research proposal}
+\input{sections/01-summary}
+\input{sections/02-background}
+\input{sections/03-sota}
+\input{sections/04-aims}
+
+\begin{figure}[p]
+  \centering
+  \input{figures/mechanisms}
+  \caption{Candidate processes at a UV-illuminated fibre end face (input end shown; the output face sees
+  practically the same guided intensity). Only H1--H4 can depend on the surrounding gas. H5 can be
+  influenced only by hydrogen, which diffuses into silica; H6 is an artefact. The experiment is designed
+  to discriminate between them (\cref{tab:predictions}).}
+  \label{fig:mechanisms}
+\end{figure}
+
+\input{sections/05-methods}
+
+\begin{figure}[p]
+  \centering
+  \resizebox{\textwidth}{!}{\input{figures/testbed}}
+  \caption{Multi-arm accelerated-ageing testbed. One near-UV source feeds identical arms that differ only
+  in the atmosphere at the two end faces. Each arm records the reference, back-reflected and transmitted
+  powers. Purged arms share one gas-purification chain; the static arm uses an oxygen absorber and an
+  optical \Oxy{} sensor spot. Arm 1 has no cells and reproduces the present lab conditions.}
+  \label{fig:testbed}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \input{figures/cell}
+  \caption{Concept of a 3D-printed end-face cell (cross-section, input end). The whole connector is
+  enclosed and the cable is sealed in a potted gland, because air would otherwise diffuse along the cable
+  to the ferrule. Gas enters next to the end face and leaves downstream. In the static variant the inlet
+  and outlet are closed after an \Ntwo{} pre-purge and the absorber in the pocket removes the residual
+  oxygen. The window sits in the converging beam, far enough from the focus that the intensity on it is
+  low.}
+  \label{fig:cell}
+\end{figure}
+
+\input{sections/06-workplan}
+\input{sections/07-resources}
+\input{sections/08-risks}
+\input{sections/09-safety}
+\input{sections/10-outcomes}
+
+\clearpage
+\input{sections/11-guide}
+\input{sections/12-reading}
+
+\clearpage
+\appendix
+\part*{Appendices}
+\addcontentsline{toc}{part}{Appendices}
+\input{sections/14-estimates}
+\input{sections/13-sops}
+
+\clearpage
+\printbibliography[heading=bibintoc,title={References}]
+
+\end{document}

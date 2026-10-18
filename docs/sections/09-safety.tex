@@ -1,0 +1,39 @@
+\section{Health and safety}\label{sec:safety}
+
+Hands-on work starts only after the departmental inductions and with signed risk assessments for the
+laser work, the gas set-up, and the chemicals (COSHH). The main hazards and controls are:
+
+\begin{description}[style=nextline,leftmargin=1.2em,itemsep=3pt]
+  \item[Near-UV laser radiation] A \SI{375}{nm} diode of tens of milliwatts, or the \SI{369.5}{nm}
+        systems, are Class~3B. Near-UV beams are barely visible, so stray reflections are easy to
+        miss. Controls: enclose the beam paths of the testbed (the long runs are unattended), fit an
+        interlock to the enclosure, wear eyewear with adequate optical density at the wavelength in
+        use, use fluorescent viewing cards, register the set-up with the laser safety officer and follow
+        the local rules. Unattended operation needs its own risk assessment.
+  \item[Compressed and inert gases] Cylinders are secured and fitted with suitable regulators and
+        relief devices. The lab \Ntwo{} supply is used where possible. The purge flows are tiny
+        (about \SI{0.1}{L/min} in total) and cannot deplete the oxygen in a ventilated lab. The relevant
+        scenario is the release of a whole cylinder in a small room. The risk assessment must check the
+        room volume and ventilation and decide whether an oxygen-depletion monitor is needed. Exhausts are
+        routed to extraction.
+  \item[Forming gas] \SI{5}{\percent} \Htwo{} in \Ntwo{} is normally supplied and classified as a
+        non-flammable mixture. It is still handled as a hydrogen-containing gas (no ignition sources at
+        the exhaust, leak checks with a hydrogen detector). Use only if Campaign~II needs it.
+  \item[Oxygen absorbers] Iron-based sachets heat up as they react. Keep them sealed until use, do not
+        cut them open, and allow used sachets to finish reacting before disposal.
+  \item[Chemicals] Isopropanol and acetone (flammable), epoxies and resins (skin sensitisers),
+        polishing slurries. Wear gloves and eye protection and work with ventilation as stated in the
+        COSHH assessments.
+  \item[3D printing] Run printers in ventilated or filtered enclosures (FDM printers emit ultrafine
+        particles and VOCs). Handle uncured resin with gloves.
+  \item[Fibre shards] Wear eye protection when cleaving and polishing, use a sharps container and
+        a dedicated work mat, and keep food and drink out of the area.
+  \item[Plasma and UV/ozone cleaners] If used, they produce UV-C and ozone. Use them only with their
+        interlocks and extraction.
+\end{description}
+
+\begin{safetybox}[Rule of thumb]
+If an experiment is going to run unattended for weeks, design it so that every failure (power cut, gas
+cylinder empty, laser fault, interlock trip) leaves it in a safe state \emph{and} is logged with a
+timestamp. Then the failure costs you a data gap but does not put anyone at risk.
+\end{safetybox}
