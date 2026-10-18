@@ -4,6 +4,7 @@
             giveninits=true,doi=true,isbn=false,url=true,eprint=true]{biblatex}
 \addbibresource{references.bib}
 \AtEveryBibitem{\ifentrytype{article}{\clearfield{url}\clearfield{urldate}}{}}
+\appto{\bibsetup}{\sloppy\emergencystretch=2em}
 
 \hypersetup{pdftitle={Experimental demonstration of reduced fibre solarisation in an oxygen-free atmosphere},
             pdfsubject={MSc thesis project proposal and student guide},
@@ -81,39 +82,10 @@ Version & 1.0 -- 18 October 2026, draft for discussion \\
 \input{sections/03-sota}
 \input{sections/04-aims}
 
-\begin{figure}[p]
-  \centering
-  \input{figures/mechanisms}
-  \caption{Candidate processes at a UV-illuminated fibre end face (input end shown; the output face sees
-  practically the same guided intensity). Only H1--H4 can depend on the surrounding gas. H5 can be
-  influenced only by hydrogen, which diffuses into silica; H6 is an artefact. The experiment is designed
-  to discriminate between them (\cref{tab:predictions}).}
-  \label{fig:mechanisms}
-\end{figure}
 
 \input{sections/05-methods}
 
-\begin{figure}[p]
-  \centering
-  \resizebox{\textwidth}{!}{\input{figures/testbed}}
-  \caption{Multi-arm accelerated-ageing testbed. One near-UV source feeds identical arms that differ only
-  in the atmosphere at the two end faces. Each arm records the reference, back-reflected and transmitted
-  powers. Purged arms share one gas-purification chain; the static arm uses an oxygen absorber and an
-  optical \Oxy{} sensor spot. Arm 1 has no cells and reproduces the present lab conditions.}
-  \label{fig:testbed}
-\end{figure}
 
-\begin{figure}[t]
-  \centering
-  \input{figures/cell}
-  \caption{Concept of a 3D-printed end-face cell (cross-section, input end). The whole connector is
-  enclosed and the cable is sealed in a potted gland, because air would otherwise diffuse along the cable
-  to the ferrule. Gas enters next to the end face and leaves downstream. In the static variant the inlet
-  and outlet are closed after an \Ntwo{} pre-purge and the absorber in the pocket removes the residual
-  oxygen. The window sits in the converging beam, far enough from the focus that the intensity on it is
-  low.}
-  \label{fig:cell}
-\end{figure}
 
 \input{sections/06-workplan}
 \input{sections/07-resources}

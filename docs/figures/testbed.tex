@@ -9,7 +9,7 @@
   % ------------------------------------------------------------ source and splitter column
   \node[comp,fill=uvlight,minimum width=2.1cm,minimum height=0.75cm] (laser) at (1.2,8.25)
        {\textbf{laser}\\375\,nm diode or 369.5\,nm};
-  \node[comp,minimum width=2.1cm] (shape) at (1.2,7.15) {isolator + beam shaping};
+  \node[comp,minimum width=2.1cm] (shape) at (1.2,7.15) {beam shaping (+ isolator)};
   \draw[beam,->] (laser.south) -- (shape.north);
   \draw[beam] (shape.south) -- (1.2,1.5);
   \foreach \y/\lab/\desc/\celltype in {6.0/1/{ambient lab air (open)}/0,
@@ -92,7 +92,7 @@
   \draw[gas,->] (pur.east) -- (flow.west);
   \draw[gas,->] (flow.east) -- (9.35,-0.95) node[anchor=west,align=left,tealdark] {to the cells\\of arms 2 and 3};
   \node[tealdark,anchor=north west,align=left] at (0.55,-1.65)
-       {cell outlets $\to$ RH, VOC and \Oxy{} sensors $\to$ exhaust (oil bubbler or long outlet line prevents back-diffusion)};
+       {cell outlets $\to$ RH sensor, trace \Oxy{} analyser, VOC sampling $\to$ long exhaust line or check valve (no oil bubbler)};
   % ------------------------------------------------------------ data acquisition
   \node[comp,minimum width=2.4cm,align=left,anchor=west] (daq) at (12.0,-0.95)
        {\textbf{DAQ + PC}\\photodiodes, \Oxy, RH, $T$, $p$,\\flows, laser current};

@@ -1,0 +1,117 @@
+% Body of the short summary (summary.tex). Keep consistent with proposal.tex.
+\section*{The problem}
+The \Ybion{} experiments deliver \SI{369.5}{nm} light through Thorlabs P3-375PM-FC patch cables
+(PM-S350-HP: PANDA, pure-silica core, FC/APC). After a fresh polish the coupling efficiency is
+excellent. It then falls over days to weeks, faster at higher power, and both the input and the output end
+are affected. At \SI{3}{mW} in the \SI{2.4}{\micro m} mode the end faces see
+\SI{\approx1.3e5}{W/cm^2}. Because re-polishing restores the throughput, the damage sits at the end faces
+(or within micrometres of them), not in the bulk of the fibre. The proposed remedy is to keep the end
+faces in an \textbf{oxygen-free atmosphere}, using \textbf{3D-printed cells} with an \textbf{oxygen
+absorber} or an inert-gas purge. The MSc project should demonstrate that this halts the degradation, or
+find out why it does not.
+
+\section*{What the literature says}
+\begin{itemize}
+  \item \textbf{Oxygen cannot reach the bulk.} At room temperature \Oxy{} penetrates silica by only nanometres
+        per year~\cite{Kajihara2010}, whereas \Htwo{} crosses a fibre in days~\cite{Lemaire1991}. Any oxygen
+        effect must act at the end faces, which is where the group's fibres fail.
+  \item \textbf{Hydrocarbon contamination: oxygen protects.} Space lasers (Aeolus/ALADIN), UV
+        frequency-conversion cavities in ion-trap labs and GaN laser diodes all suffer absorbing carbon
+        deposits in nitrogen or vacuum, and are run with oxygen for this
+        reason~\cite{Hippler2016,Mondin2017,Hannig2018,Schoedl2005}. Under CW light at an intensity like
+        ours, deposits grew fastest at \emph{trace} oxygen levels~\cite{Parthasarathy2024}.
+  \item \textbf{Siloxane contamination: oxygen can harm.} Silicones oxidise to non-volatile \ce{SiO_x}.
+        At a \SI{410}{nm} fibre end face, \Oxy{} $\geq\SI{100}{ppm}$ \emph{accelerated} such
+        deposits~\cite{Fujifilmpatent2006}. This is the strongest support for the group's hypothesis.
+  \item \textbf{Oxygen-independent mechanisms.} Particles pulled into the beam, prevented at \SI{313}{nm}
+        by a dry \Ntwo{} overpressure~\cite{Marciniak2017}. Laser-induced periodic structures growing out
+        of the silica itself, seen at \SI{405}{nm} on both faces of small-core fibres~\cite{Gonschior2013JNCS}.
+  \item \textbf{The gap.} Nobody has varied \Oxy{} in a controlled way for near-UV fibre end faces, and there
+        are no lifetime data for step-index pure-silica PM fibre at \SI{369.5}{nm}.
+\end{itemize}
+
+\section*{Aim and research questions}
+Determine whether, and in which atmosphere, the degradation can be stopped, and demonstrate a
+low-cost 3D-printed enclosure that does it in routine use. \textbf{RQ1} Where is the loss, and what is it?
+\textbf{RQ2} Does removing \Oxy{} change the rate, in which direction, and is there a threshold?
+\textbf{RQ3} What are the roles of water, organic and siloxane vapours, and particles?
+\textbf{RQ4} Does a sealed absorber cell hold its atmosphere for months and protect a working link?
+
+\section*{Hypotheses and the decisive test}
+\begin{center}\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l cccc l@{}}
+\toprule
+Hypothesis & \arm{AIR} & \arm{CDA} & \arm{N2} & \arm{ABS} & tell-tale sign \\
+\midrule
+H1 \Oxy-assisted (e.g.\ siloxane $\to$ \ce{SiO_x}) & $\bullet$ & $\bullet$ & $\circ$ & $\circ$ & rate rises with \Oxy; Si/O-rich deposit \\
+H2 carbonaceous contamination, \Oxy{} protects & $\bullet$ & $\circ$ & $\bullet/\circ$ & $\bullet/\uparrow$ & C-rich, fluorescent film \\
+H3 restructuring of the silica surface & $\bullet$ & $\bullet/\circ$ & $\bullet/\circ$ & $\bullet/\circ$ & ripples along polarisation \\
+H4 particles & $\bullet$ & $\circ$ & $\circ$ & $\circ$ & discrete particles \\
+H5 colour centres in the glass & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & no surface change \\
+H6 mechanical drift & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & recovered by re-peaking \\
+\bottomrule
+\end{tabular}
+\end{center}
+{\footnotesize \arm{AIR} lab air; \arm{CDA} clean dry synthetic air; \arm{N2} clean dry nitrogen;
+\arm{ABS} sealed printed cell with \Oxy{} absorber. $\bullet$ degrades like air, $\circ$ strongly
+reduced, $\uparrow$ faster. \arm{CDA} and \arm{N2} differ \emph{only} in \Oxy, so comparing them
+decides the oxygen question.}
+
+\begin{center}
+\resizebox{0.66\textwidth}{!}{\input{figures/mechanisms}}
+\end{center}
+
+\section*{Approach}
+\begin{center}
+\resizebox{0.97\textwidth}{!}{\input{figures/testbed}}
+\end{center}
+\begin{itemize}
+  \item \textbf{Phase 0, forensics (months 1--2).} Image, test and analyse fibres already degraded in the
+        lab (microscopy, SEM/EDX, AFM, Raman), and survey contaminant sources such as silicones, printed
+        parts and cable jackets.
+  \item \textbf{Testbed.} A dedicated \SI{375}{nm} single-mode diode (\SI{70}{mW}) feeds 4--6
+        identical arms in \emph{parallel}. For each arm the testbed logs throughput, end-face reflection,
+        \Oxy, RH, VOC index, temperature and flow continuously. A sentinel arm tracks system drift, and a
+        daily re-peak separates alignment drift from end-face change.
+  \item \textbf{End-face cells.} 3D-printed (sealed and baked) with a UV window, the connector fully
+        enclosed, a potted cable gland, gas swept across the face, and an absorber behind a PTFE membrane.
+        An optical \Oxy{} sensor spot reads the cell from outside. Target: $<\SI{100}{ppm}$ \Oxy{} for months,
+        leak rate $<\SI{1e-5}{mbar.L/s}$.
+  \item \textbf{Campaigns.} Baseline in air at 1, 3 and \SI{10}{mW} (power law). Campaign I: \arm{AIR},
+        \arm{CDA}, \arm{N2}, \arm{ABS}. Campaign II: replicates, \Oxy{} dose--response (10~ppm to
+        \SI{1}{\percent}), humid gas, polymer and silicone challenges, crossed input/output. Finally,
+        demonstration on a working \SI{369.5}{nm} link for $\geq8$ weeks.
+  \item \textbf{Locating the loss.} At the end of each run, a fixed cleaning sequence (dry, solvent,
+        \Oxy{} plasma or UV/ozone, re-polish) is applied to each face in turn, with a measurement after
+        every step. Uncleaned twins go to surface analysis.
+\end{itemize}
+
+\section*{Work plan (12 months; a 6-month variant exists)}
+\begin{center}
+\resizebox{0.9\textwidth}{!}{\input{figures/gantt}}
+\end{center}
+
+\section*{Success criteria and deliverables}
+\begin{itemize}
+  \item The effect of \Oxy{} is measured with a confidence interval: a ratio of rates between \arm{N2} and
+        \arm{CDA} different from 1 by a factor of at least 2 in two runs, or excluded.
+  \item ``Halted'' means a 95\,\% upper limit below \SI{1}{\percent} per \SI{1000}{h} at \SI{3}{mW} (less than
+        \SI{10}{\percent} per year of continuous use), at least 20 times below the air arm, with unchanged end
+        faces. This is reachable in 3--6 weeks at \SI{0.3}{\percent} daily scatter.
+  \item A qualified cell design (CAD, bill of materials, SOPs) tested on a working link; data, code,
+        thesis, and a short paper if the results allow.
+\end{itemize}
+
+\section*{Resources, risks and first steps}
+\textbf{Resources.} The main new items are the \SI{375}{nm} diode with mount and driver, 8--12
+P3-375PM-FC cables, windows, UV-resistant photodiodes and DAQ, gas purification and flow control, and
+optical \Oxy{} sensing. Much of the optics, the power meters, the \Ntwo{} supply, the 3D printers and the
+polishing kit are likely to be in the group already. Indicative costs are in the full proposal.
+\textbf{Main risks.} The testbed may not reproduce the lab degradation (mitigated by the forensics first
+and by tuning the power). Alignment drift may mask the effect (re-peak protocol, reflection monitor). The
+cells or the printed material itself may contaminate the faces (leak tests, material screening, the
+\arm{N2+P} arm). Polishing scatter may hide small effects (one procedure, replicates).
+\textbf{First month.} Inductions and risk assessments; the five key papers; hands-on cleaning,
+inspection and coupling; collecting degraded fibres; a project plan and order list presented to the
+group.

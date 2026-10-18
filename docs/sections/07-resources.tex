@@ -1,2 +1,67 @@
-\section{Placeholder 07-resources}\label{sec:ph-07-resources}
-\label{sec:resources}
+\section{Resources and indicative budget}\label{sec:resources}
+
+\subsection{What the group is likely to have already}
+Check these in month~1: fibre polishing and inspection equipment; spare \SI{369.5}{nm} power on one of the
+laser systems (for Phase~4 and as a fall-back source); optical mounts, mirrors, wave plates and beam
+splitters for the near UV; power meters; the laboratory \Ntwo{} supply; 3D printers (FDM, possibly SLA)
+in the group or the workshop; a fusion splicer (for end caps, optional); and access to SEM/EDX, AFM or
+white-light interferometry, Raman and XPS/ToF-SIMS through university facilities.
+
+\subsection{Items to buy}
+\Cref{tab:budget} lists the main items. Thorlabs prices are US list prices read on 18~October 2026
+(UK prices and university discounts differ). Items marked $\approx$ are rough estimates that should be
+replaced by quotes.
+
+\begin{longtable}{@{}L{4.4cm} L{6.6cm} r@{}}
+\caption{Main items for the testbed and cells (US dollars).}\label{tab:budget}\\
+\toprule
+Item & Example and quantity & Cost \\
+\midrule
+\endfirsthead
+\toprule
+Item & Example and quantity & Cost \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\multicolumn{3}{@{}l}{\emph{Light source and distribution}}\\
+\SI{375}{nm} single-mode diode & Thorlabs L375P70MLD (Nichia NDU4116, \SI{70}{mW})~\cite{ThorlabsL375} & 5\,589 \\
+TEC mount & Thorlabs LDM56F (supports the F pin code) & 810 \\
+diode current and TEC controller & one combined unit & $\approx$\,2\,000--3\,000 \\
+splitting and steering optics & half-wave plates, PBS cubes, mirrors, mounts for 4--6 arms & $\approx$\,2\,000--4\,000 \\
+fibre launches & 4--6 $\times$ FiberPort PAF2A-5A or -7A (FC/APC) at \$674 & 2\,700--4\,000 \\
+\multicolumn{3}{@{}l}{\emph{Test fibres and preparation}}\\
+test cables & 8--12 $\times$ P3-375PM-FC-2 at \$366 (plus spares) & 2\,900--4\,400 \\
+optional control fibres & 4 $\times$ P3-305A-FC-1 (SM300, FC/APC) at \$131 & 530 \\
+polishing consumables & diamond films 30--1\,\textmu m, \SI{0.01}{\micro m} final film, FC/APC puck & $\approx$\,500 \\
+\multicolumn{3}{@{}l}{\emph{Detection and logging}}\\
+reference power meter & S120VC sensor + PM100USB & 1\,061 \\
+arm photodiodes and DAQ & 12--18 UV-resistant photodiodes, transimpedance amplifiers, multichannel ADC & $\approx$\,1\,500--3\,000 \\
+optional integrating sphere & S142C for the output detector of a key arm & 1\,215 \\
+\multicolumn{3}{@{}l}{\emph{End-face cells}}\\
+windows & 8--12 $\times$ WG41010-A (UV fused silica, \SI{1}{mm}, AR \SIrange{350}{700}{nm}) at \$123 & 990--1\,480 \\
+FC/APC receptacles, sleeves & ADAFCPM2 (\$62) or equivalent, 4--8 & 250--500 \\
+printing materials, O-rings, epoxy, inserts, PTFE membranes, desiccant & PETG, FKM/butyl O-rings, low-outgassing epoxy & $\approx$\,500--1\,000 \\
+\multicolumn{3}{@{}l}{\emph{Atmosphere control and verification}}\\
+gas handling & regulators, \Oxy/\water{} purifier, \SI{3}{nm} filters, flow meters or mass-flow controllers, stainless lines and fittings & $\approx$\,3\,000--6\,000 \\
+trace \Oxy{} sensing & reader with ultra-trace sensor spots (e.g.\ PreSens SP-PSt9~\cite{PreSensPSt9}); optionally a galvanic trace analyser for exhausts & $\approx$\,3\,000--8\,000 \\
+absorbers and indicators & RP-A and AGELESS sachets, indicators & $\approx$\,200 \\
+gases & synthetic air ($\leq\SI{0.1}{ppm}$ hydrocarbons), small \Ntwo{} 6.0 cylinder, optional mixtures, rental & $\approx$\,500--1\,500/yr \\
+\multicolumn{3}{@{}l}{\emph{Analysis}}\\
+VOC analysis & sorbent tubes and TD-GC/MS analyses (service) & $\approx$\,500--1\,500 \\
+surface analysis & SEM/EDX, AFM, Raman, ToF-SIMS/XPS facility time & $\approx$\,1\,000--4\,000 \\
+\midrule
+\textbf{Total if everything is bought new} & & $\approx$\,\textbf{30\,000--50\,000} \\
+\end{longtable}
+
+Using the group's existing optics, power meters, \Ntwo{} supply, polishing kit and printers roughly halves
+the total. If an existing \SI{369.5}{nm} laser can spare \SIrange{20}{40}{mW} for long runs, the dedicated
+source (about \$8--9k) can be dropped, at the price of competing with the experiments for laser time.
+The minimum viable thesis (\cref{sec:workplan}) needs little beyond test cables, windows, printing
+materials, gas lines and trace \Oxy{} verification.
+
+\subsection{People and facilities}
+Daily supervision by a group member experienced with UV fibre coupling and polishing. The mechanical
+workshop for machined sealing lands and possible aluminium cells. Materials-characterisation facilities
+for surface analysis, contacted in month~2. The departmental laser and gas safety officers for the risk
+assessments.

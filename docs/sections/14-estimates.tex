@@ -1,2 +1,110 @@
-\section{Placeholder 14-estimates}\label{sec:ph-14-estimates}
-\label{app:estimates}
+\section{Design estimates}\label{app:estimates}
+All numbers in this appendix are printed by \texttt{calc/estimates.py} in the repository, where every
+input is documented. The student should rerun it with measured values (e.g.\ the actual mode-field
+diameter and cell volume) and keep it up to date.
+
+\paragraph{A1 -- Intensity at the end face} For a Gaussian mode of $1/e^2$ radius $w$ the peak intensity
+is $I_0=2P/(\pi w^2)$. With a mode-field diameter of \SI{2.4}{\micro m} at \SI{369.5}{nm}:
+\begin{center}\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Guided power & \SI{1}{mW} & \SI{3}{mW} & \SI{10}{mW} \\
+\midrule
+peak intensity $I_0$ (\si{kW/cm^2}) & 44 & 133 & 442 \\
+photon flux (\si{cm^{-2}.s^{-1}}) & \num{8e22} & \num{2.5e23} & \num{8e23} \\
+fluence per day (\si{J/cm^2}) & \num{3.8e9} & \num{1.1e10} & \num{3.8e10} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{A2 -- How much contamination is ``a lot''?} From kinetic theory, a molecule of mass
+\SI{150}{u} present at \SI{1}{ppb} strikes the surface at \SI{1.3e18}{m^{-2}.s^{-1}}. That is a
+monolayer-equivalent every \SI{\sim8}{s}. If only one impact in a million is photo-fixed, a monolayer
+still grows every \SI{\sim90}{days} at \SI{1}{ppb}, every \SI{\sim9}{days} at \SI{10}{ppb} and about
+daily at \SI{100}{ppb}. Parts-per-billion levels of organics are therefore enough to explain degradation
+over days to weeks. This is consistent with the Aeolus experience~\cite{ESA2018Aeolus}, and it is why the
+purge gas needs a purifier and the cells must be clean.
+
+\paragraph{A3 -- How thick must a film be to matter?} An absorbing film with extinction coefficient $k$
+absorbs \SI{10}{\percent} at a thickness of \SI{103}{nm}, \SI{31}{nm} and \SI{10}{nm} for $k=0.03$, $0.1$ and
+$0.3$ (polymer-like to graphitic carbon; the values of $k$ are assumptions). A transparent film
+($n=1.5$) whose thickness follows the Gaussian intensity profile reduces the coupling efficiency as
+$\eta=\mathrm{sinc}^2(\phi_0/2)$, where $\phi_0$ is the peak phase. A \SI{10}{\percent} loss needs
+$\phi_0=\SI{1.1}{rad}$, i.e.\ a peak thickness of \SI{\approx130}{nm}. Absorbing films of a few tens of
+nanometres, or transparent ones of about a hundred, are therefore enough. Both are easy to see by AFM or
+white-light interferometry.
+
+\paragraph{A4 -- Heating by an absorbing film} For absorption at the surface of a semi-infinite silica
+body, the steady-state temperature rise at the centre is $\Delta T=P_\text{abs}/(\sqrt{2\pi}\,\kappa w)$
+with $\kappa=\SI{1.38}{W/(m.K)}$~\cite{Lax1977}. A film that absorbs \SI{10}{\percent} of \SI{3}{mW}
+heats the face by \SI{\approx70}{K}, and at \SI{10}{mW} by \SI{\approx240}{K}. Once a film absorbs, it
+heats itself and its surroundings. This feedback can accelerate its own growth and explains why
+degradation often appears to ``run away''.
+
+\paragraph{A5 -- Gas transport into silica} With literature Arrhenius parameters at \SI{295}{K}:
+\begin{center}\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+ & $D$ (\si{cm^2/s}) & $\sqrt{Dt}$, 1 year & time constant, \SI{125}{\micro m} fibre \\
+\midrule
+\Htwo{}~\cite{Lemaire1991,Shang2009} & \numrange{0.9e-11}{2.2e-11} & \SIrange{170}{260}{\micro m} & \SIrange{3.6}{8.8}{days} \\
+\Oxy{}~\cite{Norton1961,Kajihara2010} & \numrange{3e-24}{6e-21} & \SIrange{0.1}{4}{nm} & $>\num{e10}$\,days \\
+\bottomrule
+\end{tabular}
+\end{center}
+The oxygen values are extrapolated from measurements above \SI{800}{\celsius} and are good to an order
+of magnitude at best. The conclusion is robust: oxygen reaches only the top few nanometres of the end
+face, whereas hydrogen penetrates the whole fibre within days.
+
+\paragraph{A6 -- Continuous purge} A well-mixed cell of volume $V$ purged with $Q$ approaches the feed
+composition with time constant $V/Q$. For $V=\SI{30}{cm^3}$ and $Q=\SI{20}{sccm}$ (time constant
+\SI{1.5}{min}) the ideal time to reach \SI{10}{ppm} is \SI{15}{min}. Allowing a factor of three for
+imperfect mixing, start measurements no earlier than an hour after closing the cell. The steady-state
+\Oxy{} fraction is set by the influx divided by $Q$:
+\begin{itemize}
+  \item permeation through dense printed walls (\SI{60}{cm^2}, \SI{3}{mm}; PET \SI{0.034}{Barrer} to
+        PP \SI{1.7}{Barrer}, \cref{tab:materials}) adds only \SIrange{0.1}{6.5}{ppm} at \SI{5}{sccm};
+  \item one metre of \numproduct{6 x 4}\,mm polyurethane, PTFE or FEP tubing adds
+        \SIrange{70}{130}{ppm} at \SI{5}{sccm}, nylon \SI{\sim4}{ppm}, and stainless steel nothing.
+        \emph{Tubing, not the printed cell, limits the purity}.
+  \item Water is a different matter. At \SI{50}{\percent} lab RH, \SI{0.2}{mg/day} of water passes the same
+        wall in PET or PEEK, but \SI{3.8}{mg/day} in PLA or ABS (about \SI{650}{ppmv} at \SI{5}{sccm}).
+  \item Back-diffusion through a \SI{30}{cm} long, \SI{2}{mm} bore outlet is suppressed by $\exp(-\mathrm{Pe})$,
+        with Péclet number $\mathrm{Pe}=QL/(AD)\approx40$ even at \SI{0.5}{sccm} ($D_{\ce{O2}\text{--}\ce{N2}}=\SI{0.20}{cm^2/s}$~\cite{Marrero1972}). A modest outlet line
+        is therefore as effective as a bubbler, provided the flow never stops.
+\end{itemize}
+
+\paragraph{A7 -- Static absorber cell} A sealed \SI{30}{cm^3} cell of air contains \SI{6.3}{cm^3} of
+\Oxy. Absorbing it lowers the pressure of a rigid cell by \SI{\approx210}{mbar}, which then sucks air in
+through any leak. After an \Ntwo{} pre-purge to \SI{1}{\percent} \Oxy{} only \SI{0.3}{cm^3} remains and the
+pressure drop is \SI{\approx10}{mbar}. The absorber then has to cope mainly with leaks and permeation.
+A ZP-50-size sachet (\SI{50}{cm^3} of \Oxy) lasts about 8 years at an air leak rate of
+\SI{1e-6}{mbar.L/s}, about 9 months at \SI{1e-5}{mbar.L/s} and only about 4 weeks at
+\SI{1e-4}{mbar.L/s}. Hence the leak-rate specification of \SI{1e-5}{mbar.L/s} in \cref{sec:cells}.
+Permeation adds to the load: a \SI{2}{mm} FKM or butyl O-ring of \SI{30}{mm} diameter lets in about
+\SI{2}{\micro L} of \Oxy{} per day (\SI{+65}{ppm/day} in a sealed \SI{30}{cm^3} cell without absorber), a
+silicone O-ring about 200 times more. With an absorber, the equilibrium concentration in a leaking box is
+$[\Oxy]\approx L/(12.7\,C)$~\cite{Lambert1992}. An ingress of \SI{200}{ppm/day} and $C=50/30$ give
+about \SI{10}{ppm}, comfortably below the \SI{100}{ppm} target, as long as the absorber is not exhausted.
+Water ingress, by contrast, saturates an undesiccated cell within hours (A6). A pressure-decay test with a
+\SI{0.1}{mbar} sensor over \SI{12}{h} resolves \SI{\sim1e-7}{mbar.L/s}. A temperature change of only
+\SI{0.1}{K} shifts the pressure by \SI{0.34}{mbar}, so temperature must be logged and corrected for.
+
+\paragraph{A8 -- Optics} Mode matching to a \SI{2.4}{\micro m} mode needs collimated beam diameters of
+\SI{0.88}{mm}, \SI{0.98}{mm} and \SI{1.57}{mm} for $f=\SI{4.5}{mm}$, \SI{5}{mm} and \SI{8}{mm}
+($w_\text{in}=\lambda f/\pi w_0$~\cite{Kogelnik1966}). A \SI{1}{mm} fused-silica window
+($n=1.474$~\cite{Malitson1965}) in a beam converging at NA~0.1 adds \SI{5}{nm} of primary spherical
+aberration (Strehl ratio $>0.9999$) and moves the focus by \SI{0.32}{mm}. A bare end face reflects
+\SI{3.7}{\percent}. At an \ang{8} APC face the input beam must arrive \ang{3.8} off the fibre axis, and
+the reflection leaves \ang{23.7} away from the incoming beam. A coreless end cap of length $L$ expands
+the beam before the glass--gas interface (Rayleigh range in glass \SI{18}{\micro m}). This reduces the
+face intensity 32-fold for $L=\SI{100}{\micro m}$, 124-fold for \SI{200}{\micro m}, 277-fold for
+\SI{300}{\micro m} and 770-fold for \SI{500}{\micro m}.
+
+\paragraph{A9 -- How small a degradation rate can be demonstrated?} For $N$ daily readings over $T$ days
+with scatter $\sigma$, the standard error of a fitted slope is $\sigma/(\sqrt{N}\,T/\sqrt{12})$. With
+$\sigma=\SI{0.3}{\percent}$, three weeks give a 95\,\% upper limit of \SI{\approx0.9}{\percent} per
+\SI{1000}{h}, and six weeks give \SI{\approx0.3}{\percent} per \SI{1000}{h}. The ``degradation
+halted'' criterion of \cref{sec:analysis} ($<\SI{1}{\percent}$ per \SI{1000}{h}) is therefore within
+reach of a single long run, provided systematic drifts are controlled to the same level. Controlling
+them is the real challenge.

@@ -13,3 +13,4 @@ docs/*.synctex.gz
 docs/proposal.pdf
 docs/summary.pdf
 __pycache__/
+docs/*-SAVE-ERROR

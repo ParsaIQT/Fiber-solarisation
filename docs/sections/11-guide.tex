@@ -20,7 +20,7 @@ that belong in your thesis.
 \end{keybox}
 
 \section{Your first four weeks}
-\begin{table}[h]
+\begin{table}[htbp]
 \centering\small
 \caption{Suggested onboarding plan. Adapt it with your supervisor in the first meeting.}
 \label{tab:onboarding}
@@ -121,6 +121,10 @@ end-face geometry if an interferometer is available).
   \item Design O-ring grooves to standard proportions (squeeze and gland fill as in a sealing handbook)
         and print the sealing faces flat and smooth, or face them with a thin epoxy layer. Use heat-set
         metal inserts for screws.
+  \item Choose the material with \cref{tab:materials} in mind. PETG is a good first choice for FDM. ABS
+        (styrene emission, high water permeability) and standard SLA resins (high outgassing) are poor
+        choices near UV-illuminated end faces. Use walls of at least \SI{1.1}{mm} and randomised
+        seams~\cite{Gordeev2018}.
   \item Print a test coupon with every new material or setting, and keep coupons for the \arm{N2+P}
         outgassing test.
 \end{itemize}

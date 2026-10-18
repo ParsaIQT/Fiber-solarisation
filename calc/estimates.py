@@ -63,20 +63,25 @@ FIBRE_RADIUS = 62.5e-6            # cladding radius, m
 # Gas cell / purge
 CELL_VOLUME_CM3 = 30.0            # internal free volume of one end-face cell (assumption)
 PURGE_SCCM = (5.0, 20.0)          # purge flows to tabulate
-O2_FEED_PPM = 2.0                 # O2 in the feed gas (N2 5.0 grade, typical spec)
+O2_FEED_PPM = 3.0                 # O2 in the feed gas (N2 5.0 grade: <= 3 ppm O2, 5 ppm H2O, 0.2 ppm HC)
 O2_TARGETS_PPM = (100.0, 10.0)
 MIXING_PENALTY = 3.0              # real cells are not perfectly mixed (assumption)
 
-# Wall permeation: printed wall, O2 permeability in Barrer (assumption, see Table in proposal)
+# Wall permeation through a dense printed wall (literature values at ~23 degC, Barrer)
 WALL_AREA_CM2 = 60.0
 WALL_THICKNESS_MM = 3.0
-WALL_P_O2_BARRER = (0.1, 1.0)     # PETG-like ... PC/ABS-like
+WALL_P_O2_BARRER = {"PET (0.034)": 0.034, "PEEK (0.14)": 0.14, "PLA (0.43)": 0.43, "PC (1.0)": 1.0,
+                    "PP (1.7)": 1.7}
+WALL_P_H2O_BARRER = {"PET (130)": 130.0, "PEEK (~140)": 140.0, "PLA / ABS (~2600)": 2600.0}
+LAB_RH = 0.5                      # relative humidity outside the cell
+P_SAT_H2O_PA = 2810.0             # saturation vapour pressure of water at 23 degC
 
 # Tubing permeation (6 mm OD x 4 mm ID, 1 m long)
 TUBE_OD_MM, TUBE_ID_MM, TUBE_LENGTH_M = 6.0, 4.0, 1.0
-TUBE_P_O2_BARRER = {"polyurethane (assumption ~3 Barrer)": 3.0,
-                    "PTFE/FEP (assumption ~3 Barrer)": 3.0,
-                    "nylon/PA (assumption ~0.1 Barrer)": 0.1,
+TUBE_P_O2_BARRER = {"polyurethane (1.5-4.7 Barrer)": 3.0,
+                    "FEP (4.5 Barrer)": 4.5,
+                    "PTFE (2.3 Barrer)": 2.3,
+                    "nylon PA12 (~0.15 Barrer)": 0.15,
                     "stainless steel / copper": 0.0}
 
 # Outlet back-diffusion: O2 in N2 binary diffusion coefficient (~0.2 cm^2/s at 295 K)
@@ -84,7 +89,9 @@ D_O2_N2 = 2.0e-5                  # m^2/s
 OUTLET_ID_MM, OUTLET_LENGTH_M = 2.0, 0.3
 
 # Static oxygen-absorber cell
-ABSORBER_CAPACITY_CM3 = 20.0      # mL O2 the sachet can bind (vendor rating; assumption)
+ABSORBER_CAPACITY_CM3 = 50.0      # mL O2 the sachet can bind (AGELESS ZP-50 = 50 mL O2; RP-3A ~ 63 mL)
+ORING_P_O2_BARRER = {"FKM (1.4)": 1.4, "butyl (1.5)": 1.5, "silicone (100-600)": 300.0}
+ORING_CS_MM, ORING_DIAM_MM = 2.0, 30.0   # cross-section and mean diameter of the window O-ring
 LEAK_RATES_MBAR_L_S = (1e-6, 1e-5, 1e-4)   # air leak rates to tabulate
 PREPURGE_O2 = 0.01                # 1 % O2 left after a quick N2 pre-purge
 PRESSURE_SENSOR_RES_MBAR = 0.1    # pressure-decay leak test: sensor resolution
@@ -180,13 +187,21 @@ def main():
                   f" ideal time to {target:5.0f} ppm = {t:5.1f} min"
                   f" (x{MIXING_PENALTY:.0f} for imperfect mixing: {MIXING_PENALTY*t/60:.1f} h)")
     dp_o2 = 0.209 * P_ATM
-    for perm in WALL_P_O2_BARRER:
+    cell_mol = P_ATM * CELL_VOLUME_CM3 * 1e-6 / (R_GAS * T_LAB)
+    for name, perm in WALL_P_O2_BARRER.items():
         j = perm * BARRER_SI * (WALL_AREA_CM2 * 1e-4) * dp_o2 / (WALL_THICKNESS_MM * 1e-3)
-        for q in PURGE_SCCM:
-            ppm = j / (q * MOL_PER_SCCM_S) * 1e6
-            print(f"  intact printed wall, {perm:4.1f} Barrer, {WALL_AREA_CM2:.0f} cm^2 x"
-                  f" {WALL_THICKNESS_MM:.0f} mm: O2 influx {j/MOL_PER_SCCM_S:.1e} sccm ->"
-                  f" {ppm:6.2f} ppm at {q:4.1f} sccm purge")
+        ppm_flow = j / (PURGE_SCCM[0] * MOL_PER_SCCM_S) * 1e6
+        ppm_day = j * 86400 / cell_mol * 1e6
+        print(f"  dense wall {name:12s} {WALL_AREA_CM2:.0f} cm^2 x {WALL_THICKNESS_MM:.0f} mm: O2 in"
+              f" {j*86400*22414*1e3:.2g} uL/day -> {ppm_flow:5.2f} ppm at {PURGE_SCCM[0]:.0f} sccm, or"
+              f" +{ppm_day:5.0f} ppm/day in a sealed {CELL_VOLUME_CM3:.0f} cm^3 cell")
+    dp_h2o = LAB_RH * P_SAT_H2O_PA
+    for name, perm in WALL_P_H2O_BARRER.items():
+        j = perm * BARRER_SI * (WALL_AREA_CM2 * 1e-4) * dp_h2o / (WALL_THICKNESS_MM * 1e-3)
+        ppm_flow = j / (PURGE_SCCM[0] * MOL_PER_SCCM_S) * 1e6
+        print(f"  water through {name:18s}: {j*18.015*86400*1e3:5.2f} mg/day -> {ppm_flow:6.0f} ppmv at"
+              f" {PURGE_SCCM[0]:.0f} sccm (a {CELL_VOLUME_CM3:.0f} cm^3 cell holds only"
+              f" {P_SAT_H2O_PA*CELL_VOLUME_CM3*1e-6/(R_GAS*T_LAB)*18.015*1e3:.2f} mg at saturation)")
     # cylindrical wall: J = P * 2 pi L * dp / ln(r_out / r_in)
     geometry = 2.0 * math.pi * TUBE_LENGTH_M / math.log(TUBE_OD_MM / TUBE_ID_MM)
     for name, perm in TUBE_P_O2_BARRER.items():
@@ -212,6 +227,19 @@ def main():
         life = (ABSORBER_CAPACITY_CM3 - PREPURGE_O2 * CELL_VOLUME_CM3) / o2_per_day
         print(f"  air leak {leak:.0e} mbar L/s: {o2_per_day:.2e} cm^3 O2/day ->"
               f" {ABSORBER_CAPACITY_CM3:.0f} cm^3 absorber lasts {life:.3g} days")
+    cell_mol = P_ATM * CELL_VOLUME_CM3 * 1e-6 / (R_GAS * T_LAB)
+    for name, perm in ORING_P_O2_BARRER.items():
+        # rough model: permeation path = cross-section, area = ring circumference x cross-section
+        area = math.pi * ORING_DIAM_MM * 1e-3 * ORING_CS_MM * 1e-3
+        j = perm * BARRER_SI * area * 0.209 * P_ATM / (ORING_CS_MM * 1e-3)
+        print(f"  O-ring {name:16s} (CS {ORING_CS_MM:.0f} mm, D {ORING_DIAM_MM:.0f} mm): O2 in"
+              f" {j*86400*22414*1e3:.2g} uL/day -> +{j*86400/cell_mol*1e6:.0f} ppm/day in a sealed cell")
+    # equilibrium of an absorber in a leaking box (Lambert et al., Stud. Conserv. 37, 267 (1992)):
+    # [O2]_eq (ppm) = L (ppm/day) / (12.7 * C), C = sachet capacity (L) / box volume (L)
+    c_ratio = ABSORBER_CAPACITY_CM3 / CELL_VOLUME_CM3
+    for leak_ppm_day in (20.0, 200.0):
+        print(f"  absorber equilibrium (Lambert): ingress {leak_ppm_day:.0f} ppm/day, C = {c_ratio:.1f}"
+              f" -> [O2] ~ {leak_ppm_day/(12.7*c_ratio):.1f} ppm")
     v_l = CELL_VOLUME_CM3 * 1e-3
     q_min = v_l * PRESSURE_SENSOR_RES_MBAR / (LEAK_TEST_DURATION_H * 3600.0)
     print(f"  pressure-decay test ({PRESSURE_SENSOR_RES_MBAR} mbar resolution over"

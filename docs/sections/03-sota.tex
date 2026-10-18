@@ -220,7 +220,8 @@ guidance for ground operation is explicit: ``operation with normal dry air is to
 in nitrogen''~\cite{Mondin2017}. The same paper notes that silicones are not removed by oxidation, that CW
 irradiation can produce more deposit than pulsed irradiation, and that high-purity bottled gas alone does
 not prevent absorbing ``black dots''. In sealed \SI{1064}{nm} lasers, trace contamination from
-ultra-high-purity nitrogen cylinders was enough to cause damage~\cite{Hovis1994}. With \SI{300}{ppm} toluene
+ultra-high-purity nitrogen cylinders was enough to cause damage above about
+\SI{60}{\celsius}~\cite{Hovis1994}. With \SI{300}{ppm} toluene
 present, optics survived $8\times10^3$ pulses in \Ntwo, $1.8\times10^4$ in synthetic air, and more than
 $10^6$ in air with a few thousand ppm of water or alcohol~\cite{Weiller2010}.
 
@@ -236,7 +237,7 @@ air is a hundred times above the inhibition threshold. How these vacuum results 
 
 \paragraph{UV conversion cavities} Groups producing CW UV light for trapped ions routinely flush their
 nonlinear crystals with oxygen. At NIST the \SI{313}{nm} BBO crystal sits in an enclosure ``purged with a
-gentle flow of dry oxygen''~\cite{Wilson2011}. At PTB oxygen is led directly onto the crystal facets ``to
+gentle flow of dry oxygen'', there mainly against moisture-induced fogging~\cite{Wilson2011}. At PTB oxygen is led directly onto the crystal facets ``to
 prevent light-induced damage''~\cite{Hannig2018}. At \SI{243}{nm}, cavity mirrors degraded within minutes
 below about \SI{0.7}{mbar} of oxygen, and the deposit could be removed with organic
 solvents~\cite{Cooper2018,Burkley2021}. A recent watt-level \SI{230}{nm} source uses filtered dry air
@@ -291,7 +292,102 @@ rather than assuming it helps.
 \end{keybox}
 
 
-%%ATMOSPHERE%%
+\subsection{Creating and verifying a clean, oxygen-free atmosphere}\label{sec:sota-atmosphere}
+\paragraph{Oxygen absorbers} Iron-based absorbers (Mitsubishi Gas Chemical AGELESS) reduce the oxygen
+in a sealed barrier container to $\leq\SI{0.1}{\percent}$. The container wall should let through no more
+than \SI{20}{mL} of oxygen per square metre, day and atmosphere of pressure difference~\cite{MGCAgeless}. The number in the type name is the volume of
+\Oxy{} absorbed: a ZP-50 binds \SI{50}{mL}. Some types need moisture from their surroundings. The
+self-reacting Z types work best above about \SI{55}{\percent} RH and release humidity into the
+container~\cite{Daniel1993}. The reaction is exothermic, and the sachets lose capacity within minutes in
+air. Lambert et al.\ give a useful rule for a leaking box: the equilibrium concentration is
+$[\Oxy]\approx L/(12.7\,C)$, where $L$ is the ingress in ppm per day and $C$ is the absorber capacity
+divided by the box volume~\cite{Lambert1992}. The RP System of the same manufacturer exists in two
+types. RP-A absorbs oxygen, water and corrosive gases and drives the humidity to nearly zero. RP-K
+leaves the humidity unchanged but can release organic acids if overloaded~\cite{MGCRP}. Both reach
+$\leq\SI{0.1}{\percent}$ \Oxy{} within a day and shed fine powder, so the sachet belongs behind a
+membrane. Colour indicators change near \SIrange{0.1}{0.5}{\percent} \Oxy{} and show only gross
+failures. Vacuum non-evaporable getters need activation at \SIrange{350}{450}{\celsius} and would
+saturate almost immediately in a cell at atmospheric pressure~\cite{SAESSorbAC}. In heated form they serve
+as in-line gas purifiers. Commercial point-of-use purifiers deliver inert gas with
+$<\SI{100}{ppt}$ \Oxy{} and \water{}~\cite{EntegrisHX}. A palladium catalyst with a few per cent \Htwo{}
+holds anaerobic chambers at \SIrange{0}{5}{ppm} \Oxy~\cite{Coy}, an option if forming gas is used anyway.
+
+\paragraph{Measuring oxygen, water and organic vapour} Proving $<\SI{100}{ppm}$ needs an instrument that
+resolves ppm.
+\begin{itemize}
+  \item Ultra-trace luminescent sensor spots read through a window: e.g.\ PreSens SP-PSt9,
+        \SIrange{0}{200}{ppm}, detection limit \SI{0.5}{ppm}~\cite{PreSensPSt9}. They are ideal for
+        sealed cells. The common trace spots with a \SI{50}{ppm} detection limit are only marginal for this
+        purpose~\cite{PyroTROX}, and percent-level sensors are useless here~\cite{LuminOx}.
+  \item Galvanic trace analysers (detection limit \SI{\sim0.05}{ppm}) need a sample flow of
+        \SIrange{0.5}{1}{L/min}. They suit the exhaust of purged arms rather than sealed
+        cells~\cite{GPR1200}.
+  \item Zirconia sensors read wrongly in hydrogen-containing gas and are poisoned by silicone
+        vapour~\cite{PSTzirconia}.
+\end{itemize}
+Luminescent spots must be shielded from the UV beam. Capacitive humidity sensors resolve trends down to
+about \SI{1}{\percent} RH (\SI{\approx230}{ppmv})~\cite{SHT4x}. Low-cost metal-oxide VOC sensors depend on
+oxygen adsorbed on the oxide~\cite{Barsan2001}, so they work only in oxygen-containing streams. Organic
+vapour in oxygen-free streams is best sampled onto sorbent tubes and analysed by TD-GC/MS.
+
+\paragraph{Gas purity} Nitrogen 5.0 contains up to \SI{3}{ppm} \Oxy, \SI{5}{ppm} \water{} and
+\SI{0.2}{ppm} hydrocarbons; 6.0 grade one sixth of that~\cite{LindeN2}. ``Zero grade'' air may contain
+\SI{5}{ppm} of hydrocarbons~\cite{BOCzero}, whereas ultra-zero grades are specified at
+\SI{0.1}{ppm}~\cite{AirgasUZ}. The hydrocarbon content must be specified explicitly, because
+parts-per-billion levels already matter (\cref{app:estimates}).
+
+\paragraph{3D-printed enclosures} FDM parts become leak-tight with slight over-extrusion (extrusion
+multiplier 0.98 to 1.2 depending on the printer), walls of at least \SI{1.1}{mm} and randomised
+seams~\cite{Gordeev2018}. Thin layers matter more than infill~\cite{Leeder2025}, and laser-sintered PA12
+permeates like bulk material~\cite{Liebrich2021}. Printed parts are used in vacuum systems: SLS PA12 was
+characterised by Povilus et al.~\cite{Povilus2014}; FDM PEEK, SLA resins and other printed plastics have
+been tested since~\cite{Stallwood2018,Radic2025,Domingues2025}. Printed metal chambers reach ultra-high
+vacuum in portable quantum technology~\cite{Cooper2021}. \Cref{tab:materials} lists permeabilities and
+outgassing data. Three points stand out:
+\begin{itemize}
+  \item Dense polymer walls let in 50--500 times more water molecules than oxygen molecules. Printed ABS
+        stores \SI{0.35}{wt\percent} of gas, mostly water~\cite{Sefa2016}. A sealed ``dry'' cell
+        therefore becomes wet within hours unless it contains a desiccant (\cref{app:estimates}).
+  \item Standard SLA resins lose \SIrange{1.5}{2.9}{\percent} of their mass in vacuum, whereas PETG,
+        PEEK, ULTEM and Antero lose about \SI{0.3}{\percent}~\cite{NASAoutgassing}. FDM printing of
+        ABS releases styrene, and cured resins still emit acrylates and
+        aldehydes~\cite{Azimi2016,Wojnowski2022,Pham2023}.
+  \item O-rings need a surface finish of about \SI{0.4}{\micro m}, squeeze of at most \SI{30}{\percent}
+        and \SIrange{60}{85}{\percent} gland fill~\cite{ParkerORing}. FDM surfaces are much rougher,
+        so the seal should sit on an ironed top skin, a machined land or an SLA part. Silicone O-rings
+        let in about 200 times more oxygen than FKM or butyl, and they release siloxanes.
+\end{itemize}
+
+\begin{table}[t]
+\centering\small
+\caption{Permeability at about \SI{23}{\celsius} (1\,Barrer $=\SI{3.35e-16}{mol.m.m^{-2}.s^{-1}.Pa^{-1}}$)
+and outgassing (ASTM E595 total mass loss TML and collected volatile condensable material CVCM) of
+candidate cell materials. Values compiled from \cite{Marano2022,Levitsky2019,Sonstevold2023,Liebrich2021,Peacock1980,Chiggiato2020,NASAoutgassing};
+-- not found. Permeabilities of PETG, ASA, ABS and PEI should be measured by rate of rise.}
+\label{tab:materials}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}l c c c Y@{}}
+\toprule
+Material & \Oxy{} (Barrer) & \water{} (Barrer) & TML / CVCM (\%) & Remark \\
+\midrule
+PET / PETG          & 0.034 (PET) & 130 (PET) & 0.35 / 0.02 (PETG) & good barrier; low VOC emission when printed \\
+PLA                 & 0.15--0.43  & 2000--3300 & 0.70--0.75 / 0.01 & very water-permeable \\
+ABS                 & --          & $\approx$2600 & 0.59--0.94 / 0.01--0.04 & emits styrene; avoid \\
+PC                  & 1.0         & --         & 0.14--0.17 / 0.00 & \\
+PP                  & 1.7         & --         & -- & poor \Oxy{} barrier \\
+PA12 (SLS)          & 0.13--0.20  & --         & 0.75 / 0.02 & hygroscopic \\
+PEEK                & 0.14        & $\approx$140 & 0.26--0.30 / $\leq$0.02 & needs a high-temp.\ printer \\
+ULTEM 9085 / Antero 800NA & --    & --         & 0.33--0.37 / $\leq$0.02; 0.35 / 0.004 & low-outgassing FDM \\
+SLA resins (Clear, Tough, Grey) & 0.125 (VeroClear) & -- & 1.5--2.9 / $\leq$0.02 & Rigid 10K: 0.54 / 0.00 \\
+PVDF / PCTFE        & 0.031 / 0.093 & --       & 0.27 / 0.01 (PVDF) & excellent barriers \\
+PTFE / FEP          & 2.3 / 4.5   & --         & -- & poor \Oxy{} barrier despite inertness \\
+FKM / butyl O-rings & 1.3--1.7    & 40--200    & 0.10--0.82 / $\leq$0.04 (FKM) & preferred seal materials \\
+polyurethane        & 1.5--4.7    & 340--12\,500 & -- & avoid for gas lines \\
+silicone            & 100--600    & 10\,500    & -- & never near the end faces \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 
 \subsection{Technical facts that shape the testbed}\label{sec:sota-hardware}
 \begin{itemize}

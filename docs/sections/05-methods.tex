@@ -65,14 +65,25 @@ over others and decides which test atmospheres are most informative.
 \end{itemize}
 
 \subsection{Light source and multi-arm testbed}\label{sec:testbed}
+\begin{figure}[tbp]
+  \centering
+  \resizebox{\textwidth}{!}{\input{figures/testbed}}
+  \caption{Multi-arm accelerated-ageing testbed. One near-UV source feeds identical arms that differ only
+  in the atmosphere at the two end faces. Each arm records the reference, back-reflected and transmitted
+  powers. Purged arms share one gas-purification chain; the static arm uses an oxygen absorber and an
+  optical \Oxy{} sensor spot. Arm 1 has no cells and reproduces the present lab conditions.}
+  \label{fig:testbed}
+\end{figure}
+
 \Cref{fig:testbed} shows the testbed. Its main elements are:
 
 \paragraph{Source} A dedicated \SI{375}{nm} single-mode laser diode (\cref{sec:sota-hardware}) with
-an optical isolator and anamorphic beam shaping. It frees the group's \SI{369.5}{nm} lasers for
-experiments and allows long, uninterrupted runs. The photon energies at \SI{375}{nm} and
-\SI{369.5}{nm} differ by only \SI{1.5}{\percent}, and no known silica absorption band lies between them.
-Equivalent behaviour is therefore expected, but this assumption is \emph{tested} in Phase~4, which
-runs at \SI{369.5}{nm}. If no diode is available, a pick-off of a few tens of milliwatts from an
+anamorphic beam shaping. It is protected from feedback by an optical isolator if one is available at
+this wavelength, otherwise by tilted optics; the APC faces do not reflect back into the beam anyway. The
+dedicated source frees the group's \SI{369.5}{nm} lasers for experiments and allows long, uninterrupted
+runs. The photon energies at \SI{375}{nm} and \SI{369.5}{nm} differ by only \SI{1.5}{\percent}, and both
+lie on the same flanks of the weak defect bands of \cref{tab:defects}. Equivalent behaviour is
+therefore expected, but this assumption is \emph{tested} in Phase~4, which runs at \SI{369.5}{nm}. If no diode is available, a pick-off of a few tens of milliwatts from an
 existing \SI{369.5}{nm} system can feed the testbed.
 
 \paragraph{Power distribution} A cascade of half-wave plates and polarising beam splitters divides the
@@ -121,7 +132,7 @@ Arm & Atmosphere at both end faces & Purpose \\
            & contains \Oxy{} but no contaminants, particles or water \\
 \arm{N2}   & \Ntwo{} (grade 5.0 or LN$_2$ boil-off), same purifier and filter, dry
            & identical to \arm{CDA} except for \Oxy{} $\Rightarrow$ decisive test of H1 vs H2 \\
-\arm{ABS}  & sealed printed cell, pre-purged with \Ntwo{}, iron-based \Oxy{} absorber, no flow
+\arm{ABS}  & sealed printed cell, pre-purged with \Ntwo{}, \Oxy{} absorber that also takes up water (RP-A type), no flow
            & the low-cost, passive solution to be deployed \\
 \midrule
 \multicolumn{3}{@{}l}{\emph{Extended arms}}\\
@@ -143,17 +154,33 @@ Arm & Atmosphere at both end faces & Purpose \\
 \Cref{tab:arms} lists the atmospheres. Purged arms receive \SIrange{5}{20}{sccm} per cell through a
 common chain of regulator, oxygen and moisture purifier and \SI{3}{nm} particle filter. This is far less
 than the \SIrange{0.5}{1}{L/min} that Marciniak et al.\ blew through open collimators to keep particles
-out~\cite{Marciniak2017}, but a sealed cell needs no more than a small positive outflow (\cref{app:estimates}). Short runs of
-stainless-steel or nylon tubing are used, because polyurethane and fluoropolymer tubing let enough
-oxygen through to matter at the ppm level (\cref{app:estimates}). Each outlet passes a humidity sensor, a
-VOC sensor and (for \Oxy{}-free arms) an \Oxy{} sensor before reaching an oil bubbler or a long thin
-exhaust line that stops back-diffusion. \Oxy{} mixtures for \arm{O2-x} are made by adding synthetic
-air to \Ntwo{} with two flow controllers, or are bought as certified mixtures. Humidified arms use a
-water bubbler in a split stream. The terms ``getter'' and ``absorber'' are used carefully. Vacuum
-non-evaporable getters are not suitable at atmospheric pressure. The cells use iron-based oxygen
-absorbers of the kind used in food and museum conservation (\cref{sec:sota-atmosphere}).
+out~\cite{Marciniak2017}, but a sealed cell needs no more than a small positive outflow (\cref{app:estimates}).
+Gas lines are stainless steel or copper, with only short pieces of nylon. One metre of polyurethane or
+fluoropolymer tubing lets in tens of ppm of \Oxy{} at these flows (\cref{app:estimates}). Each outlet passes
+a humidity sensor before a long, thin exhaust line or a check valve that stops back-diffusion. Oil
+bubblers are avoided, because oil vapour is itself a contaminant. A trace \Oxy{} analyser is switched
+between the outlets of the purged arms. Low-cost metal-oxide VOC sensors need oxygen to work, so they
+are used only on oxygen-containing outlets. The oxygen-free streams are sampled onto sorbent tubes for
+TD-GC/MS analysis. The synthetic air is ordered with a specified hydrocarbon content of
+$\leq\SI{0.1}{ppm}$, because ``zero grade'' alone can mean \SI{5}{ppm}~\cite{BOCzero}. \Oxy{} mixtures for
+\arm{O2-x} are made by adding synthetic air to \Ntwo{} with two flow controllers, or are bought as
+certified mixtures. Humidified arms use a water bubbler in a split stream. The terms ``getter'' and
+``absorber'' are used carefully. Vacuum getters are unsuitable inside a cell at atmospheric pressure; the
+cells use absorbers of the kind used in food and museum conservation (\cref{sec:sota-atmosphere}).
 
 \subsection{End-face cells}\label{sec:cells}
+\begin{figure}[tbp]
+  \centering
+  \input{figures/cell}
+  \caption{Concept of a 3D-printed end-face cell (cross-section, input end). The whole connector is
+  enclosed and the cable is sealed in a potted gland, because air would otherwise diffuse along the cable
+  to the ferrule. Gas enters next to the end face and leaves downstream. In the static variant the inlet
+  and outlet are closed after an \Ntwo{} pre-purge and the absorber in the pocket removes the residual
+  oxygen. The window sits in the converging beam, far enough from the focus that the intensity on it is
+  low.}
+  \label{fig:cell}
+\end{figure}
+
 Each fibre end that is not in ambient air sits in a small cell (\cref{fig:cell}). The requirements are:
 \begin{enumerate}
   \item \textbf{Optical access} through a UV fused-silica window, AR-coated near \SI{370}{nm} and
@@ -173,14 +200,28 @@ Each fibre end that is not in ambient air sits in a small cell (\cref{fig:cell})
         reaches it. The cell is first purged with \Ntwo{} to about \SI{1}{\percent} \Oxy{}. The absorber
         then only has to remove a small residue, and the pressure in the sealed cell drops by about
         \SI{10}{mbar} instead of \SI{210}{mbar}, which would otherwise draw air in through any leak.
-  \item \textbf{Verification.} An optical \Oxy{} sensor spot (read through a window, so that no
-        electronics sit inside the cell) and a colour \Oxy{} indicator monitor the atmosphere.
+        For a dry cell the absorber is of the type that also takes up water (RP-A). Self-reacting iron
+        types humidify the cell and are reserved for humid variants, or are combined with a molecular-sieve
+        desiccant~\cite{MGCRP,Daniel1993}.
+  \item \textbf{Water budget.} Printed walls let in far more water than oxygen. Through \SI{60}{cm^2} of
+        \SI{3}{mm} PLA or ABS, about \SI{4}{mg} of water per day reaches a cell that holds only
+        \SI{0.6}{mg} at saturation (\cref{app:estimates}). Static cells therefore carry a desiccant with
+        months of capacity, the walls are made of a low-permeability material, and RH is logged.
+  \item \textbf{Verification.} An ultra-trace optical \Oxy{} sensor spot (detection limit
+        \SI{\sim0.5}{ppm}, read through a window so that no electronics sit inside the cell and shielded
+        from the UV beam) and a colour indicator for gross failures monitor the atmosphere. Each cell is
+        qualified by its rate of rise. With an FKM window O-ring alone, \Oxy{} would rise by tens of ppm
+        per day in a sealed \SI{30}{cm^3} cell without an absorber (\cref{app:estimates}).
   \item \textbf{Clean materials.} Printed parts are a possible source of organic vapour (H2). Prototypes
-        are printed in PETG or ASA with \SI{100}{\percent} infill and several perimeters, sealed with a
-        low-outgassing epoxy and baked under \Ntwo{} purge. The \arm{N2+P} arm tests directly whether the
-        material harms the end face. O-rings are fitted dry or with a minimal film of PFPE grease, and
-        silicone grease is banned because of siloxane contamination. The gland is potted with a
-        low-outgassing epoxy.
+        are printed in PETG (low outgassing, low VOC emission) with \SI{100}{\percent} infill, walls of at
+        least \SI{1.1}{mm}, slight over-extrusion and randomised seams~\cite{Gordeev2018}. They are sealed
+        with a low-outgassing epoxy and baked under \Ntwo{} purge. Final cells use a low-outgassing
+        polymer (PEEK, ULTEM or Antero by FDM; Rigid 10K by SLA) or machined aluminium
+        (\cref{tab:materials}). ABS and standard SLA resins are avoided. The \arm{N2+P} arm tests directly
+        whether the chosen material harms the end face. O-rings are FKM or butyl, seated on machined,
+        ironed or SLA-printed lands, and fitted dry or with a minimal film of PFPE grease. Silicone O-rings,
+        silicone grease and silicone adhesives are banned, because they release siloxanes (H1). The gland
+        is potted with a low-outgassing epoxy.
 \end{enumerate}
 The student designs the cells in CAD with the dimensions of the group's fibre mounts. Two designs are
 worth prototyping early: (a) a cap that encloses the connector and screws onto a standard
@@ -251,7 +292,7 @@ this sequence and the other is kept uncleaned for surface analysis.
 \item[Phase 3 -- Campaign II, confirmation and mechanism (months 8--9)] Repeat the key contrast at
   \SI{3}{mW} with at least two fibres per condition, and add the most informative extended arms
   (\cref{tab:arms}): the \Oxy{} dose--response if \Oxy{} matters, \arm{WET-N2}/\arm{WET-CDA} and \arm{N2+P}
-  if it does not. A crossed configuration (input in \Ntwo{}, output in air, and vice versa) tests whether
+  if it does not, and the \arm{+SIL} pair if the forensics find silicon-rich deposits. A crossed configuration (input in \Ntwo{}, output in air, and vice versa) tests whether
   both faces respond in the same way. Marciniak et al.\ observed that the purged and unpurged ends of
   the same fibre behaved differently~\cite{Marciniak2017}.
 \item[Phase 4 -- demonstration at 369.5\,nm (months 9--11)] The best cell design is fitted to both ends
@@ -285,8 +326,10 @@ Every branch gives a publishable answer and a concrete recommendation for the gr
 
 \subsection{Data analysis and decision rules}\label{sec:analysis}
 \paragraph{Metrics} The primary quantity is the normalised, re-peaked throughput
-$\eta(t)=[P_\text{out}/P_\text{ref}](t)/[P_\text{out}/P_\text{ref}](t_0)$, corrected for detector
-temperature coefficients, with flagged intervals (interventions, outages) excluded. The \emph{primary
+\begin{equation*}
+  \eta(t)=\frac{[P_\text{out}/P_\text{ref}](t)}{[P_\text{out}/P_\text{ref}](t_0)},
+\end{equation*}
+corrected for detector temperature coefficients, with flagged intervals (interventions, outages) excluded. The \emph{primary
 endpoint} is the initial degradation rate $r=-\mathrm{d}\eta/\mathrm{d}t$ in \si{\percent} per
 \SI{1000}{h} at \SI{3}{mW}. Secondary endpoints are the time to \SI{10}{\percent} loss, the fit
 parameters of a phenomenological model (e.g.\ a stretched exponential
