@@ -39,10 +39,12 @@ over others and decides which test atmospheres are most informative.
 
 \subsection{Test fibres and end-face preparation}
 \begin{itemize}
-  \item \textbf{Fibre type.} The same polarisation-maintaining UV fibre type as used in the experiments
-        (the Thorlabs fibre referred to in the group as ``375PM'', \cref{sec:sota-fibres}), from a single
-        batch, so that the results transfer directly. If budget allows, a second, pure-silica-core
-        fibre type is included later as a comparison.
+  \item \textbf{Fibre type.} The same fibre as used in the experiments, so that the results transfer
+        directly: Thorlabs P3-375PM-FC patch cables, FC/APC at both ends, built on PM-S350-HP
+        pure-silica-core PANDA fibre (\cref{sec:sota-fibres}), ideally from a single batch. Thorlabs
+        sells the bare fibre no longer, but a fibre with the same part number and specification is
+        available from Coherent (Nufern). Cheaper non-PM SM300 cables, which also have a pure-silica
+        core, can serve as extra arms where polarisation does not matter.
   \item \textbf{Format.} \SIrange{1}{2}{m} lengths, connectorised and polished in-house with one
         documented procedure and one epoxy (or bought as identical patch cables). The fibre is coiled
         loosely (bend radius well above the specified minimum) and taped to the table, so that bend
@@ -73,18 +75,24 @@ polarisation to the slow axis of the PM fibre. The operational test power is \SI
 accelerated condition is \SI{10}{mW}. A sentinel arm at \SI{\le 0.1}{mW} in \Ntwo{} measures the
 drift of the measurement system itself.
 
-\paragraph{Coupling} An aspheric lens with UV anti-reflection coating ($f\approx\SIrange{5}{8}{mm}$,
+\paragraph{Coupling} An aspheric lens with near-UV anti-reflection coating ($f\approx\SIrange{4.5}{8}{mm}$,
 chosen for mode matching, \cref{app:estimates}) focuses the beam through the cell window onto the
-fibre end face. The lens, or the cell, sits on a stable XYZ mount. Automated peak-up with motorised mirror
+fibre end face, at the \ang{3.8} incidence an \ang{8} APC face requires. Commercial launch systems for
+FC/APC (e.g.\ Thorlabs FiberPort PAF2A-5A or -7A) or a moulded asphere (e.g.\ C230TMD-A) can be used.
+The high-index glasses of such aspheres transmit less well in the near UV, so their transmission at
+\SI{369.5}{nm} should be checked. The lens, or the cell, sits on a stable XYZ mount. Automated peak-up with motorised mirror
 mounts is a stretch goal; the baseline is a manual re-peak once a day with a fixed procedure.
 
 \paragraph{Detection} A wedged pick-off in each arm feeds a reference photodiode ($P_\text{ref}$) and a
-second photodiode that records light reflected back from the input face ($P_\text{back}$; with FC/APC
-connectors this detector is placed in the specularly reflected beam). The output power $P_\text{out}$
+second photodiode that records the light reflected by the input face ($P_\text{back}$; with FC/APC
+connectors this detector sits in the specularly reflected beam, which does not retrace the input). The output power $P_\text{out}$
 is measured with an integrating-sphere or diffuser-fronted photodiode, which is insensitive to small
-changes of the output beam. Silicon photodiodes lose UV responsivity under prolonged exposure. All
-detectors are therefore operated at low intensity (attenuated or diffused), UV-stable SiC photodiodes are
-preferred, and a reference power meter cross-checks them weekly.
+changes of the output beam. Silicon photodiodes lose UV responsivity and gain dark current under
+prolonged UV exposure~\cite{HamamatsuS1336,Korde1987}. All detectors are therefore operated at low
+intensity (attenuated, diffused or shuttered), photodiodes sold for UV resistance are preferred (e.g.\
+Hamamatsu S12698 series~\cite{HamamatsuS12698}), and a reference power meter that is otherwise kept
+in a drawer cross-checks them weekly. SiC photodiodes, the usual choice for UV-stable detection, are not
+suitable here: \SI{369.5}{nm} lies at the edge of their spectral response.
 
 \paragraph{Logging} All photodiodes, laser current and temperature, lab and arm temperatures, humidity,
 pressure, flows and \Oxy{} readings are logged at \SI{1}{Hz} (stored as 1-minute means) by a Python
@@ -190,9 +198,11 @@ SEM/EDX, AFM or interferometry, Raman, ToF-SIMS/XPS & composition and thickness 
 \end{tabularx}
 \end{table}
 \Cref{tab:diagnostics} summarises the measurements. Two of them are cheap but very useful. First, the
-\emph{back-reflected power} from an FC/PC input face is about \SI{3.7}{\percent} of the incident power.
-Even a thin film changes it through thin-film interference and scattering, so it is a sensitive in-situ
-monitor of the input face. Second, \emph{organic films fluoresce} under near-UV excitation, while clean silica
+\emph{power reflected by the input face} is \SI{3.7}{\percent} of the incident power. With the
+\ang{8} FC/APC faces of the group's cables this reflection does not retrace the input beam. It leaves
+\ang{\approx 24} away from it (\cref{app:estimates}) and can be caught with a small mirror or
+photodiode. Even a thin film changes it through thin-film interference and scattering, so it is a
+sensitive in-situ monitor of the input face. Second, \emph{organic films fluoresce} under near-UV excitation, while clean silica
 hardly does. A long-pass filter and a small spectrometer that looks back through the coupling lens can
 therefore see a film start to grow long before the throughput drops noticeably.
 

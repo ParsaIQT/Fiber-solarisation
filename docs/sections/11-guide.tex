@@ -71,7 +71,7 @@ end-face geometry if an interferometer is available).
 \begin{itemize}
   \item \textbf{Mode matching.} For a collimated Gaussian beam of $1/e^2$ radius $w_\text{in}$, a lens of
         focal length $f$ produces a waist $w_0=\lambda f/(\pi w_\text{in})$. Choose $f$ so that $w_0$
-        equals the fibre mode-field radius. With a mode-field diameter of \SI{\approx2.3}{\micro m} at
+        equals the fibre mode-field radius. With a mode-field diameter of \SI{\approx2.4}{\micro m} at
         \SI{369.5}{nm}, an $f=\SI{5}{mm}$ asphere needs a \SI{\approx1.0}{mm} diameter beam
         (\cref{app:estimates}).
   \item \textbf{Alignment.} Start with a visible alignment beam if the optics allow it. Make the
@@ -90,7 +90,7 @@ end-face geometry if an interferometer is available).
 \begin{itemize}
   \item Silicon photodiodes slowly lose responsivity under UV exposure, and photodiodes and amplifiers
         drift with temperature. Keep the intensity on detectors low, prefer integrating spheres or
-        diffusers, and consider SiC photodiodes for the long runs.
+        diffusers, and consider photodiodes specified for UV resistance for the long runs. (SiC photodiodes,\n        often recommended for UV, barely respond at \SI{369.5}{nm}.)
   \item Check the zero (laser off) and the linearity (calibrated attenuator) at the start of every run.
   \item Avoid interference fringes: use wedged optics and tilt surfaces slightly, otherwise
         etalons turn tiny temperature drifts into apparent power changes.

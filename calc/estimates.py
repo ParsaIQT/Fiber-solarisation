@@ -31,7 +31,8 @@ BARRER_SI = 3.35e-16      # 1 Barrer in mol m / (m^2 s Pa)
 # PARAMETERS
 # ----------------------------------------------------------------------------------
 WAVELENGTH = 369.5e-9     # Yb+ S1/2-P1/2 cooling/detection wavelength, m
-MFD = 2.3e-6              # mode-field diameter near 370 nm, m (fibre data sheet; measure it)
+MFD = 2.4e-6              # mode-field diameter at 369.5 nm, m: PM-S350-HP data sheet gives 2.3 um at
+                          # 350 nm; scaled to 369.5 nm with Marcuse's formula (measure it!)
 POWERS_MW = (1.0, 3.0, 10.0)   # guided powers to tabulate, mW
 T_LAB = 295.0             # lab temperature, K
 
@@ -229,7 +230,17 @@ def main():
         print(f"  {t_mm:.0f} mm window at NA {na:.2f}: W040 = {w040*1e9:.1f} nm, Strehl = {strehl:.5f},"
               f" focus shift = {t_mm*(1-1/n_fs):.2f} mm")
     r_fresnel = ((n_fs - 1.0) / (n_fs + 1.0)) ** 2
-    print(f"  Fresnel reflection of a bare (FC/PC) silica end face: {r_fresnel*100:.1f} %")
+    print(f"  Fresnel reflection of a bare silica end face: {r_fresnel*100:.1f} %")
+    theta_in = math.degrees(math.asin(n_fs * math.sin(math.radians(8.0))))
+    print(f"  FC/APC (8 deg) face: beam must arrive {theta_in - 8.0:.1f} deg off the fibre axis; the face"
+          f" reflection leaves {2*theta_in:.1f} deg away from the incoming beam (does not retrace it)")
+    # Coreless end cap: the beam diffracts inside the cap before reaching the air-glass face
+    z_r = math.pi * w_f ** 2 * n_fs / WAVELENGTH
+    print(f"  end cap (coreless silica): Rayleigh range in glass z_R = {z_r*1e6:.0f} um")
+    for cap_um in (100, 200, 300, 500):
+        w_cap = w_f * math.sqrt(1.0 + (cap_um * 1e-6 / z_r) ** 2)
+        print(f"    {cap_um:3d} um cap: spot diameter {2*w_cap*1e6:5.1f} um, face intensity reduced"
+              f" x{(w_cap/w_f)**2:5.0f}")
 
     header("A9  How well can a 'zero degradation' claim be bounded?")
     for days in RUN_DAYS:
