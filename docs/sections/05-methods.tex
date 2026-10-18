@@ -33,8 +33,10 @@ power, hours of use, wavelength, environment, cleaning and polishing history, PC
         uncleaned for surface analysis (optical and fluorescence microscopy, SEM/EDX, AFM or
         white-light interferometry, Raman, and where available ToF-SIMS or XPS).
 \end{enumerate}
-Within weeks this shows whether the damage is a \emph{deposit} (removable or not), a
-\emph{surface modification} or \emph{nothing visible}. That result already favours some hypotheses
+In parallel, the student surveys likely contaminant sources near the group's fibre ends: silicone
+grease, silicone tubing and adhesives, thermal paste, cable jackets, printed parts and cleaning
+practices. Within weeks this shows whether the damage is a \emph{deposit} (and whether it is rich in carbon
+or in silicon), a \emph{surface modification} or \emph{nothing visible}. That result already favours some hypotheses
 over others and decides which test atmospheres are most informative.
 
 \subsection{Test fibres and end-face preparation}
@@ -53,6 +55,10 @@ over others and decides which test atmospheres are most informative.
         is measured if an end-face interferometer is available. Its initial coupling efficiency is measured
         at low power. Ends that miss the acceptance criteria (no defects in the core zone; coupling
         within a few per cent of the batch median) are re-polished before use.
+  \item \textbf{Surface preparation is a variable.} At \SI{405}{nm}, cleaved faces degraded four times
+        more slowly than glued-and-polished ones~\cite{Gonschior2013PhD}. Every test end is therefore
+        prepared by exactly the same polishing procedure. A comparison of preparation methods (e.g.\ an
+        additional final polishing step) is an optional arm in Campaign~II.
   \item \textbf{Traceability.} Each fibre gets an ID. Each end has its own polishing record and image
         set. The assignment of fibres to arms is randomised, and arm positions are swapped between
         runs so that any arm-specific optical problem cannot look like an atmosphere effect.
@@ -121,18 +127,23 @@ Arm & Atmosphere at both end faces & Purpose \\
 \multicolumn{3}{@{}l}{\emph{Extended arms}}\\
 \arm{O2-x} & \Ntwo{} with $x=$ 10, 100, \num{1000}, \num{10000}\,ppm \Oxy{}
            & dose--response, sets the \Oxy{} specification for the cells \\
-\arm{WET-N2}  & \Ntwo{} humidified to \SIrange{30}{50}{\percent} RH & effect of water without \Oxy{} (H3) \\
+\arm{WET-N2}  & \Ntwo{} humidified to \SIrange{30}{50}{\percent} RH & water without \Oxy: assists damage (H3)
+           or protects against carbon deposits (H2)~\cite{Weiller2010,Parthasarathy2024} \\
 \arm{WET-CDA} & synthetic air at lab-like RH, filtered & lab air minus contaminants and particles (H2, H4) \\
 \arm{FG}   & forming gas, \SI{5}{\percent} \Htwo{} in \Ntwo{} & hydrogen passivation of defects (H5) \\
 \arm{N2+P} & \Ntwo{} cell containing a coupon of the printing material
            & are printed parts a contamination source? (H2) \\
+\arm{+SIL} & a silicone coupon in one \arm{CDA} and one \arm{N2} cell
+           & oxygen-assisted siloxane deposition (H1)~\cite{Fujifilmpatent2006} \\
 \arm{VAC}  & vacuum (optional, if a chamber with fibre feedthrough is free) & link to in-vacuum fibre ends \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \Cref{tab:arms} lists the atmospheres. Purged arms receive \SIrange{5}{20}{sccm} per cell through a
-common chain of regulator, oxygen and moisture purifier and \SI{3}{nm} particle filter. Short runs of
+common chain of regulator, oxygen and moisture purifier and \SI{3}{nm} particle filter. This is far less
+than the \SIrange{0.5}{1}{L/min} that Marciniak et al.\ blew through open collimators to keep particles
+out~\cite{Marciniak2017}, but a sealed cell needs no more than a small positive outflow (\cref{app:estimates}). Short runs of
 stainless-steel or nylon tubing are used, because polyurethane and fluoropolymer tubing let enough
 oxygen through to matter at the ppm level (\cref{app:estimates}). Each outlet passes a humidity sensor, a
 VOC sensor and (for \Oxy{}-free arms) an \Oxy{} sensor before reaching an oil bubbler or a long thin
@@ -189,7 +200,8 @@ $\eta = P_\text{out}/P_\text{ref}$ (normalised) & total throughput change of eac
 re-peak gain $\eta_\text{after}/\eta_\text{before}$ & alignment drift (H6) vs end-face change & daily or automated \\
 $P_\text{back}/P_\text{ref}$ & optical change of the input face (film, roughness) & continuous \\
 \Oxy, RH, VOC index, $T$, $p$, flow & that each atmosphere is what it should be & continuous \\
-output beam image (camera, optional) & scattering or distortion from the output face & every \SI{30}{min} \\
+output beam profile and power through a mode-selective aperture & loss of beam quality (rises in $M^2$ have
+been seen at \SI{405}{nm}~\cite{Gonschior2013PhD}) that a large detector does not register & every \SI{30}{min} \\
 visible luminescence from the input face (spectrometer, optional) & fluorescence of growing organic films; defect PL bands & every \SI{30}{min} \\
 end-face microscopy (bright field, fluorescence) & deposits, particles, damage & start and end of each run \\
 cleaning sequence (\cref{sec:ladder}) & splits the loss between faces and bulk & end of each run \\
@@ -228,7 +240,10 @@ this sequence and the other is kept uncleaned for surface analysis.
   \SI{3}{mW} and \SI{10}{mW}, plus the sentinel. Outputs: (i) proof that the testbed reproduces the
   degradation seen in the lab; (ii) the power law $r\propto P^{n}$ of the initial degradation rate. An
   exponent $n\approx2$ points to a two-photon process; (iii) fibre-to-fibre scatter; (iv) the run length
-  needed in the later campaigns.
+  needed in the later campaigns. Raising the power only accelerates the test if the mechanism stays the
+  same. Surface restructuring at \SI{405}{nm} was reported above \SI{\sim0.5}{MW/cm^2}~\cite{Gonschior2013JNCS},
+  close to the \SI{0.44}{MW/cm^2} reached here at \SI{10}{mW}. The end faces from the \SI{3}{mW} and
+  \SI{10}{mW} arms are therefore compared by microscopy before \SI{10}{mW} is used as an accelerated condition.
 \item[Phase 2 -- Campaign I, atmosphere screening (months 6--7)] \arm{AIR}, \arm{CDA}, \arm{N2} and
   \arm{ABS} in parallel at the accelerated power (or \SI{3}{mW} if Phase~1 shows that \SI{10}{mW} changes
   the mechanism, e.g.\ thermal runaway). Each run lasts until \arm{AIR} has lost \SI{\sim30}{\percent} or
@@ -237,7 +252,8 @@ this sequence and the other is kept uncleaned for surface analysis.
   \SI{3}{mW} with at least two fibres per condition, and add the most informative extended arms
   (\cref{tab:arms}): the \Oxy{} dose--response if \Oxy{} matters, \arm{WET-N2}/\arm{WET-CDA} and \arm{N2+P}
   if it does not. A crossed configuration (input in \Ntwo{}, output in air, and vice versa) tests whether
-  both faces respond in the same way.
+  both faces respond in the same way. Marciniak et al.\ observed that the purged and unpurged ends of
+  the same fibre behaved differently~\cite{Marciniak2017}.
 \item[Phase 4 -- demonstration at 369.5\,nm (months 9--11)] The best cell design is fitted to both ends
   of a working \SI{369.5}{nm} fibre in one of the group's experiments, with a control fibre or the fibre's
   own history as reference, for at least eight weeks. This phase also checks the transfer from
@@ -247,17 +263,22 @@ this sequence and the other is kept uncleaned for surface analysis.
 
 \begin{decisionbox}[How the outcome of Campaign I steers the project]
 \begin{itemize}[leftmargin=1em]
-  \item \textbf{\arm{N2} and \arm{ABS} stable, \arm{CDA} degrades like \arm{AIR}}: oxygen is the culprit
-        (H1). Measure the \Oxy{} dose--response, specify the cell atmosphere, deploy \arm{ABS} cells.
+  \item \textbf{\arm{N2} and \arm{ABS} stable, \arm{CDA} degrades like \arm{AIR}}: oxygen takes part
+        (H1). Check the deposit chemistry: if it is rich in Si and O, siloxanes are involved, and their
+        sources near the fibres should be removed anyway. Then measure the \Oxy{} dose--response,
+        specify the cell atmosphere and deploy \arm{ABS} cells. This is the outcome the group hopes for.
   \item \textbf{\arm{CDA} and \arm{N2} both stable, \arm{AIR} degrades}: something in lab air other than
-        \Oxy{} is responsible (contaminants, particles or water). Campaign~II separates them. A sealed or purged
-        \emph{clean} cell solves the practical problem, with or without oxygen.
-  \item \textbf{\arm{CDA} stable, \arm{N2} or \arm{ABS} degrade}: contamination with oxygen as a protective
-        agent (H2). Oxygen absorbers would be counter-productive, and the recommendation becomes a clean, dry,
-        oxygen-containing purge. This is the outcome the space-laser literature would predict.
-  \item \textbf{No atmosphere helps}: intrinsic damage or an artefact (H5/H6). Shift the effort to fibre
-        and end-face engineering: pure-silica core, hydrogen-loaded and UV-cured fibre, end caps,
-        hollow-core fibre (\cref{sec:sota-fibres}).
+        \Oxy{} is responsible: particles, organic vapours or water (H4, H2, or a water-assisted H3).
+        Campaign~II separates them. A sealed or purged \emph{clean} cell solves the practical problem, with
+        or without oxygen. This is what the published nitrogen-purge results would suggest~\cite{Marciniak2017}.
+  \item \textbf{\arm{CDA} stable, \arm{N2} or \arm{ABS} degrade}: carbonaceous contamination with
+        oxygen as a protective agent (H2). This is the outcome that space-laser, UV-cavity and laser-diode
+        experience predicts (\cref{sec:sota-surface}). Oxygen absorbers would be counter-productive; the
+        recommendation becomes a clean, dry (or humidified) air purge.
+  \item \textbf{No atmosphere helps}: restructuring of the silica, colour centres or an artefact (H3, H5,
+        H6). Shift the effort to end-face and fibre engineering. Coreless end caps lower the intensity at
+        the glass--gas interface by two to three orders of magnitude (\cref{app:estimates}). Other options are
+        hydrogen-loaded and UV-cured fibre and hollow-core fibre (\cref{sec:sota-fibres}).
 \end{itemize}
 Every branch gives a publishable answer and a concrete recommendation for the group.
 \end{decisionbox}

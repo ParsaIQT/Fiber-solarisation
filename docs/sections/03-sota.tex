@@ -1,5 +1,323 @@
-\section{Placeholder 03-sota}\label{sec:ph-03-sota}
-\subsection{x}\label{sec:sota-fibres}
-\subsection{y}\label{sec:sota-bulk}
-\subsection{z}\label{sec:sota-hardware}
-\subsection{w}\label{sec:sota-atmosphere}
+\section{State of the art}\label{sec:sota}
+
+\subsection{UV-induced defects in silica and their relevance at 369.5\,nm}\label{sec:sota-bulk}
+\paragraph{Energetics} A \SI{369.5}{nm} photon carries \SI{3.36}{eV}; two photons carry \SI{6.71}{eV}.
+The absorption edge of amorphous \ce{SiO2} lies near \SI{8}{eV}~\cite{Kajihara2010}, so neither one nor
+two photons can excite the perfect glass across its gap. Excimer-laser studies show that E$'$ centres form
+in a two-photon process at \SI{5.0}{eV} and \SI{6.4}{eV}~\cite{Arai1988,Tsai1988}. XeCl light
+(\SI{4.0}{eV}, two-photon energy \SI{8.0}{eV}) created no centres in dry synthetic
+silica~\cite{Arai1988}. At \SI{369.5}{nm} only processes that start at a pre-existing defect, an impurity
+or a surface site are therefore expected: one-photon absorption into a weak band, or stepwise two-photon
+absorption through a long-lived intermediate state.
+
+\paragraph{The relevant defects} \Cref{tab:defects} lists the main point defects of silica
+glass~\cite{Skuja1998,Griscom1991,Skuja2005,Skuja2012,Girard2019}. Most absorb well above
+\SI{3.36}{eV}, but several channels exist at \SI{369.5}{nm}:
+\begin{itemize}
+  \item the spin-forbidden singlet--triplet band of the twofold-coordinated silicon centre ODC(II) at
+        \SI{3.15}{eV}, whose long-lived (\si{ms}) triplet state can absorb a second photon;
+  \item the \SI{6.9}{eV} band of ODC(II) and the onset of the Schumann--Runge absorption of interstitial
+        \Oxy{} (shifted to $\approx\SI{6.5}{eV}$ in the glass), both reachable by two photons;
+        photolysed interstitial \Oxy{} yields mobile oxygen atoms, interstitial ozone and peroxy
+        radicals~\cite{Awazu1990,Kajihara2004a,Kajihara2005a,Skuja2000};
+  \item chlorine species left by the manufacturing process: interstitial \ce{Cl2} absorbs at
+        \SI{3.78}{eV} with a width of \SI{0.6}{eV}, and atomic \ce{Cl^0} at \SI{3.26}{eV}. In pure-silica-core
+        fibres, much of the radiation-induced loss above \SI{2.5}{eV} is chlorine-related~\cite{Skuja2017,Girard2019}.
+\end{itemize}
+In pure-silica-core single-mode fibre under \SI{405}{nm} CW light at \si{MW/cm^2}, bleaching of ODC(II) and
+growth of E$'$ centres have indeed been observed~\cite{Gonschior2013JNCS}. Germanium-related centres
+would add a one-photon channel through the GeODC triplet band near \SI{3.8}{eV}. This is the origin of
+the photosensitivity of Ge-doped fibres at near-UV and, via two photons, visible
+wavelengths~\cite{Hill1978,Starodubov1997,Grubsky1999}. The group's PM-S350-HP fibre has a pure-silica core, so these
+channels should be absent.
+
+\begin{table}[t]
+\centering\small
+\caption{Main point defects in silica glass: absorption and photoluminescence (PL) bands, in eV, after
+\cite{Skuja1998,Skuja2011,Skuja2017,Girard2019}. Values in bold are within reach of one (\SI{3.36}{eV})
+or two (\SI{6.71}{eV}) photons at \SI{369.5}{nm}.}
+\label{tab:defects}
+\begin{tabularx}{\textwidth}{@{}L{4.6cm} L{3.6cm} L{2.4cm} Y@{}}
+\toprule
+Defect & Absorption (eV) & PL (eV) & Comment \\
+\midrule
+E$'$ centre, $\equiv$Si$^{\bullet}$ & 5.8 & -- & dominant UV-induced centre \\
+NBOHC, $\equiv$Si--O$^{\bullet}$ & 1.97, 4.8 (continuum 4--7.8) & 1.91 & \SI{3.36}{eV} lies in its low-absorption gap \\
+ODC(I), $\equiv$Si--Si$\equiv$ & 7.6 & 4.4 & precursor of E$'$ \\
+ODC(II), $=$Si: & 5.05, \textbf{6.9}; triplet \textbf{3.15} & 4.4, 2.75 & triplet band and long-lived T$_1$ state \\
+peroxy radical, $\equiv$Si--O--O$^{\bullet}$ & $\approx$2.0, 4.8 & -- & forms from NBOHC + O, or E$'$ + \Oxy{} \\
+interstitial \Oxy{} & onset \textbf{$\approx$6.5} & 0.975 & source of O atoms and \ce{O3} \\
+interstitial \ce{O3} & 4.8 & -- & bleached by UV \\
+interstitial \ce{Cl2}, \ce{Cl^0} & \textbf{3.78} (FWHM 0.6), \textbf{3.26} & -- & chlorine from manufacture \\
+GeODC (Ge-doped cores only) & 5.15; triplet \textbf{$\approx$3.8} & 4.3, 3.2 & Ge photosensitivity \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Hydrogen, OH and fibre manufacture} Molecular hydrogen passivates E$'$ centres and NBOHCs. The
+E$'$ + \Htwo{} reaction has an activation energy of only \SI{0.38}{eV} and proceeds at the same rate for
+surface E$'$ centres~\cite{Radzig1995,Messina2007}. Under ArF and \ce{F2} irradiation \Htwo{} can also
+promote ODC(I) formation~\cite{Ikuta2002}. Fibre drawing creates E$'$ centres, NBOHCs (the \SI{630}{nm}
+band, which grows with draw tension) and peroxy radicals~\cite{Hanafusa1985,Hibino1986,Hibino1987}.
+Strained Si--O--Si bonds are the main intrinsic precursors~\cite{Kajihara2008b}. Decades of work on
+multimode UV fibres have led from hydrogen-loaded to hydrogen-free, high-OH designs with improved deep-UV
+stability~\cite{Karlitschek1995,Karlitschek1998a,Klein2001,Khalilov2006,KleinKhalilov2015}. Loading with
+\Htwo{} and UV curing has transferred this to single-mode PCF~\cite{Colombe2014}.
+
+\paragraph{Kinetics} Colour-centre growth in fibres typically follows a stretched exponential or a
+power law in dose~\cite{Griscom1993,Griscom2001}. Two-photon creation shows up as a quadratic
+dependence on intensity~\cite{Arai1988,Tsai1988}. Comparable methods for measuring and fitting
+photodarkening have been standardised for Yb-doped fibres~\cite{Koponen2006,Koponen2008,Jetschke2007}.
+Measuring the initial rate at three or more powers therefore gives a cheap first indication of the
+mechanism.
+
+\paragraph{Gas transport into the glass} At room temperature \Htwo{} diffuses through a
+\SI{125}{\micro m} fibre in a few days~\cite{Lemaire1991,Shang2009}. Oxygen molecules move about ten
+orders of magnitude more slowly. Extrapolated high-temperature data~\cite{Norton1961,Kajihara2010} give
+penetration depths of 0.1--5\,nm per year (\cref{app:estimates}). The bulk of the core is therefore
+isolated from the atmosphere, except for deliberately added hydrogen. Oxygen can act only at the
+surface, where it dissolves readily~\cite{Kajihara2004c}.
+
+\paragraph{Reactive surfaces} Freshly fractured or ground silica carries reactive sites: silicon and
+oxygen dangling bonds, silylene groups and strained two-membered rings~\cite{Radzig1993,Radzig1998,Radzig2000,Ceresoli2000}.
+These react with \water{} (which opens the strained rings~\cite{Rimola2008}), with \Htwo{} and with
+\Oxy{}. Polished end faces are such mechanically activated surfaces. Oxygen, water and hydrogen
+therefore determine what UV-generated surface defects turn into: peroxy radicals, silanols or Si--H.
+These products absorb mainly above \SI{4}{eV}, not at \SI{3.36}{eV}. Spectroscopically, H1 is therefore
+not the most likely mechanism, which is one more reason to test it directly rather than assume it.
+
+
+\subsection{What has been observed in single-mode fibres carrying UV and blue light}\label{sec:sota-reports}
+\Cref{tab:reports} collects the most relevant reports. Two kinds of degradation emerge clearly.
+\emph{Bulk solarisation} dominates in the deep UV. It is irreversible, it can set in at microwatt powers
+in fused-silica fibres~\cite{Colombe2014}, and what light remains is carried in a speckled mode
+pattern~\cite{Marciniak2017}. Below about \SI{300}{nm}, unprotected photonic-crystal fibres lose most of
+their transmission within hours at milliwatt powers~\cite{Colombe2014,Gebert2014}. \emph{End-face
+degradation} is reversible by re-cleaving or re-polishing, and it is the more relevant kind at near-UV and
+blue wavelengths. It takes at least three forms:
+\begin{itemize}
+  \item \textbf{Deposits.} Colombe et al.\ mention UV-induced carbon deposition on input
+        faces~\cite{Colombe2014}. Marciniak et al.\ saw deposits on large-mode-area PCF faces at
+        \SI{313}{nm} with input powers as low as \SI{10}{mW}. Polishing removed them, and a slight
+        overpressure of dry \Ntwo{} at the collimators prevented them for months~\cite{Marciniak2017}. They
+        attributed the deposits to particles and oil drawn into the beam by the ``optical-tweezer effect''
+        and then burned in. Purged and unpurged ends of the same fibre behaved differently. A Duke group
+        reports the same use of nitrogen purging against particle deposition at UV
+        wavelengths~\cite{YuJ2026}.
+  \item \textbf{Restructuring of the silica.} In the most detailed study of CW blue light in small-core
+        single-mode fibres (\SI{405}{nm}, mode-field diameter \SIrange{2}{3}{\micro m}), Gonschior et al.\
+        found no deposits. Instead, laser-induced periodic surface structures formed on both faces:
+        protrusions of \SIrange{0.5}{0.7}{\micro m} after 9--11 days, ripples of \SIrange{250}{400}{nm}
+        period aligned with the polarisation, and a porous, lower-density silica layer. EDX and ToF-SIMS
+        found no foreign elements~\cite{Gonschior2013JNCS,Gonschior2013PhD}. The loss grew faster than
+        linearly in time, typically \SIrange{0.2}{1}{dB/day} at \SIrange{74}{95}{mW}. The output beam
+        quality degraded ($M^2$ from 1.2 to 5 in 12 days). Cleaved faces degraded four times more slowly
+        than polished ones~\cite{Gonschior2013PhD,Gonschior2014OE}. The structures appeared at
+        \SIrange{0.5}{2.5}{MW/cm^2}, three orders of magnitude below the optical damage
+        threshold~\cite{Gonschior2013JNCS}.
+  \item \textbf{Slow drifts of unclear origin.} At \SI{369}{nm}, Sandia found lensed-fibre-to-chip coupling stable at
+        \SIrange{7}{24}{mW} on short time scales but degrading over hours, with surface contamination of
+        the fibre or chip facets among the suspected causes~\cite{Kwon2024}.
+\end{itemize}
+Two further observations bear directly on the oxygen hypothesis. Gonschior ran a PM single-mode fibre for
+50 days at \SI{250}{mW} (\SI{405}{nm}) between \emph{nitrogen-purged, sealed} collimators. The fibre
+lost only about \SI{1}{dB}, but cone-like structures still formed on both faces~\cite{Gonschior2013PhD}.
+Inert gas alone therefore did not stop the restructuring at that (much higher) intensity. Second, in
+ion-trap vacuum systems, \SIrange{369}{370}{nm} light caused losses in oxide mirror coatings that were
+reversed by admitting oxygen or air~\cite{Gangloff2015,Ballance2017}. Absence of oxygen can therefore
+\emph{harm} UV-illuminated oxide surfaces.
+
+\begin{table}[t]
+\centering\footnotesize
+\caption{Selected reports on UV/blue degradation of single-mode fibres and related surfaces. PCF:
+photonic-crystal fibre; LMA: large mode area; HC: hollow core.}
+\label{tab:reports}
+\begin{tabularx}{\textwidth}{@{}L{1.9cm} L{1.2cm} L{2.6cm} Y L{3.6cm}@{}}
+\toprule
+Ref. & $\lambda$ (nm) & Fibre / surface & Observation & Mitigation that worked \\
+\midrule
+\cite{Colombe2014} & 313, 280 & LMA PCF & bulk solarisation within hours at \si{mW}; carbon on input face
+  & \Htwo{} loading + UV curing; collapsed, angled ends \\
+\cite{Gebert2014} & 280 & solid-core PCF; kagom\'e HC & solid core $-$80\,\% in 3\,h at \SI{2}{mW}; HC unchanged after \SI{100}{h} at \SI{15}{mW}
+  & hollow core \\
+\cite{Yamamoto2009} & 250 & LMA PCF & damage mainly at the input; partly reversed by re-cleaving & low power ($<\SI{0.3}{mW}$) \\
+\cite{Gonschior2013JNCS,Gonschior2013PhD} & 405 & SM and PM, MFD 2--3\,\textmu m & LIPSS and porous silica on both faces; $M^2$ grows; no foreign elements
+  & end caps or launch fibre: $<\SI{0.03}{dB/day}$ \\
+\cite{Marciniak2017} & 313 (369) & LMA-PM PCF & particle/oil deposits from \SI{10}{mW}; removed by polishing & dry \Ntwo{} overpressure \\
+\cite{Kwon2024} & 369 & lensed fibre to chip & slow (hour-scale) coupling loss & -- \\
+\cite{Gangloff2015,Ballance2017} & 369--422 & oxide mirror coatings in vacuum & UV-induced loss in vacuum & reversed by \Oxy{} or air \\
+\cite{Hippler2016,Kokkinos2017} & 355 & optics with organic contaminants & deposit growth in vacuum & \Oxy{} partial pressure \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{keybox}[What is not known]
+We have found no published measurement of the degradation of step-index, pure-silica-core PM fibre at
+\SI{369.5}{nm} and a few milliwatts, the configuration used in the group. No study in the trapped-ion
+community has treated \Oxy{} as a controlled variable. Nitrogen purging is used to keep particles away,
+not to remove oxygen. This is the gap the project fills.
+\end{keybox}
+
+\subsection{Fibre technologies for near-UV delivery}\label{sec:sota-fibres}
+\paragraph{The group's fibre} The cables known in the group as ``375PM'' are Thorlabs P3-375PM-FC
+patch cables (\SIrange{1}{10}{m}), FC/APC at both ends, aligned at \SI{375}{nm}, with no AR-coated
+option~\cite{ThorlabsP3375PM}. They are built on PM-S350-HP: a PANDA fibre with a \emph{pure-silica
+core}, mode-field diameter \SI{2.3}{\micro m} at \SI{350}{nm} (about \SI{2.4}{\micro m} at
+\SI{369.5}{nm}), NA~0.12 and second-mode cut-off $\leq\SI{340}{nm}$~\cite{ThorlabsPMS350}. A
+germanium-free core avoids the strong photosensitivity of Ge-doped silica, and Thorlabs advertises
+pure-silica cores for their resistance to photodarkening. The same catalogue nevertheless states that all
+fibres eventually photodarken in the UV and should be treated as consumables. For CW light at an
+air--glass face of undoped silica, Thorlabs quotes a practical safe intensity of about
+\SI{250}{kW/cm^2}~\cite{ThorlabsDamage}. With Thorlabs' convention this corresponds to about \SI{11}{mW}
+for a \SI{2.4}{\micro m} mode. The group's few milliwatts are below that, yet the faces still degrade,
+which illustrates that ``damage threshold'' figures say little about slow photochemical processes.
+Thorlabs no longer sells the bare fibre; Coherent (Nufern) offers a fibre with the same part number. The
+\SI{405}{nm} PM cables use PM-S405-XP, whose cut-off ($380\pm\SI{20}{nm}$) may allow a second mode at
+\SI{369.5}{nm}. They are therefore no substitute.
+
+\paragraph{Large-mode-area photonic-crystal fibre with hydrogen loading} Endlessly single-mode PCFs
+spread the light over roughly ten times the mode area. Loading them with \Htwo{} (about \SI{10}{MPa},
+room temperature, 4--6 days) and curing them with UV light before the hydrogen escapes makes them resistant
+to deep-UV solarisation for hundreds of hours at \SI{125}{mW} (\SI{313}{nm})~\cite{Colombe2014,NISTrecipe}.
+Hydrogen loading alone does not confer resistance unless curing occurs before the hydrogen has diffused
+out~\cite{Colombe2014}. Collapsing the holes over a few hundred micrometres and angle-cleaving the ends
+protects the faces and suppresses back-reflections. PM versions reach polarisation extinction ratios of
+30--32\,dB at \SI{369}{nm} after curing~\cite{Marciniak2017}. These fibres are not off-the-shelf
+patch cords, and their faces still collect deposits without a purge~\cite{Marciniak2017}.
+
+\paragraph{Hollow-core fibres} Kagom\'e and antiresonant hollow-core fibres guide almost all the light in
+gas, so the glass hardly sees it. They have transmitted \SI{280}{nm} CW light without change for
+\SI{100}{h}~\cite{Gebert2014} and \SI{320}{nm} light at up to \SI{60}{mW} without degradation, at about
+\SI{0.13}{dB/m}~\cite{Dorer2024}. Losses below \SI{10}{dB/km} have been reported at
+\SI{369}{nm}~\cite{Osorio2023}, and guidance extends down to \SI{190}{nm}~\cite{Mears2024}. Caveats:
+there is no PM hollow-core fibre, ammonium chloride can grow on cleaved hollow-core end
+faces~\cite{Rikimi2020}, and reversible photodarkening has been reported in UV-guiding hollow-core
+fibres~\cite{Mears2024SPIE}.
+
+\paragraph{End caps} A coreless silica cap spliced to the fibre lets the beam expand before it reaches the
+glass--gas interface. At \SI{369.5}{nm} a \SI{300}{\micro m} cap reduces the face intensity about
+280-fold (\cref{app:estimates}). At \SI{405}{nm}, a short launch fibre and end caps reduced the
+damage rate from \SIrange{0.2}{1}{dB/day} to below \SI{0.03}{dB/day}~\cite{Gonschior2013PhD}. End caps
+attack the intensity-driven surface processes at their root. Together with the atmosphere control
+studied here they are the most promising engineering solution, and the obvious next step if the
+atmosphere alone is not enough.
+
+\subsection{Surface processes and the role of the atmosphere}\label{sec:sota-surface}
+Four communities have studied UV-driven degradation of optical surfaces in controlled atmospheres:
+space lidar, UV frequency-conversion cavities, semiconductor lasers and laser modules, and
+high-power fibre connectors. Their results are the best available guide to what the atmosphere around a
+fibre end face will do.
+
+\paragraph{Laser-induced contamination in space lasers} A prototype of the \SI{355}{nm} ALADIN laser for
+ESA's Aeolus mission lost \SI{50}{\percent} of its transmission in less than six hours. Outgassed organics
+were carbonised on the optics by the UV light, and even a few parts per billion of organics caused
+contamination~\cite{ESA2018Aeolus}. The flight laser therefore operates with a low-pressure oxygen purge
+of a few tens of pascals~\cite{Wernham2010,ESA2018Aeolus}. Systematic tests at DLR showed that an
+\Oxy-to-contaminant pressure ratio above 50:1 drastically reduces deposit growth, above 1000:1 no
+transmission loss was detectable, and existing deposits were completely removed by irradiation in
+several tens of pascals of oxygen~\cite{Hippler2016,Tighe2008,Riede2011,Schroeder2013}. The ESA/DLR
+guidance for ground operation is explicit: ``operation with normal dry air is to be preferred to operation
+in nitrogen''~\cite{Mondin2017}. The same paper notes that silicones are not removed by oxidation, that CW
+irradiation can produce more deposit than pulsed irradiation, and that high-purity bottled gas alone does
+not prevent absorbing ``black dots''. In sealed \SI{1064}{nm} lasers, trace contamination from
+ultra-high-purity nitrogen cylinders was enough to cause damage~\cite{Hovis1994}. With \SI{300}{ppm} toluene
+present, optics survived $8\times10^3$ pulses in \Ntwo, $1.8\times10^4$ in synthetic air, and more than
+$10^6$ in air with a few thousand ppm of water or alcohol~\cite{Weiller2010}.
+
+\paragraph{CW evidence at our intensity} Parthasarathy et al.\ studied contamination at a diamond
+surface in vacuum under \SI{1.5}{mW} of CW \SI{532}{nm} light focused to about \SI{220}{kW/cm^2}, an
+intensity close to that on the group's fibre faces~\cite{Parthasarathy2024}. Deposits grew
+\emph{fastest} at an oxygen partial pressure of about \SI{5e-3}{mbar}. Between \SI{2e-3}{mbar} and
+\SI{2}{mbar} their onset was delayed, and above \SI{2}{mbar} none formed. Humidity slowed the growth. At
+atmospheric pressure, \SIrange{1}{1000}{ppm} of \Oxy{} corresponds to \SIrange{0.001}{1}{mbar}. An
+``almost oxygen-free'' cell is therefore exactly in the regime where contamination was promoted, whereas
+air is a hundred times above the inhibition threshold. How these vacuum results transfer to
+\SI{1}{atm} of nitrogen is not known. That is one of the questions the \arm{O2-x} arms answer.
+
+\paragraph{UV conversion cavities} Groups producing CW UV light for trapped ions routinely flush their
+nonlinear crystals with oxygen. At NIST the \SI{313}{nm} BBO crystal sits in an enclosure ``purged with a
+gentle flow of dry oxygen''~\cite{Wilson2011}. At PTB oxygen is led directly onto the crystal facets ``to
+prevent light-induced damage''~\cite{Hannig2018}. At \SI{243}{nm}, cavity mirrors degraded within minutes
+below about \SI{0.7}{mbar} of oxygen, and the deposit could be removed with organic
+solvents~\cite{Cooper2018,Burkley2021}. A recent watt-level \SI{230}{nm} source uses filtered dry air
+because ``pure nitrogen removes this cleaning pathway''~\cite{Cai2026}. One industrial patent reports the
+opposite for BBO: clean dry air alone degraded the crystal within 100 hours, and adding about \SI{1000}{ppm}
+of water to the purge cured this~\cite{KLApatent}.
+
+\paragraph{Semiconductor lasers and fibre-coupled laser modules} GaN laser diodes operated in pure
+nitrogen grow a thick, highly absorbing deposit on the facet, which oxygen removes~\cite{Schoedl2005}.
+Carbon deposition~\cite{Kim2008} and the growth of \ce{SiO_x} layers~\cite{Freier2024,WangXW2021} are
+documented facet failure modes. Package patents mostly specify oxygen-containing fills: more than
+\SI{100}{ppm}~\cite{Corningpatent}, at least \SI{5}{\percent}~\cite{Sanyopatent}, or
+\SIrange{1}{18}{\percent}~\cite{Sharppatent}. For \SI{405}{nm} lasers, oxygen is said to react with
+photo-decomposed silicon compounds before they deposit on the facet~\cite{Panasonicpatent}. The important
+exception concerns \emph{fibre} end faces. In a fibre-coupled \SI{410}{nm} module, reliability
+\emph{deteriorated} at oxygen concentrations of \SI{100}{ppm} or more, because silicon-based compounds
+deposited at the fibre end face. Silicone parts were the principal source, and the patent specifies
+\SIrange{1}{100}{ppm} \Oxy~\cite{Fujifilmpatent2006}. A related patent on siloxane-derived \ce{SiO_x}
+deposits at a fibre input recommends silicone-free materials and air admitted only through activated
+carbon~\cite{Ricohpatent}. Another describes a ``dust collection effect'' where the optical density is
+high~\cite{Fujifilmpatent2007}.
+
+\paragraph{Can 369.5\,nm light make ozone?} Splitting \Oxy{} needs photons below \SI{242}{nm} (the
+Herzberg continuum~\cite{Yoshino1988}). UV/ozone cleaning therefore uses the \SI{185}{nm} and
+\SI{254}{nm} mercury lines~\cite{Vig1985}. Two \SI{369.5}{nm} photons carry enough energy, but no
+two-photon cross-section near \SI{370}{nm} is known, and any effect would be confined to the
+\SI{\approx20}{\micro m} next to the face. Oxygen suppresses contamination even where it cannot be
+photodissociated~\cite{Parthasarathy2024,Hippler2016}. The relevant chemistry is light-assisted oxidation
+at the surface, not gas-phase ozone.
+
+\paragraph{Particles and high-power connectors} Dielectric particles are trapped by the optical gradient
+force in air~\cite{Ashkin1986,Omori1997}, and absorbing particles are moved by photophoretic
+forces~\cite{Shvedov2009}. Fibre connectors carrying watts at \SI{1550}{nm} fail mainly because of
+absorbing contamination on the face, at intensities comparable to ours~\cite{DeRosa2002,Seo2003,Domingues2011}.
+The \SI{313}{nm} fibre deposits of Marciniak et al.\ were attributed to this mechanism~\cite{Marciniak2017}.
+
+\begin{keybox}[Oxygen: friend or foe?]
+\begin{itemize}[leftmargin=1em]
+  \item \textbf{Hydrocarbon contamination:} every community finds oxygen (and often water vapour)
+        \emph{protective}. Nitrogen and vacuum favour absorbing carbon deposits, most strongly at
+        trace \Oxy{} levels.
+  \item \textbf{Siloxane contamination:} oxidation turns silicones into non-volatile \ce{SiO_x}. At a
+        \SI{410}{nm} fibre end face, oxygen above \SI{100}{ppm} \emph{accelerated} such deposits. This is
+        the strongest support in the literature for the group's hypothesis.
+  \item \textbf{Particles and silica restructuring:} not expected to depend on oxygen. A clean, slightly
+        pressurised gas keeps particles away.
+\end{itemize}
+The outcome for the group's fibres therefore depends on which contaminants are present, and finding
+that out is the first task (Phase~0). A sealed, nearly oxygen-free cell that contains outgassing
+polymers is a high-risk configuration. The experiment tests it against clean, oxygen-containing gas
+rather than assuming it helps.
+\end{keybox}
+
+
+%%ATMOSPHERE%%
+
+\subsection{Technical facts that shape the testbed}\label{sec:sota-hardware}
+\begin{itemize}
+  \item \textbf{Source.} The only single-mode \SI{375}{nm} laser diode in Nichia's line-up is the
+        NDU4116 (\SI{70}{mW}), sold by Thorlabs as L375P70MLD~\cite{ThorlabsL375}. It needs a TEC
+        mount that supports its pin code (e.g.\ LDM56F). Splitting its free-space beam before any fibre
+        makes every input face a test item, and no upstream delivery fibre ages. With \SIrange{30}{60}{\percent}
+        coupling efficiency, four to six arms at \SI{3}{mW} guided are possible.
+  \item \textbf{Detectors.} Silicon photodiodes lose UV responsivity under exposure~\cite{Korde1987,Siles2024};
+        photodiodes with high UV resistance exist~\cite{HamamatsuS12698}. SiC photodiodes respond only weakly
+        at \SI{369.5}{nm} because it lies at their band edge.
+  \item \textbf{Lenses.} The moulded aspheres commonly used for fibre coupling are made of high-index
+        glasses whose UV transmission is reduced. Check them at \SI{369.5}{nm}.
+  \item \textbf{Inspection standards.} The core zone of IEC~61300-3-35 has a diameter of
+        \SI{25}{\micro m}, about ten times the mode-field diameter~\cite{IEC61300335}. Standard
+        pass/fail criteria are too coarse for these fibres. An in-house criterion based on
+        $\geq400\times$ imaging of the central \SI{10}{\micro m} is needed.
+  \item \textbf{Polishing.} Thorlabs' procedure for FC/APC uses diamond films down to \SI{1}{\micro m}
+        and a final \SI{0.01}{\micro m} silica film, and warns that alumina and SiC films undercut fibres
+        in zirconia ferrules~\cite{ThorlabsPolish}. Every final film and lubricant also leaves a
+        possible residue on the face. The procedure is therefore part of the experimental protocol.
+\end{itemize}
+
+\subsection{Contribution of this project}
+The project combines four elements that, to our knowledge, have not been brought together:
+(i) the step-index pure-silica PM fibre and the wavelength and power actually used in \Ybion{}
+experiments; (ii) atmosphere as a controlled variable, with \Oxy, water, organic vapour and particles
+separated; (iii) simultaneous, identical arms with continuous logging of throughput, face reflection and
+gas composition; and (iv) a low-cost, deployable enclosure qualified against the same measurements.

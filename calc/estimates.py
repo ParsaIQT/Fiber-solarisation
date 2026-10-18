@@ -48,13 +48,16 @@ DEPOSIT_K_VALUES = (0.03, 0.1, 0.3)   # extinction coefficients of absorbing dep
 # Thermal conductivity of fused silica, W/(m K)
 KAPPA_SILICA = 1.38
 
-# Gas diffusion in silica glass (Arrhenius D = D0 exp(-Ea / R T))
-# H2: P. J. Lemaire, Opt. Eng. 30, 780 (1991)
-D0_H2_CM2_S = 2.83e-4
-EA_H2_KJ_MOL = 40.19
-# O2 (interstitial): K. Kajihara et al., J. Non-Cryst. Solids 354, 224 (2008)
-D0_O2_CM2_S = 2.7e-3              # PLACEHOLDER - updated after literature check
-EA_O2_KJ_MOL = 115.8              # PLACEHOLDER - updated after literature check
+# Gas diffusion in silica glass (Arrhenius D = D0 exp(-Ea / R T)); name, D0 (cm^2/s), Ea (kJ/mol)
+EV_TO_KJ_MOL = 96.485
+DIFFUSION = (
+    ("H2 (Lemaire, Opt. Eng. 30, 780 (1991))", 2.83e-4, 40.19),
+    ("H2 (Shang et al., GCA 73, 5435 (2009))", 7.0e-4, 44.59),
+    # O2 data were measured at 800-1200 degC; extrapolating to room temperature is an order-of-magnitude
+    # estimate only.
+    ("O2 (Kajihara et al., MSE B 173, 158 (2010), low-OH)", 4.5e-5, 0.93 * EV_TO_KJ_MOL),
+    ("O2 (Norton, Nature 191, 701 (1961))", 2.7e-4, 1.17 * EV_TO_KJ_MOL),
+)
 FIBRE_RADIUS = 62.5e-6            # cladding radius, m
 
 # Gas cell / purge
@@ -159,14 +162,14 @@ def main():
             print(f"  P = {p_mw:5.1f} mW, film absorbs {a*100:4.0f} %: dT = {dT:6.1f} K")
 
     header("A5  Can atmospheric gases reach the glass? Diffusion in silica at room temperature")
-    for name, d0, ea in (("H2", D0_H2_CM2_S, EA_H2_KJ_MOL), ("O2", D0_O2_CM2_S, EA_O2_KJ_MOL)):
+    for name, d0, ea in DIFFUSION:
         d = arrhenius(d0, ea, T_LAB) * 1e-4   # m^2/s
         tau = FIBRE_RADIUS ** 2 / (5.78 * d)  # first-mode time constant of a cylinder
-        print(f"  {name}: D({T_LAB:.0f} K) = {d*1e4:.1e} cm^2/s;"
-              f" depth sqrt(Dt) after 1 day / 1 month / 1 year ="
+        print(f"  {name}: D({T_LAB:.0f} K) = {d*1e4:.1e} cm^2/s")
+        print(f"      depth sqrt(Dt) after 1 day / 1 month / 1 year ="
               f" {math.sqrt(d*86400)*1e9:.3g} / {math.sqrt(d*30*86400)*1e9:.3g} /"
               f" {math.sqrt(d*365*86400)*1e9:.3g} nm;"
-              f" in/out-diffusion time constant of a 125 um fibre = {tau/86400:.3g} days")
+              f" time constant for a 125 um fibre = {tau/86400:.3g} days")
 
     header("A6  Continuous purge of an end-face cell")
     for q in PURGE_SCCM:
