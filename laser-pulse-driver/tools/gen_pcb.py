@@ -9,7 +9,7 @@ zones.  Usage:  python3 gen_pcb.py [--route]
 import os, sys, math
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import pcbnew
-import design, placement
+import design, placement, symlib
 from gen_sch import U as SCH_U
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -116,30 +116,94 @@ def place_parts(board):
         if p.get("nobom"):
             fp.SetExcludedFromBOM(True)
             fp.SetExcludedFromPosFiles(True)
+        names = {q["num"]: q["name"] for q in symlib.pins(p["lib"])}
         for pad in fp.Pads():
             num = pad.GetNumber()
-            if num in p["pins"] and p["pins"][num] is not None:
+            if num not in p["pins"]:
+                continue
+            if p["pins"][num] is not None:
                 pad.SetNet(net(p["pins"][num]))
+            else:
+                # same name KiCad gives a no-connect pin, so the parity check agrees
+                nm = names.get(num, "~")
+                tag = "" if nm in ("~", "", num) else "-" + nm
+                pad.SetNet(net(f"unconnected-({ref}{tag}-Pad{num})"))
         board.Add(fp)
         fps[ref] = fp
     return fps, netinfo
 
 
-def main(route=False):
+def add_zones(board):
+    """Inner planes (In1 GND, In2 +5V), GND pours on both outer layers and the
+    LD_OUT heat spreader (filled later by fill_zones)."""
+    b = placement.BOARD
+    rect = [(b["x0"], b["y0"]), (b["x1"], b["y0"]), (b["x1"], b["y1"]), (b["x0"], b["y1"])]
+
+    def zone(netname, layer, pts, prio, conn, name):
+        z = pcbnew.ZONE(board)
+        z.SetLayer(layer)
+        z.SetNet(board.FindNet(netname))
+        z.SetZoneName(name)
+        ol = z.Outline()
+        ol.NewOutline()
+        for x, y in pts:
+            ol.Append(MM(x), MM(y))
+        z.SetLocalClearance(MM(0.3))
+        z.SetMinThickness(MM(0.25))
+        z.SetPadConnection(conn)
+        z.SetThermalReliefGap(MM(0.3))
+        z.SetThermalReliefSpokeWidth(MM(0.5))
+        z.SetAssignedPriority(prio)
+        z.SetIslandRemovalMode(pcbnew.ISLAND_REMOVAL_MODE_ALWAYS)
+        z.SetHatchStyle(pcbnew.ZONE_BORDER_DISPLAY_STYLE_DIAGONAL_EDGE)
+        board.Add(z)
+        return z
+
+    zone("GND", pcbnew.In1_Cu, rect, 0, pcbnew.ZONE_CONNECTION_THERMAL, "GND plane")
+    zone("+5V", pcbnew.In2_Cu, rect, 0, pcbnew.ZONE_CONNECTION_THERMAL, "+5V plane")
+    zone("GND", pcbnew.F_Cu, rect, 0, pcbnew.ZONE_CONNECTION_THERMAL, "GND top")
+    zone("GND", pcbnew.B_Cu, rect, 0, pcbnew.ZONE_CONNECTION_THERMAL, "GND bottom")
+    for net, layers, poly in placement.ZONES:
+        for ln in layers:
+            zone(net, pcbnew.F_Cu if ln == "F.Cu" else pcbnew.B_Cu, poly, 2,
+                 pcbnew.ZONE_CONNECTION_FULL, net + " spreader")
+
+
+def fill_zones(path):
+    """Fill all zones.  The filler needs a board loaded from disk (with its
+    project and DRC engine), so this reloads the saved file."""
+    board = pcbnew.LoadBoard(path)
+    pcbnew.ZONE_FILLER(board).Fill(board.Zones())
+    board.Save(path)
+    return board
+
+
+def route(board):
+    import router, time
+    b = placement.BOARD
+    t0 = time.time()
+    r = router.Router(board, b["x0"], b["y0"], b["x1"], b["y1"], b["corner_r"], zones=placement.ZONES)
+    failed = r.run(thermal_vias=placement.THERMAL_VIAS)
+    nt, nv = r.emit()
+    for line in r.log:
+        print("  ", line)
+    print(f"routed in {time.time() - t0:.0f} s: {nt} track segments, {nv} vias, {len(failed)} failed")
+    return r
+
+
+def main(do_route=False):
     board = pcbnew.CreateEmptyBoard()
     setup_board(board)
     outline(board)
     fps, nets = place_parts(board)
-    if route:
-        import router
-        router.route_board(board, fps, nets)
+    if do_route:
+        route(board)
+        add_zones(board)
     board.Save(OUT)
+    if do_route:
+        board = fill_zones(OUT)
     print("saved", OUT, "footprints:", len(fps), "nets:", len(nets))
     return board
-
-
-if __name__ == "__main__":
-    main(route="--route" in sys.argv)
 
 
 def check_overlaps(board):
@@ -156,8 +220,11 @@ def check_overlaps(board):
             a, b = items[i][1], items[j][1]
             if not a.BBox().Intersects(b.BBox()):
                 continue
-            inter = a.Collide(b.Outline(0), 0) if False else None
             sa = pcbnew.SHAPE_POLY_SET(a); sa.BooleanIntersection(b)
             if sa.OutlineCount() and sa.Area() > MM(0.05) * MM(0.05):
                 bad.append((items[i][0], items[j][0], pcbnew.ToMM(1) * pcbnew.ToMM(1) * sa.Area()))
     return bad
+
+
+if __name__ == "__main__":
+    main(do_route="--route" in sys.argv)
