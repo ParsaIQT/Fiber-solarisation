@@ -105,16 +105,20 @@ module rear_panel() {
     zd = z_pcb + h_dsub;  zj = z_pcb + h_jack35;  zdc = z_pcb + h_dcjack;
     difference() {
         panel_blank(yr - panel_t);
-        // DE-9: flange sits behind the panel, so thin the panel to 1.3 mm here
+        // DE-9 (CONNFLY DS1037, "7.2 mm" type): the 31 x 12.5 mm steel flange stands
+        // 0.4 mm proud of the board edge -> 0.6 mm recess on the inside; the 4-40 hex
+        // jack posts (5 mm A/F, 4.8 mm tall) pass through; outside pocket leaves 1.1 mm
+        // so the cable plug mates fully.
         translate([dsub[0], 0, zd]) rotate([90, 0, 0]) linear_extrude(10, center = true) dshape(20.2, 17.6, 11.4, 1.6);
-        for (s = [-12.5, 12.5]) yhole(dsub[0] + s, zd, 3.4);
-        translate([dsub[0] - 17.5, yr - panel_t - 1, zd - 8]) cube([35, 1 + 1.2, 16]);
+        for (s = [-12.5, 12.5]) yhole(dsub[0] + s, zd, 6.3);
+        translate([dsub[0] - 16.2, yr - 0.6, z_pcb - 0.6]) cube([32.4, 1, 13.8]);
+        translate([dsub[0] - 17.5, yr - panel_t - 1, zd - 8]) cube([35, 1 + 0.8, 16]);
         rear_text(dsub[1], dsub[0], zd + 10.6, 3.2);
         rear_text("8 = LD anode   3 = LD cathode   1-5 = interlock loop", dsub[0], zd - 10.3, 2.0);
         // 3.5 mm interlock jack: plug body must reach the jack face
         yhole(jack35[0], zj, 8.6);
         translate([jack35[0], yr - panel_t - 1, zj]) rotate([-90, 0, 0]) cylinder(d = 12, h = 1 + 1.2);
-        rear_text(jack35[1], jack35[0], zj + 12.5, 2.8);
+        rear_text(jack35[1], jack35[0], zj + 12.5, 2.5);
         rear_text("short = OK", jack35[0], zj + 8.6, 2.0);
         // DC jack (5.5 / 2.1 mm plug, centre +)
         yhole(dcjack[0], zdc, 11.0);

@@ -202,8 +202,11 @@ datasheets (BNC 9.8 mm, pots 6.5 mm, toggle 6.46 mm, DE-9 6.25 mm, DC jack
 6.5 mm, 3.5 mm jack 2.5 mm above the PCB). The front/rear panels are
 separate 2.5 mm plates held in grooves by the base and lid, so they can be
 fitted to the board's connectors before the board goes into the base. The
-panel is thinned to 2.0 mm around the pots (M9 × 0.75 bushing, 5 mm long) and
-to 1.3 mm around the DE-9 and the 3.5 mm jack so plugs mate fully.
+panel is thinned to 2.0 mm around the pots (M9 × 0.75 bushing, 5 mm long), to
+1.3 mm around the 3.5 mm jack, and to 1.1 mm around the DE-9 (whose steel
+flange stands 0.4 mm proud of the board edge and sits in a recess on the inside
+of the panel; its 4-40 hex jack posts pass through the panel) so plugs mate
+fully.
 
 ## 6. Limitations and options
 
