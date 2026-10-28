@@ -1,0 +1,11 @@
+# KiCad local/session files
+*.kicad_prl
+*-backups/
+_autosave-*
+*.lck
+fp-info-cache
+~*.lck
+# simulation outputs and vendor models (fetched by sim/get_models.sh)
+sim/models/
+sim/out/
+__pycache__/

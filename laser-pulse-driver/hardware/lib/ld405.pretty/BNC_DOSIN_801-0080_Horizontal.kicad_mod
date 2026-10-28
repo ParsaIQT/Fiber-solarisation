@@ -1,0 +1,193 @@
+(footprint "BNC_DOSIN_801-0080_Horizontal"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "Right-angle PCB BNC jack, bulkhead M12x0.75, Dosin 801-0080 (LCSC C521219); flange face 6.0 mm in front of the centre pin, axis 9.8 mm above PCB")
+	(tags "BNC coax right angle panel")
+	(attr through_hole)
+	(property "Reference" "REF**"
+		(at 0 -7.5 0)
+		(layer "F.SilkS")
+		(uuid "3d34689b-809b-5a89-8e1b-7511b1b2adf8")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "BNC_DOSIN_801-0080"
+		(at 0 7.5 0)
+		(layer "F.Fab")
+		(uuid "7c23cb10-6cb9-55b7-807e-1d37eb97cb3c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://jlcpcb.com/partdetail/C521219"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "43ee6a55-1125-5a38-b301-c611086cf144")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "Dosin 801-0080 BNC, right angle, panel nut"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "7a671acb-154f-50b1-a24d-1758597e5edd")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_rect
+		(start -5 -5)
+		(end 5 5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "14bbd3fb-d74a-5a02-80bf-9ca700d68f22")
+	)
+	(fp_rect
+		(start -6 -7)
+		(end -5 7)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "f2e9d4e8-3895-5e68-a1dd-19ca6cc22e72")
+	)
+	(fp_rect
+		(start -24.5 -5.5)
+		(end -6 5.5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "594c36ec-f17d-587b-9e36-f4cba46e1fb9")
+	)
+	(fp_line
+		(start -5.11 -5.11)
+		(end 5.11 -5.11)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "625c4211-6232-5ebb-9ccf-9298cdf9e8ef")
+	)
+	(fp_line
+		(start -5.11 5.11)
+		(end 5.11 5.11)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "902722e7-4b91-58dd-aa99-13c09a046717")
+	)
+	(fp_line
+		(start 5.11 -5.11)
+		(end 5.11 5.11)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "47d87b55-f204-516f-9dbe-03940b8f00bc")
+	)
+	(fp_line
+		(start -6.1 -7.1)
+		(end -6.1 7.1)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "d0124ebc-f7a6-55e9-9c1f-8197221cd16d")
+	)
+	(fp_rect
+		(start -6.5 -7.5)
+		(end 5.5 7.5)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "094df12b-def9-5cc0-a339-a308f4851ba4")
+	)
+	(fp_text user "PANEL"
+		(at -7.5 0 0)
+		(layer "F.Fab")
+		(uuid "de01c81c-4033-561e-8796-308c488b4a32")
+		(effects
+			(font
+				(size 0.6 0.6)
+				(thickness 0.12)
+			)
+		)
+	)
+	(pad "1" thru_hole circle
+		(at 0 0)
+		(size 2 2)
+		(drill 1.2)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "a51c8b52-c0e8-5d2b-b61a-332b03745f3b")
+	)
+	(pad "2" thru_hole circle
+		(at -4 -4)
+		(size 2.6 2.6)
+		(drill 1.6)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "894de411-8933-542b-bc1f-4a46ce61688c")
+	)
+	(pad "2" thru_hole circle
+		(at -4 4)
+		(size 2.6 2.6)
+		(drill 1.6)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "aa228b68-44a3-53f3-ad54-125b327a1443")
+	)
+	(pad "2" thru_hole circle
+		(at 4 -4)
+		(size 2.6 2.6)
+		(drill 1.6)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "e03920fd-3a4d-5763-ae83-97f5a66fe530")
+	)
+	(pad "2" thru_hole circle
+		(at 4 4)
+		(size 2.6 2.6)
+		(drill 1.6)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "ba9d5f65-d1d8-5939-92bc-4a467ef860d2")
+	)
+	(embedded_fonts no)
+)

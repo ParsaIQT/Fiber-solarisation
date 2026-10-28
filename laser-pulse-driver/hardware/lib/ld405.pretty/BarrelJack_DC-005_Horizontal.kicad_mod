@@ -1,0 +1,153 @@
+(footprint "BarrelJack_DC-005_Horizontal"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "DC-005 barrel jack 5.5x2.0/2.1 mm, right angle, slotted pins (XKB DC-005-5A-2.0, LCSC C381116)")
+	(tags "DC power jack barrel DC-005")
+	(attr through_hole)
+	(property "Reference" "REF**"
+		(at 7 -6.5 0)
+		(layer "F.SilkS")
+		(uuid "c4546320-6eaa-5aa6-8598-2559e0e8012e")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "DC-005"
+		(at 7 6.5 0)
+		(layer "F.Fab")
+		(uuid "e3d73cfb-0a7e-58a4-9b9b-2e2752a86490")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://jlcpcb.com/partdetail/C381116"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "1032b262-8dd3-5e3c-a599-f0bb1cddc899")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "26318f33-b785-52f3-bfce-11eec67e46bb")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_rect
+		(start 0 -4.5)
+		(end 14 4.5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "ae15a9d2-428f-5481-9434-3a96d50e5011")
+	)
+	(fp_line
+		(start -0.1 -4.6)
+		(end 14.1 -4.6)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "d99a0b71-b95c-5384-adad-a2c5e751b6b7")
+	)
+	(fp_line
+		(start -0.1 4.6)
+		(end 14.1 4.6)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "a29c5bb9-d4d9-5fd6-8942-d16185f46607")
+	)
+	(fp_line
+		(start 14.1 -4.6)
+		(end 14.1 4.6)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "d64806f4-90d2-581c-b508-3398e86b6646")
+	)
+	(fp_rect
+		(start -0.5 -6.3)
+		(end 15.4 6.3)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "29b6373d-8954-5166-ad3f-df22dc4f0abd")
+	)
+	(fp_text user "PANEL"
+		(at -2 0 0)
+		(layer "F.Fab")
+		(uuid "eaaf7278-2b60-517b-bf98-89db98b1af48")
+		(effects
+			(font
+				(size 0.6 0.6)
+				(thickness 0.12)
+			)
+		)
+	)
+	(pad "1" thru_hole oval
+		(at 13.6 0)
+		(size 2.3 4.2)
+		(drill oval 1.3 3.2)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "d80c3bf9-140e-5c52-91eb-3e2a354ff6a6")
+	)
+	(pad "2" thru_hole oval
+		(at 7.7 0)
+		(size 2.3 4.2)
+		(drill oval 1.3 3.2)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "33276874-760a-5f3d-9455-6bd5b9343b81")
+	)
+	(pad "3" thru_hole oval
+		(at 10.6 4.7)
+		(size 4.2 2.3)
+		(drill oval 3.2 1.3)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "7767d9d2-e48e-530c-bae2-c090569f8345")
+	)
+	(pad "3" thru_hole oval
+		(at 10.6 -4.7)
+		(size 4.2 2.3)
+		(drill oval 3.2 1.3)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "4d0bee79-8266-5a83-90a4-6f119d1e3056")
+	)
+	(embedded_fonts no)
+)

@@ -1,0 +1,151 @@
+(footprint "LED_SideView_XL-3210"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "Side-view LED 3.2x1.0 mm, XINGLIGHT XL-3210 series, emits towards -X; recommended land pattern from datasheet")
+	(tags "LED side view right angle")
+	(attr smd)
+	(property "Reference" "REF**"
+		(at 1.8 -2.6 0)
+		(layer "F.SilkS")
+		(uuid "dd5e9b50-4af4-50de-8ff0-0da38a1ad31c")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "XL-3210"
+		(at 1.8 2.6 0)
+		(layer "F.Fab")
+		(uuid "c7c9fc64-1e18-50fe-9dec-5ab012efd214")
+		(effects
+			(font
+				(size 0.6 0.6)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://jlcpcb.com/partdetail/C965877"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "a46cc642-8498-55e5-96e4-d5d9174b78ce")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "5ea77f6d-f353-5750-9b1b-c863286c30f1")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "2" smd roundrect
+		(at 0 -1.55)
+		(size 0.93 0.9)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "b18822b4-19ee-5406-b6ac-d2a3cc926907")
+	)
+	(pad "1" smd roundrect
+		(at 0 1.55)
+		(size 0.93 0.9)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "7f3b2873-7b91-5192-b760-e1355fe8b71a")
+	)
+	(pad "" smd roundrect
+		(at 0.215 0)
+		(size 0.5 0.9)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "2edd47c5-90ab-5820-a9e0-852630ecfb88")
+	)
+	(fp_rect
+		(start -0.5 -1.6)
+		(end 0.5 1.6)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "0d5368cf-5505-5390-834d-583da7a38e2f")
+	)
+	(fp_line
+		(start -0.5 -0.8)
+		(end -1 -0.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "8afdb138-644d-5889-b075-ecff92c2f907")
+	)
+	(fp_line
+		(start -1 -0.4)
+		(end -1 0.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "0dd90f65-96bf-5f50-bd1a-aa4dd6e90ede")
+	)
+	(fp_line
+		(start -1 0.4)
+		(end -0.5 0.8)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "4f4eb34b-c1f5-5f89-acc3-fa9b597bab71")
+	)
+	(fp_line
+		(start 0.75 -2.3)
+		(end 0.75 2.3)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "e0674f49-a424-540d-a4d1-ceed5c4a2075")
+	)
+	(fp_line
+		(start -0.6 -2.35)
+		(end 0.75 -2.35)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "7c76b02f-9bba-5155-b289-f4d48c4e7f4a")
+	)
+	(fp_rect
+		(start -1.25 -2.25)
+		(end 0.85 2.25)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "c36aae10-8fe6-54b5-a77e-5c510f8f3619")
+	)
+	(embedded_fonts no)
+)
