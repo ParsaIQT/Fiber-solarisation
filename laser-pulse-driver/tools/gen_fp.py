@@ -110,11 +110,12 @@ def bnc():
     f.line(-6.1, -7.1, -6.1, 7.1, "F.SilkS")
     f.rect(-6.5, -7.5, 5.5, 7.5, "F.CrtYd", 0.05)
     f.text("PANEL", -7.5, 0, "F.Fab", 0.6)
-    # Ø1.0 pins; datasheet holes Ø1.2 (-0.1), opened slightly for hand soldering
+    # Ø1.0 centre pin in a Ø1.2 hole; the Ø1.2 (-0.1) ground posts get Ø1.4 holes
     f.tht("1", 0, 0, "circle", (2.0, 2.0), 1.2)
     for x in (-4, 4):
         for y in (-4, 4):
-            f.tht("2", x, y, "circle", (2.4, 2.4), 1.3)
+            f.tht("2", x, y, "circle", (2.5, 2.5), 1.4)
+    f.model("${KIPRJMOD}/lib/ld405.3dshapes/BNC_DOSIN_801-0080.wrl")
     f.save()
 
 
@@ -143,6 +144,7 @@ def toggle():
     f.tht("1", 12.70, 0, "rect", (2.6, 2.6), 1.85)
     f.tht("2", 16.51, 0, "circle", (2.6, 2.6), 1.85)
     f.tht("3", 20.32, 0, "circle", (2.6, 2.6), 1.85)
+    f.model("${KIPRJMOD}/lib/ld405.3dshapes/Toggle_Dailywell_1MS1T2B4M7QES.wrl")
     f.save()
 
 
@@ -166,6 +168,7 @@ def led_side():
     f.line(0.75, -2.3, 0.75, 2.3, "F.SilkS")      # rear edge marker
     f.line(-0.6, 2.35, 0.75, 2.35, "F.SilkS")      # cathode (pad 1) marker
     f.rect(-1.25, -2.25, 0.85, 2.25, "F.CrtYd", 0.05)
+    f.model("${KIPRJMOD}/lib/ld405.3dshapes/LED_SideView_XL-3210.wrl")
     f.save()
 
 
@@ -192,6 +195,7 @@ def dcjack():
     f.tht("2", 7.7, 0, "oval", (2.4, 4.6), None, oval=(1.2, 3.6))
     f.tht("3", 10.6, 4.7, "oval", (4.6, 2.4), None, oval=(3.6, 1.2))
     f.tht("3", 10.6, -4.7, "oval", (4.6, 2.4), None, oval=(3.6, 1.2))
+    f.model("${KIPRJMOD}/lib/ld405.3dshapes/BarrelJack_DC-005_Horizontal.wrl")
     f.save()
 
 

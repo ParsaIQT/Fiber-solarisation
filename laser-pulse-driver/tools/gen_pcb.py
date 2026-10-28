@@ -31,6 +31,12 @@ def load_fp(fpid):
     if fp is None:
         raise SystemExit("cannot load " + fpid)
     fp.SetFPID(pcbnew.LIB_ID(lib, name))
+    # this KiCad install lacks a few library STEP models: use our simple ones
+    import gen_3d
+    if name in gen_3d.SUBSTITUTE:
+        ms = fp.Models()          # iterating yields copies: assign through the index
+        for i in range(len(ms)):
+            ms[i].m_Filename = "${KIPRJMOD}/lib/ld405.3dshapes/" + gen_3d.SUBSTITUTE[name] + ".wrl"
     return fp
 
 

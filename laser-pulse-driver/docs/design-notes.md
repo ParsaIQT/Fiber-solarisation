@@ -219,3 +219,31 @@ fully.
   requires pins 1 and 5 linked in the diode cable.
 * The relay is rated 1 A; do not raise the current range above ~800 mA without
   re-checking K1, R40/R41 dissipation and Q2's SOA.
+
+## 7. Design review
+
+`tools/review.py` renders everything that is easy to get wrong and hard to see
+in a 3D view into `docs/review/` (index in `docs/review/README.md`): every
+footprint with pad numbers, nets and hole sizes, a pin-1/cathode/+ map of all
+40 polarised parts with their CPL rotations (`polarity.json`), close-ups of the
+laser current path, the Kelvin sense and the TTL input, cross-sections through
+every panel hole (sliced from the enclosure STLs), both panels seen from
+outside, the lid clearance, the diode cable and the switch/knob directions.
+`tools/gen_3d.py` provides simple datasheet-dimension VRML models for the parts
+whose KiCad library has none (BNC, toggle, pots, DC jack, 3.5 mm jack, side
+LEDs, 1812 fuse); they are used for the renders and the fit checks only.
+
+Found and fixed while checking against the datasheets:
+
+* K1: the normally-closed contacts are pins 2 and 7 (Omron "Terminal
+  Arrangement", top view); the first version had them elsewhere, which would
+  have left `LD_OUT` floating with the relay off.
+* SW1: terminal holes 1.2 → 1.85 mm (Dailywell M7 P.C. mounting holes).
+* J2–J4: BNC ground-post holes 1.3 → 1.4 mm for the Ø1.2 (−0.1) posts.
+* C10: 100 nF → 1 µF (REF3030 needs ≥ 0.47 µF on its supply).
+* Side LEDs: the silkscreen bar now marks the cathode pad (pad 1).
+
+Still to be confirmed by eye: the JLC rotation offsets (SOT-23 +180°,
+SOIC +270°, electrolytics +180°, side LEDs unchanged) in the placement
+preview, and that "lever up" on SW1 is the 2–1 position (inferred from the
+terminal order).

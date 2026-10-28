@@ -149,5 +149,16 @@
 		(remove_unused_layers no)
 		(uuid "4d0bee79-8266-5a83-90a4-6f119d1e3056")
 	)
+	(model "${KIPRJMOD}/lib/ld405.3dshapes/BarrelJack_DC-005_Horizontal.wrl"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 	(embedded_fonts no)
 )

@@ -147,5 +147,16 @@
 		(layer "F.CrtYd")
 		(uuid "c36aae10-8fe6-54b5-a77e-5c510f8f3619")
 	)
+	(model "${KIPRJMOD}/lib/ld405.3dshapes/LED_SideView_XL-3210.wrl"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 	(embedded_fonts no)
 )

@@ -235,19 +235,21 @@ aligning onto the trap without firing pulses.
 | `enclosure/` | OpenSCAD source, STL files, preview images |
 | `artiq/` | ARTIQ experiment for ablation loading with the pulsed 405 nm laser |
 | `sim/` | ngspice testbench and corner simulations (`get_models.sh` fetches the vendor models) |
-| `docs/` | design notes and simulation plots |
+| `docs/` | design notes, simulation plots and the design-review renders (`docs/review/`) |
 | `tools/` | the generators: everything in `hardware/`, `hardware/fab/` and `enclosure/` is produced by these scripts |
 
-Regenerating from source (KiCad 9 with its Python module, numpy, scipy,
+Regenerating from source (KiCad 9 with its Python module, numpy, scipy, poppler,
 matplotlib, gcc, OpenSCAD, ngspice):
 
 ```sh
 cd tools
+python3 gen_3d.py              # simple 3D models for parts without a KiCad model
 python3 gen_fp.py              # custom footprints
 python3 gen_sch.py             # schematic (ERC clean)
 python3 gen_pcb.py --route     # placement, routing, zones, DRC-clean board
 python3 export_fab.py          # Gerbers, drill, BOM, CPL, PDFs, renders
 python3 gen_enclosure.py       # OpenSCAD model and STLs
+python3 review.py              # review renders in docs/review/
 cd ../sim && ./get_models.sh && python3 run_sims.py
 ```
 

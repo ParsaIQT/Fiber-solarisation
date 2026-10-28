@@ -149,5 +149,16 @@
 		(remove_unused_layers no)
 		(uuid "97f81a28-d7a8-5aa8-8ad9-c71ce594ae6f")
 	)
+	(model "${KIPRJMOD}/lib/ld405.3dshapes/Toggle_Dailywell_1MS1T2B4M7QES.wrl"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 	(embedded_fonts no)
 )
