@@ -92,7 +92,7 @@ class FP:
 def bnc():
     """DOSIN-801-0080 right-angle bulkhead BNC (M12x0.75, nut + washer).
     Origin = centre contact.  Ground posts on an 8 x 8 mm square, body 10 x 10 mm.
-    The square flange (panel stop) is 6.0 mm in front (-X) of the centre contact,
+    The round Ø14 flange (panel stop) is 6.0 mm in front (-X) of the centre contact,
     axis 9.8 mm above the board, thread usable for panels <= 3.5 mm."""
     f = FP("BNC_DOSIN_801-0080_Horizontal",
            "Right-angle PCB BNC jack, bulkhead M12x0.75, Dosin 801-0080 (LCSC C521219); "
@@ -110,10 +110,11 @@ def bnc():
     f.line(-6.1, -7.1, -6.1, 7.1, "F.SilkS")
     f.rect(-6.5, -7.5, 5.5, 7.5, "F.CrtYd", 0.05)
     f.text("PANEL", -7.5, 0, "F.Fab", 0.6)
+    # Ø1.0 pins; datasheet holes Ø1.2 (-0.1), opened slightly for hand soldering
     f.tht("1", 0, 0, "circle", (2.0, 2.0), 1.2)
     for x in (-4, 4):
         for y in (-4, 4):
-            f.tht("2", x, y, "circle", (2.6, 2.6), 1.6)
+            f.tht("2", x, y, "circle", (2.4, 2.4), 1.3)
     f.save()
 
 
@@ -167,6 +168,7 @@ def led_side():
 
 def dcjack():
     """DC-005 5.5/2.0 mm barrel jack, right angle (XKB DC-005-5A-2.0, LCSC C381116).
+    Body 9.0 W x 11.0 H x 14.0 L, plug axis 6.5 mm above the board.
     Origin = centre of the front face on the board edge line, plug enters from -X.
     Pin 1 = centre (+) at x = 13.6, pin 2 = sleeve at x = 7.7, pin 3 = switch at x = 10.6,
     y = +/-4.7.  Pin 3 slot is provided on both sides; both are tied to pin 2 (GND)."""
@@ -182,10 +184,11 @@ def dcjack():
     f.line(14.1, -4.6, 14.1, 4.6, "F.SilkS")
     f.rect(-0.5, -6.3, 15.4, 6.3, "F.CrtYd", 0.05)
     f.text("PANEL", -2.0, 0, "F.Fab", 0.6)
-    f.tht("1", 13.6, 0, "roundrect" if False else "oval", (2.3, 4.2), None, oval=(1.3, 3.2))
-    f.tht("2", 7.7, 0, "oval", (2.3, 4.2), None, oval=(1.3, 3.2))
-    f.tht("3", 10.6, 4.7, "oval", (4.2, 2.3), None, oval=(3.2, 1.3))
-    f.tht("3", 10.6, -4.7, "oval", (4.2, 2.3), None, oval=(3.2, 1.3))
+    # slots 1.2 x 3.6 mm (datasheet recommends 1.0 x 3.5 for the 0.35 mm terminals)
+    f.tht("1", 13.6, 0, "oval", (2.4, 4.6), None, oval=(1.2, 3.6))
+    f.tht("2", 7.7, 0, "oval", (2.4, 4.6), None, oval=(1.2, 3.6))
+    f.tht("3", 10.6, 4.7, "oval", (4.6, 2.4), None, oval=(3.6, 1.2))
+    f.tht("3", 10.6, -4.7, "oval", (4.6, 2.4), None, oval=(3.6, 1.2))
     f.save()
 
 
