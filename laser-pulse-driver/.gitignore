@@ -8,4 +8,6 @@ fp-info-cache
 # simulation outputs and vendor models (fetched by sim/get_models.sh)
 sim/models/
 sim/out/
+sim/*.cir
+sim/*.dat
 __pycache__/

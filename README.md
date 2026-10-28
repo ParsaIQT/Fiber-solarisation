@@ -18,6 +18,12 @@ real cause if oxygen is not it.
 | `docs/` | LaTeX sources (`proposal.tex`, `summary.tex`, `sections/`, `figures/` in TikZ, `references.bib`, style `fsproposal.sty`) |
 | `calc/estimates.py` | Design estimates quoted in Appendix A: end-face intensity, contamination flux, film thickness and heating, gas diffusion in silica, purge, permeation and absorber budgets, optics, statistics |
 
+## Lab hardware
+
+| Path | What it is |
+| --- | --- |
+| [`laser-pulse-driver/`](laser-pulse-driver/README.md) | TTL-gated 405 nm laser-diode pulse driver (BDR-209) for the photo-ionisation second step during ablation loading: KiCad schematic and 4-layer PCB with JLCPCB assembly files, 3D-printed enclosure, ngspice simulations and an ARTIQ example |
+
 ## Main points of the proposal
 
 - **The damage is at the end faces.** Re-polishing restores the throughput, and O₂ cannot diffuse
