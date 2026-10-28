@@ -45,6 +45,8 @@ def setup_board(board):
     ds.m_CopperEdgeClearance = MM(0.3)
     ds.m_HoleClearance = MM(0.25)
     ds.m_HoleToHoleMin = MM(0.25)
+    ds.m_TentViasFront = True
+    ds.m_TentViasBack = True
     # inner layer names
     board.SetLayerName(pcbnew.In1_Cu, "In1.Cu")
     board.SetLayerName(pcbnew.In2_Cu, "In2.Cu")
@@ -133,6 +135,19 @@ def place_parts(board):
     return fps, netinfo
 
 
+def tidy_silk(board):
+    import silk
+    b = placement.BOARD
+    box = (b["x0"], b["y0"], b["x1"], b["y1"])
+    silk.clip_silk(board, *box)
+    silk.trim_silk_at_pads(board)
+    hidden = silk.place_refs(board, *box)
+    for s, x, y, size in placement.SILK_TEXT:
+        silk.add_text(board, s, x, y, size)
+    if hidden:
+        print("references on fab layer only:", " ".join(sorted(hidden)))
+
+
 def add_zones(board):
     """Inner planes (In1 GND, In2 +5V), GND pours on both outer layers and the
     LD_OUT heat spreader (filled later by fill_zones)."""
@@ -191,17 +206,32 @@ def route(board):
     return r
 
 
+def project_settings():
+    """Settings pcbnew does not expose: written into the .kicad_pro after the
+    board has been saved (saving rewrites the project file)."""
+    import json
+    pro = os.path.join(HW, design.PROJECT + ".kicad_pro")
+    d = json.load(open(pro))
+    sev = d["board"]["design_settings"]["rule_severities"]
+    # reference fields and silk are re-placed/trimmed on purpose (silk.py), so
+    # every footprint differs from its library copy
+    sev["lib_footprint_mismatch"] = "ignore"
+    json.dump(d, open(pro, "w"), indent=2)
+
+
 def main(do_route=False):
     board = pcbnew.CreateEmptyBoard()
     setup_board(board)
     outline(board)
     fps, nets = place_parts(board)
+    tidy_silk(board)
     if do_route:
         route(board)
         add_zones(board)
     board.Save(OUT)
     if do_route:
         board = fill_zones(OUT)
+    project_settings()
     print("saved", OUT, "footprints:", len(fps), "nets:", len(nets))
     return board
 

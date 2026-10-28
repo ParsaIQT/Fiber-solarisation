@@ -192,3 +192,10 @@ at("R81", 130.5, 106.5, 90)
 # layers and stitched with vias; the router keeps other nets out of it.
 ZONES = [("LD_OUT", ("F.Cu", "B.Cu"), [(183.6, 172.4), (196.0, 172.4), (196.0, 180.2), (183.6, 180.2)])]
 THERMAL_VIAS = [("LD_OUT", [(x, y) for x in (184.6, 186.1, 187.6) for y in (173.4, 174.9, 176.4, 177.9, 179.4)])]
+
+# board labels: (text, x, y, height)
+SILK_TEXT = [
+    ("LD405 405nm LASER DIODE PULSE DRIVER", 125.0, 160.0, 1.2),
+    ("rev 1.0   2026-10   see laser-pulse-driver/README.md", 125.0, 162.5, 0.9),
+    ("CLASS 4 LASER DRIVER - INTERLOCKS MUST BE CLOSED TO ARM", 125.0, 166.0, 0.9),
+]
