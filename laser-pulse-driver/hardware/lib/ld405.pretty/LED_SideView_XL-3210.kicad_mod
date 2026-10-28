@@ -127,8 +127,8 @@
 		(uuid "e0674f49-a424-540d-a4d1-ceed5c4a2075")
 	)
 	(fp_line
-		(start -0.6 -2.35)
-		(end 0.75 -2.35)
+		(start -0.6 2.35)
+		(end 0.75 2.35)
 		(stroke
 			(width 0.12)
 			(type solid)

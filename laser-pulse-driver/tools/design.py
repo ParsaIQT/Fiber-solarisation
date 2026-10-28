@@ -105,7 +105,7 @@ C("C8", "100nF", "+5V", "GND", "PWR")
 part("U2", "Reference_Voltage:REF3030", "REF3030", FP_SOT23,
      {"1": "+5V", "2": "VREF", "3": "GND"}, "C38423", "REF3030AIDBZR", "PWR")
 C("C9", "1uF", "VREF", "GND", "PWR")
-C("C10", "100nF", "+5V", "GND", "PWR")
+C("C10", "1uF", "+5V", "GND", "PWR")          # REF30xx: >= 0.47 uF on its supply
 part("FLG1", "power:PWR_FLAG", "PWR_FLAG", "", {"1": "VIN"}, block="PWR", virtual=True)
 part("FLG2", "power:PWR_FLAG", "PWR_FLAG", "", {"1": "GND"}, block="PWR", virtual=True)
 
@@ -207,9 +207,12 @@ part("RT1", "Device:Thermistor_NTC", "10k B3950", FP_R0603, {"1": "NTC_N", "2": 
      "C279936", "SDNT1608X103F3950FTF", "CS")
 
 # ------------------------------------------------------------- output stage
+# Omron G6K-2F-Y (datasheet "Terminal Arrangement", top view): coil 1(+)/8(-),
+# COM 3 and 6, normally-closed 2 and 7, normally-open 4 and 5.  Both NC contacts
+# short the laser output to ground while the relay is de-energised.
 part("K1", "Relay:G6K-2", "G6K-2F-Y 5V", "Relay_SMD:Relay_DPDT_Omron_G6K-2F-Y",
-     {"1": "+5V", "8": "RLY_N", "3": "LD_OUT", "6": "LD_OUT", "4": "GND", "5": "GND",
-      "2": None, "7": None}, "C47190", "G6K-2F-Y-TR DC5", "OUT")
+     {"1": "+5V", "8": "RLY_N", "3": "LD_OUT", "6": "LD_OUT", "2": "GND", "7": "GND",
+      "4": None, "5": None}, "C47190", "G6K-2F-Y-TR DC5", "OUT")
 part("Q9", "Transistor_FET:2N7002", "2N7002", FP_SOT23,
      {"1": "EN_REQ", "2": "GND", "3": "RLY_N"}, "C8545", "2N7002", "OUT")
 part("D5", "Diode:1N4148WS", "1N4148WS", FP_SOD323, {"1": "+5V", "2": "RLY_N"},

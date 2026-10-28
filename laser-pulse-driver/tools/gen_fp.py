@@ -122,7 +122,9 @@ def toggle():
     """Dailywell 1MS1T2B4M7QES miniature toggle, SPDT, 'M7' vertical right-angle PCB.
     Origin = midpoint of the two bracket legs (front face of the switch body).
     Bushing (6.22 mm, unthreaded) axis 6.46 mm above the board, 7.31 mm long, pointing -X.
-    Terminals 1-2-3 (2 = common) at 12.70 / 16.51 / 20.32 mm behind the bracket."""
+    Terminals 1-2-3 (2 = common) at 12.70 / 16.51 / 20.32 mm behind the bracket;
+    terminal 1 leaves the body lowest, 3 highest, so lever up connects 2-1
+    (datasheet: pos. 1 = 2-3, pos. 3 = 2-1)."""
     f = FP("Toggle_Dailywell_1MS1T2B4M7QES",
            "Miniature toggle switch SPDT, vertical right-angle PC mount (Dailywell 1M series 'M7'), "
            "LCSC C496157; bushing axis 6.46 mm above PCB", "toggle switch right angle")
@@ -137,9 +139,10 @@ def toggle():
     f.text("PANEL", -2.5, 0, "F.Fab", 0.6)
     f.tht("MP", 0, -2.54, "circle", (3.0, 3.0), 1.9)
     f.tht("MP", 0, 2.54, "circle", (3.0, 3.0), 1.9)
-    f.tht("1", 12.70, 0, "rect", (2.0, 2.0), 1.2)
-    f.tht("2", 16.51, 0, "circle", (2.0, 2.0), 1.2)
-    f.tht("3", 20.32, 0, "circle", (2.0, 2.0), 1.2)
+    # 0.76 x 1.22 mm tab terminals: datasheet P.C. mounting holes are 1.85 mm
+    f.tht("1", 12.70, 0, "rect", (2.6, 2.6), 1.85)
+    f.tht("2", 16.51, 0, "circle", (2.6, 2.6), 1.85)
+    f.tht("3", 20.32, 0, "circle", (2.6, 2.6), 1.85)
     f.save()
 
 
@@ -161,7 +164,7 @@ def led_side():
     f.line(-0.5, -0.8, -1.0, -0.4, "F.Fab", 0.1); f.line(-1.0, -0.4, -1.0, 0.4, "F.Fab", 0.1)
     f.line(-1.0, 0.4, -0.5, 0.8, "F.Fab", 0.1)
     f.line(0.75, -2.3, 0.75, 2.3, "F.SilkS")      # rear edge marker
-    f.line(-0.6, -2.35, 0.75, -2.35, "F.SilkS")    # anode-side marker
+    f.line(-0.6, 2.35, 0.75, 2.35, "F.SilkS")      # cathode (pad 1) marker
     f.rect(-1.25, -2.25, 0.85, 2.25, "F.CrtYd", 0.05)
     f.save()
 

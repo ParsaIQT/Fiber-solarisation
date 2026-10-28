@@ -13610,7 +13610,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "1uF"
 			(at 313.69 116.84 0)
 			(effects
 				(font
@@ -13646,7 +13646,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" "C15849"
 			(at 311.15 115.57 0)
 			(effects
 				(font
@@ -13655,7 +13655,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CC0603KRX7R9BB104"
+		(property "MPN" "CL10A105KB8NNNC"
 			(at 311.15 115.57 0)
 			(effects
 				(font
@@ -24933,9 +24933,82 @@
 			)
 		)
 	)
-	(no_connect
-		(at 382.27 215.9)
-		(uuid "673b7b1e-42fa-5857-86c1-49f11d400890")
+	(wire
+		(pts
+			(xy 382.27 215.9)
+			(xy 382.27 213.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3086031a-c307-5cf1-bfbb-13e08594d3d4")
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 382.27 213.36 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d9e542d7-3478-5e0d-a847-c4c4f2c98649")
+		(property "Reference" "#PWR042"
+			(at 382.27 219.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 382.27 217.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 382.27 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 382.27 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 382.27 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b8dccd08-9fce-5040-b2cb-2196a839d175")
+		)
+		(instances
+			(project "ld405-driver"
+				(path "/adc6a07c-81be-5fa0-ac01-79c2442e860f"
+					(reference "#PWR042")
+					(unit 1)
+				)
+			)
+		)
 	)
 	(wire
 		(pts
@@ -24969,29 +25042,33 @@
 			)
 		)
 	)
+	(no_connect
+		(at 387.35 215.9)
+		(uuid "4fb685a7-8b92-588b-9bc8-00c52f971ecf")
+	)
 	(wire
 		(pts
-			(xy 387.35 215.9)
-			(xy 387.35 213.36)
+			(xy 392.43 215.9)
+			(xy 392.43 213.36)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "ef661e38-f097-5dda-906d-30e84de2ab26")
+		(uuid "9da7e8ee-fc4d-5cc7-99a6-66ba2af29cb4")
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 387.35 213.36 180)
+		(at 392.43 213.36 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "d9e542d7-3478-5e0d-a847-c4c4f2c98649")
-		(property "Reference" "#PWR042"
-			(at 387.35 219.36 0)
+		(uuid "022905b7-59e9-55b1-ad73-ed993311e877")
+		(property "Reference" "#PWR043"
+			(at 392.43 219.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -25000,7 +25077,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 387.35 217.16 0)
+			(at 392.43 217.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -25008,7 +25085,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 387.35 213.36 0)
+			(at 392.43 213.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -25017,7 +25094,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 387.35 213.36 0)
+			(at 392.43 213.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -25026,7 +25103,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 387.35 213.36 0)
+			(at 392.43 213.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -25035,20 +25112,16 @@
 			)
 		)
 		(pin "1"
-			(uuid "b8dccd08-9fce-5040-b2cb-2196a839d175")
+			(uuid "4659cec4-f55f-5e04-9b27-8404e8bdfc7f")
 		)
 		(instances
 			(project "ld405-driver"
 				(path "/adc6a07c-81be-5fa0-ac01-79c2442e860f"
-					(reference "#PWR042")
+					(reference "#PWR043")
 					(unit 1)
 				)
 			)
 		)
-	)
-	(no_connect
-		(at 392.43 215.9)
-		(uuid "5ba09be5-841b-5304-b205-1e977efb3221")
 	)
 	(wire
 		(pts
@@ -25082,82 +25155,9 @@
 			)
 		)
 	)
-	(wire
-		(pts
-			(xy 397.51 215.9)
-			(xy 397.51 213.36)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "25782aef-6843-5036-9a83-d59434fd637a")
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 397.51 213.36 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "022905b7-59e9-55b1-ad73-ed993311e877")
-		(property "Reference" "#PWR043"
-			(at 397.51 219.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 397.51 217.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 397.51 213.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 397.51 213.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 397.51 213.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "4659cec4-f55f-5e04-9b27-8404e8bdfc7f")
-		)
-		(instances
-			(project "ld405-driver"
-				(path "/adc6a07c-81be-5fa0-ac01-79c2442e860f"
-					(reference "#PWR043")
-					(unit 1)
-				)
-			)
-		)
+	(no_connect
+		(at 397.51 215.9)
+		(uuid "99bbe9f1-93ee-5a72-a808-d07c3b9d1499")
 	)
 	(symbol
 		(lib_id "Transistor_FET:2N7002")
