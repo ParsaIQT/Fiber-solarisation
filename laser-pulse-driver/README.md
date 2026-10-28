@@ -50,15 +50,25 @@ Upload these three files from [`hardware/fab/`](hardware/fab/):
 PCB options (everything else at default):
 
 * Layers **4**, dimensions 160 × 100 mm (read from the Gerbers), thickness **1.6 mm**,
-  outer copper 1 oz, inner 0.5 oz, any colour, surface finish *LeadFree HASL* or *ENIG*.
-* Via covering: *Tented* (the design assumes tented vias).
+  outer copper 1 oz, inner 0.5 oz, any colour, surface finish *LeadFree HASL*
+  (or *ENIG* for the flattest pads; leaded HASL also works but puts lead on the board).
+* Via covering: *Plugged* (JLCPCB no longer offers *Tented* on 4-layer boards;
+  plugged vias are covered just the same, which is what the design needs).
+  Min via hole size: *0.3 mm (0.4/0.45 mm)*; the board's vias are 0.3 mm drill, 0.6 mm pad.
 * Quantity: 5 boards, of which **2 assembled** (one spare).
 
-PCB Assembly options:
+The price shown at this point covers the bare boards only. Parts and assembly
+are priced after the next step.
 
-* **Standard PCBA**, assemble **top side** only. The connectors, pots and the
-  toggle switch are through-hole; JLCPCB hand-solders them as part of
-  Standard PCBA. Confirm *"Parts placement"* so an engineer checks it.
+PCB Assembly options (switch on *PCB Assembly* below *Advanced Options*):
+
+* **Standard PCBA**, assemble **top side** only, PCBA quantity **2**, tooling
+  holes added by JLCPCB. The connectors, pots and the toggle switch are
+  through-hole; JLCPCB hand-solders them as part of Standard PCBA. Confirm
+  *"Parts placement"* so an engineer checks it.
+* Click *Next*, upload the BOM and CPL, check that every line matched a part,
+  then *Next* to the placement preview; the final price (parts, assembly,
+  extended-part fees) appears after that.
 * After the BOM/CPL upload JLCPCB shows a placement preview. Check that the
   pin-1/polarity marks agree for: U1–U14, Q1–Q11, diodes D1–D16, the LEDs
   (D3, D8, D12, D16 – lenses must face the board edge), C1/C2 (electrolytic)
