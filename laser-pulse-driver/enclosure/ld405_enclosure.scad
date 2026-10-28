@@ -26,8 +26,8 @@ leds = [[6, "POWER"], [13, "ARMED"], [20, "EMISSION"], [27, "FAULT"]];
 dsub = [40, "LD OUT"];
 jack35 = [128, "INTERLOCK"];
 dcjack = [147, "9V DC"];
-h_bnc = 9.8; h_pot = 6.5; h_toggle = 6.46; h_led = 0.75;
-h_dsub = 6.25; h_jack35 = 2.5; h_dcjack = 6.5;
+h_bnc = 9.8; h_pot = 6.5; h_toggle = 6.45; h_led = 0.5;
+h_dsub = 6.25; h_jack35 = 2.5; h_dcjack = 7.0;
 
 
 // ---------------------------------------------------------------- geometry
@@ -89,8 +89,8 @@ module front_panel() {
             front_text("0", p[0] + 7.0, z_pcb + h_pot - 7.6, 1.8);
             front_text("MAX", p[0] - 8.5, z_pcb + h_pot - 7.6, 1.8);
         }
-        for (t = toggles) {                               // unthreaded 1/4" bushing
-            yhole(t[0], z_pcb + h_toggle, 6.8);
+        for (t = toggles) {                               // unthreaded 1/4" bushing, 0.6 mm play
+            yhole(t[0], z_pcb + h_toggle, 7.4);
             front_text(t[1], t[0], z_pcb + h_toggle + 7.5, 3.0);
         }
         for (l = leds) {                                  // side-view LED windows

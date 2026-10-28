@@ -38653,7 +38653,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "ld405:LED_SideView_XL-3210"
+		(property "Footprint" "ld405:LED_SideView_LiteOn_LTST-S220"
 			(at 770.89 402.59 0)
 			(effects
 				(font
@@ -38680,7 +38680,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C965877"
+		(property "LCSC" "C160470"
 			(at 770.89 402.59 0)
 			(effects
 				(font
@@ -38689,7 +38689,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "XL-3210UGC"
+		(property "MPN" "LTST-S220TGKT"
 			(at 770.89 402.59 0)
 			(effects
 				(font
@@ -39002,7 +39002,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "ld405:LED_SideView_XL-3210"
+		(property "Footprint" "ld405:LED_SideView_LiteOn_LTST-S220"
 			(at 875.03 402.59 0)
 			(effects
 				(font
@@ -39029,7 +39029,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C965874"
+		(property "LCSC" "C284935"
 			(at 875.03 402.59 0)
 			(effects
 				(font
@@ -39038,7 +39038,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "XL-3210SURC"
+		(property "MPN" "LTST-S220KRKT"
 			(at 875.03 402.59 0)
 			(effects
 				(font
@@ -39351,7 +39351,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "ld405:LED_SideView_XL-3210"
+		(property "Footprint" "ld405:LED_SideView_LiteOn_LTST-S220"
 			(at 770.89 433.07 0)
 			(effects
 				(font
@@ -39378,7 +39378,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C965876"
+		(property "LCSC" "C160468"
 			(at 770.89 433.07 0)
 			(effects
 				(font
@@ -39387,7 +39387,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "XL-3210UYC"
+		(property "MPN" "LTST-S220KSKT"
 			(at 770.89 433.07 0)
 			(effects
 				(font
@@ -39700,7 +39700,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "ld405:LED_SideView_XL-3210"
+		(property "Footprint" "ld405:LED_SideView_LiteOn_LTST-S220"
 			(at 875.03 433.07 0)
 			(effects
 				(font
@@ -39727,7 +39727,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C965879"
+		(property "LCSC" "C160471"
 			(at 875.03 433.07 0)
 			(effects
 				(font
@@ -39736,7 +39736,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "XL-3210UBC"
+		(property "MPN" "LTST-S220TBKT"
 			(at 875.03 433.07 0)
 			(effects
 				(font

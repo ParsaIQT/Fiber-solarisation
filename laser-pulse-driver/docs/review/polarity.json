@@ -46,12 +46,12 @@
  {
   "ref": "D3",
   "value": "POWER green",
-  "package": "LED_SideView_XL-3210",
+  "package": "LED_SideView_LiteOn_LTST-S220",
   "kicad_rot": 270.0,
   "cpl_rot": 270.0,
   "mark": "cathode",
   "where": "left",
-  "x": 104.45,
+  "x": 104.75,
   "y": 101.0
  },
  {
@@ -101,12 +101,12 @@
  {
   "ref": "D8",
   "value": "EMISSION blue",
-  "package": "LED_SideView_XL-3210",
+  "package": "LED_SideView_LiteOn_LTST-S220",
   "kicad_rot": 270.0,
   "cpl_rot": 270.0,
   "mark": "cathode",
   "where": "left",
-  "x": 118.45,
+  "x": 118.75,
   "y": 101.0
  },
  {
@@ -123,12 +123,12 @@
  {
   "ref": "D12",
   "value": "FAULT red",
-  "package": "LED_SideView_XL-3210",
+  "package": "LED_SideView_LiteOn_LTST-S220",
   "kicad_rot": 270.0,
   "cpl_rot": 270.0,
   "mark": "cathode",
   "where": "left",
-  "x": 125.45,
+  "x": 125.75,
   "y": 101.0
  },
  {
@@ -167,12 +167,12 @@
  {
   "ref": "D16",
   "value": "ARMED yellow",
-  "package": "LED_SideView_XL-3210",
+  "package": "LED_SideView_LiteOn_LTST-S220",
   "kicad_rot": 270.0,
   "cpl_rot": 270.0,
   "mark": "cathode",
   "where": "left",
-  "x": 111.45,
+  "x": 111.75,
   "y": 101.0
  },
  {

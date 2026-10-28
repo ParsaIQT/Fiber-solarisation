@@ -90,38 +90,45 @@ def bnc():
 
 
 def toggle():
-    """1MS1T2B4M7QES: origin = bracket legs, panel towards -x, bushing axis 6.46 mm up.
+    """1MS1T2B4M7QES (Dailywell M7: right-angle PC terminals, vertical bracket).
+    Origin = bracket legs, panel towards -x.  From the drawing: bushing Ø6.22 x 7.31,
+    lever reaching 6.46 beyond the bushing, body 10.1 long x 12.7 high x 6.86 wide,
+    terminals leave the back at 2.3 / 6.5 / 10.9 mm (1 lowest) and bend down at
+    12.70 / 16.51 / 20.32 mm.  The drawing gives no axis height: measured 6.45 mm.
     Lever drawn up (= ENABLE in this design)."""
     m = Model("Toggle_Dailywell_1MS1T2B4M7QES")
-    z = 6.46
-    m.box(SILVER, -0.76, -3.43, 0, 0, 3.43, 12.8)          # bracket
-    m.box(RED, 0, -3.43, 0, 12.7, 3.43, 12.8)               # body
-    m.cyl(SILVER, (-7.31, 0, z), (0, 0, z), 3.11)           # unthreaded 1/4" bushing
+    z = 6.45
+    m.box(SILVER, -0.76, -3.43, -2.6, 0, 3.43, 12.7)          # bracket and its legs
+    m.box(RED, 0, -3.43, 0, 10.1, 3.43, 12.7)                  # body
+    m.cyl(SILVER, (-7.31, 0, z), (0, 0, z), 3.11)              # unthreaded 1/4" bushing
     a = math.radians(18)
-    tip = (-7.31 - 11 * math.cos(a), 0, z + 11 * math.sin(a))
-    m.cyl(SILVER, (-7.0, 0, z), tip, 1.0)                   # lever
-    m.cyl(SILVER, tip, (tip[0] - 0.4, 0, tip[2] + 0.13), 1.33)
-    for x in (12.7, 16.51, 20.32):
-        m.box(SILVER, x - 0.38, -0.61, 0, x + 0.38, 0.61, 2.0 + (x - 12.7) * 0.9)
+    tip = (-7.31 - 6.46, 0, z + 6.46 * math.tan(a))
+    m.cyl(SILVER, (-6.5, 0, z), tip, 1.0)                      # lever
+    m.cyl(SILVER, (tip[0] + 0.6, 0, tip[2] - 0.2), (tip[0] - 0.4, 0, tip[2] + 0.13), 1.33)
+    for x, h in ((12.70, 2.3), (16.51, 6.5), (20.32, 10.9)):
+        m.box(SILVER, 10.1, -0.4, h - 0.38, x + 0.38, 0.4, h + 0.38)     # out of the back
+        m.box(SILVER, x - 0.38, -0.4, -3.18, x + 0.38, 0.4, h + 0.38)    # down through the board
     return m
 
 
 def dcjack():
-    """DC-005: origin = front face centre on the board edge, plug from -x; axis 6.5 mm up."""
+    """DC-005: origin = front face centre on the board edge, plug from -x; body 14 x 9 x 11,
+    plug axis 7.0 mm up (4.0 mm below the top)."""
     m = Model("BarrelJack_DC-005_Horizontal")
     m.box(BLACK, 0, -4.5, 0, 14, 4.5, 11)
-    m.cyl((0.02, 0.02, 0.02), (-0.05, 0, 6.5), (0.3, 0, 6.5), 3.1)
-    m.cyl(SILVER, (0.0, 0, 6.5), (8, 0, 6.5), 1.0)          # centre pin (visible in the hole)
+    m.cyl((0.02, 0.02, 0.02), (-0.05, 0, 7.0), (0.3, 0, 7.0), 3.1)
+    m.cyl(SILVER, (0.0, 0, 7.0), (8, 0, 7.0), 1.0)          # centre pin (visible in the hole)
     return m
 
 
 def led():
-    """XL-3210 side-view LED: lens towards -x, 1.0 mm high."""
-    m = Model("LED_SideView_XL-3210")
-    m.box(WHITE, -0.5, -1.6, 0, 0.5, 1.6, 1.0)
-    m.box(CLEAR, -1.0, -0.9, 0.1, -0.5, 0.9, 0.9)
-    for y in (-1.6, 1.6):
-        m.box(GOLD, -0.5, y - 0.225 if y > 0 else y, 0, 0.5, y if y > 0 else y + 0.225, 1.0)
+    """Lite-On LTST-S220: body 2.15 x 0.6 x 1.0, lens towards -x, origin = body centre."""
+    m = Model("LED_SideView_LTST-S220")
+    m.box(WHITE, -0.3, -1.075, 0, 0.3, 1.075, 1.0)
+    m.box(CLEAR, -0.75, -0.85, 0.1, -0.3, 0.85, 0.9)          # lens
+    for y0, y1 in ((-1.075, -0.745), (0.745, 1.075)):
+        m.box(SILVER, -0.32, y0, 0, 0.32, y1, 1.0)            # tin-plated terminals
+    m.box(GREEN, 0.3, 0.45, 0.2, 0.32, 0.7, 0.8)              # cathode mark
     return m
 
 

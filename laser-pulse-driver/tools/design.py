@@ -24,7 +24,7 @@ FP_DPAK = "Package_TO_SOT_SMD:TO-252-2"
 FP_SOD123 = "Diode_SMD:D_SOD-123"
 FP_SOD323 = "Diode_SMD:D_SOD-323"
 FP_SMA = "Diode_SMD:D_SMA"
-FP_LEDSIDE = "ld405:LED_SideView_XL-3210"
+FP_LEDSIDE = "ld405:LED_SideView_LiteOn_LTST-S220"
 
 # LCSC part numbers (checked against the JLCPCB catalogue, 28 Oct 2026)
 R_LCSC = {
@@ -322,16 +322,16 @@ part("D15", "Diode:1N4148WS", "1N4148WS", FP_SOD323, {"1": "EN_REQ", "2": "EN_DL
 
 # ---------------------------------------------------------- front-panel LEDs
 part("D3", "Device:LED", "POWER green", FP_LEDSIDE, {"1": "GND", "2": "LED_PWR"},
-     "C965877", "XL-3210UGC", "FP")
+     "C160470", "LTST-S220TGKT", "FP")
 R("R2", "2.2k", "+5V", "LED_PWR", "FP")
 part("D12", "Device:LED", "FAULT red", FP_LEDSIDE, {"1": "GND", "2": "LED_FLT"},
-     "C965874", "XL-3210SURC", "FP")
+     "C284935", "LTST-S220KRKT", "FP")
 R("R81", "1k", "FAULT", "LED_FLT", "FP")
 part("D16", "Device:LED", "ARMED yellow", FP_LEDSIDE, {"1": "GND", "2": "LED_ARM"},
-     "C965876", "XL-3210UYC", "FP")
+     "C160468", "LTST-S220KSKT", "FP")
 R("R82", "1k", "EN_REQ", "LED_ARM", "FP")
 part("D8", "Device:LED", "EMISSION blue", FP_LEDSIDE, {"1": "GND", "2": "LED_EMI"},
-     "C965879", "XL-3210UBC", "FP")
+     "C160471", "LTST-S220TBKT", "FP")
 
 # ------------------------------------------------------------- mechanical
 for i in range(1, 5):

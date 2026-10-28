@@ -23,8 +23,9 @@ def Y(by):            # board y -> enclosure Y (front panel at Y = 100, rear at 
 
 
 P = placement.P
-# heights of the connector axes above the top of the PCB (from the datasheets)
-H_BNC, H_POT, H_TOGGLE, H_LED, H_DSUB, H_JACK35, H_DCJACK = 9.8, 6.5, 6.46, 0.75, 6.25, 2.5, 6.5
+# heights of the connector axes above the top of the PCB, from the datasheets (toggle
+# measured off the Dailywell M7 drawing, which gives no figure for it)
+H_BNC, H_POT, H_TOGGLE, H_LED, H_DSUB, H_JACK35, H_DCJACK = 9.8, 6.5, 6.45, 0.5, 6.25, 2.5, 7.0
 
 front = {
     # BNC axis x = footprint x (centre contact); pots: shaft at x - 2.5; toggle at x
@@ -141,8 +142,8 @@ module front_panel() {
             front_text("0", p[0] + 7.0, z_pcb + h_pot - 7.6, 1.8);
             front_text("MAX", p[0] - 8.5, z_pcb + h_pot - 7.6, 1.8);
         }
-        for (t = toggles) {                               // unthreaded 1/4" bushing
-            yhole(t[0], z_pcb + h_toggle, 6.8);
+        for (t = toggles) {                               // unthreaded 1/4" bushing, 0.6 mm play
+            yhole(t[0], z_pcb + h_toggle, 7.4);
             front_text(t[1], t[0], z_pcb + h_toggle + 7.5, 3.0);
         }
         for (l = leds) {                                  // side-view LED windows

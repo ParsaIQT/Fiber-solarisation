@@ -241,7 +241,21 @@ Found and fixed while checking against the datasheets:
 * SW1: terminal holes 1.2 → 1.85 mm (Dailywell M7 P.C. mounting holes).
 * J2–J4: BNC ground-post holes 1.3 → 1.4 mm for the Ø1.2 (−0.1) posts.
 * C10: 100 nF → 1 µF (REF3030 needs ≥ 0.47 µF on its supply).
-* Side LEDs: the silkscreen bar now marks the cathode pad (pad 1).
+* Side LEDs: the XINGLIGHT XL-3210 datasheet contradicts itself on which end
+  is the cathode (its tape drawing and its outline drawing disagree), so the
+  four panel LEDs are now Lite-On LTST-S220 parts (TGKT green, KSKT yellow,
+  TBKT blue, KRKT red), whose package and tape drawings both label the
+  cathode. Footprint per Lite-On's land pattern (two 1.0 × 1.5 mm pads 1.0 mm
+  apart); with the lens towards the panel the cathode (pad 1, GND) is the
+  left-hand pad seen from above.
+* J1: the DC-005 plug axis is 7.0 mm above the board (4.00 mm below the top of
+  the 11.0 mm body), not 6.5 mm; the rear-panel hole now sits on it.
+* SW1: the Dailywell drawing gives no bushing height (its "6.46" is the lever
+  length); measured off the drawing it is ~6.45 mm, and the panel hole is
+  widened to Ø7.4 (0.6 mm play on the Ø6.22 bushing) to absorb the error.
+* The DE-9 shell axis (6.25 mm) agrees with KiCad's own 3D model of the
+  footprint. A mating plug's shell slides over the socket shell through the
+  panel cut-out, so the plug flange sits ~6 mm outside the socket flange.
 
 Still to be confirmed by eye: the JLC rotation offsets (SOT-23 +180°,
 SOIC +270°, electrolytics +180°, side LEDs unchanged) in the placement

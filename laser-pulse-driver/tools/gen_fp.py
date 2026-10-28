@@ -149,32 +149,33 @@ def toggle():
 
 
 def led_side():
-    """XINGLIGHT XL-3210 side-view LED (3.2 x 1.0 x 1.5 mm, '1204').
-    Emits towards -X.  Origin = centre of the pad band.  Pad 2 = anode (+), pad 1 = cathode,
-    matching the KiCad LED symbol (1 = K, 2 = A).  Centre pad is mechanical only."""
-    f = FP("LED_SideView_XL-3210",
-           "Side-view LED 3.2x1.0 mm, XINGLIGHT XL-3210 series, emits towards -X; "
-           "recommended land pattern from datasheet", "LED side view right angle", tht=False)
-    f.prop("Reference", "REF**", 1.8, -2.6, "F.SilkS", size=0.8)
-    f.prop("Value", "XL-3210", 1.8, 2.6, "F.Fab", size=0.6)
-    f.prop("Datasheet", "https://jlcpcb.com/partdetail/C965877", 0, 0, "F.Fab", hide=True)
+    """Lite-On LTST-S220 side-looking LED (2.15 x 0.6 x 1.0 mm), lens towards -X.
+    Origin = body centre.  Lite-On's suggested land pattern: two 1.0 x 1.5 mm pads
+    1.0 mm apart.  Pad 1 = cathode, pad 2 = anode (KiCad LED symbol).  With the lens
+    towards -X the cathode mark is at +Y; Lite-On's package drawing and its tape
+    drawing (lens to the right, CATHODE at the top) agree on this."""
+    f = FP("LED_SideView_LiteOn_LTST-S220",
+           "Side-looking LED 2.15x0.6x1.0 mm, Lite-On LTST-S220 series, emits towards -X; "
+           "land pattern from the datasheet", "LED side view right angle", tht=False)
+    f.prop("Reference", "REF**", 1.6, -2.6, "F.SilkS", size=0.8)
+    f.prop("Value", "LTST-S220", 1.6, 2.6, "F.Fab", size=0.6)
+    f.prop("Datasheet", "https://www.lcsc.com/datasheet/C284935.pdf", 0, 0, "F.Fab", hide=True)
     f.prop("Description", "", 0, 0, "F.Fab", hide=True)
-    f.smd("2", 0, -1.55, 0.93, 0.9)
-    f.smd("1", 0, 1.55, 0.93, 0.9)
-    f.smd("", 0.215, 0, 0.5, 0.9)
-    f.rect(-0.5, -1.6, 0.5, 1.6, "F.Fab", 0.1)
-    f.line(-0.5, -0.8, -1.0, -0.4, "F.Fab", 0.1); f.line(-1.0, -0.4, -1.0, 0.4, "F.Fab", 0.1)
-    f.line(-1.0, 0.4, -0.5, 0.8, "F.Fab", 0.1)
-    f.line(0.75, -2.3, 0.75, 2.3, "F.SilkS")      # rear edge marker
-    f.line(-0.6, 2.35, 0.75, 2.35, "F.SilkS")      # cathode (pad 1) marker
-    f.rect(-1.25, -2.25, 0.85, 2.25, "F.CrtYd", 0.05)
-    f.model("${KIPRJMOD}/lib/ld405.3dshapes/LED_SideView_XL-3210.wrl")
+    f.smd("2", 0, -1.25, 1.0, 1.5)
+    f.smd("1", 0, 1.25, 1.0, 1.5)
+    f.rect(-0.3, -1.075, 0.3, 1.075, "F.Fab", 0.1)                     # body
+    f.line(-0.3, -0.85, -0.75, -0.45, "F.Fab", 0.1); f.line(-0.75, -0.45, -0.75, 0.45, "F.Fab", 0.1)
+    f.line(-0.75, 0.45, -0.3, 0.85, "F.Fab", 0.1)                      # lens
+    f.line(0.75, -2.1, 0.75, 2.1, "F.SilkS")       # rear edge marker
+    f.line(-0.65, 2.25, 0.75, 2.25, "F.SilkS")     # cathode (pad 1) marker
+    f.rect(-1.0, -2.25, 0.85, 2.25, "F.CrtYd", 0.05)
+    f.model("${KIPRJMOD}/lib/ld405.3dshapes/LED_SideView_LTST-S220.wrl")
     f.save()
 
 
 def dcjack():
     """DC-005 5.5/2.0 mm barrel jack, right angle (XKB DC-005-5A-2.0, LCSC C381116).
-    Body 9.0 W x 11.0 H x 14.0 L, plug axis 6.5 mm above the board.
+    Body 9.0 W x 11.0 H x 14.0 L, plug axis 7.0 mm above the board (4.0 below the top).
     Origin = centre of the front face on the board edge line, plug enters from -X.
     Pin 1 = centre (+) at x = 13.6, pin 2 = sleeve at x = 7.7, pin 3 = switch at x = 10.6,
     y = +/-4.7.  Pin 3 slot is provided on both sides; both are tied to pin 2 (GND)."""

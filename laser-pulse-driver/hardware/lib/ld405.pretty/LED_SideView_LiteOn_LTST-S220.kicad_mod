@@ -1,15 +1,15 @@
-(footprint "LED_SideView_XL-3210"
+(footprint "LED_SideView_LiteOn_LTST-S220"
 	(version 20241229)
 	(generator "pcbnew")
 	(generator_version "9.0")
 	(layer "F.Cu")
-	(descr "Side-view LED 3.2x1.0 mm, XINGLIGHT XL-3210 series, emits towards -X; recommended land pattern from datasheet")
+	(descr "Side-looking LED 2.15x0.6x1.0 mm, Lite-On LTST-S220 series, emits towards -X; land pattern from the datasheet")
 	(tags "LED side view right angle")
 	(attr smd)
 	(property "Reference" "REF**"
-		(at 1.8 -2.6 0)
+		(at 1.6 -2.6 0)
 		(layer "F.SilkS")
-		(uuid "dd5e9b50-4af4-50de-8ff0-0da38a1ad31c")
+		(uuid "6721edd8-f82d-5990-b6dd-685365005acb")
 		(effects
 			(font
 				(size 0.8 0.8)
@@ -17,10 +17,10 @@
 			)
 		)
 	)
-	(property "Value" "XL-3210"
-		(at 1.8 2.6 0)
+	(property "Value" "LTST-S220"
+		(at 1.6 2.6 0)
 		(layer "F.Fab")
-		(uuid "c7c9fc64-1e18-50fe-9dec-5ab012efd214")
+		(uuid "ef5e7122-a042-5ce0-8849-c5bfcde880e6")
 		(effects
 			(font
 				(size 0.6 0.6)
@@ -28,12 +28,12 @@
 			)
 		)
 	)
-	(property "Datasheet" "https://jlcpcb.com/partdetail/C965877"
+	(property "Datasheet" "https://www.lcsc.com/datasheet/C284935.pdf"
 		(at 0 0 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "a46cc642-8498-55e5-96e4-d5d9174b78ce")
+		(uuid "62b6c673-06e9-5fff-a6d4-2f8ab70786f6")
 		(effects
 			(font
 				(size 1 1)
@@ -46,7 +46,7 @@
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "5ea77f6d-f353-5750-9b1b-c863286c30f1")
+		(uuid "f936f7c4-c537-5fd0-a6ae-0dc0a5a35724")
 		(effects
 			(font
 				(size 1 1)
@@ -55,89 +55,82 @@
 		)
 	)
 	(pad "2" smd roundrect
-		(at 0 -1.55)
-		(size 0.93 0.9)
+		(at 0 -1.25)
+		(size 1 1.5)
 		(layers "F.Cu" "F.Mask" "F.Paste")
 		(roundrect_rratio 0.15)
-		(uuid "b18822b4-19ee-5406-b6ac-d2a3cc926907")
+		(uuid "22e1e7c8-d4c5-5de5-bf01-4a30584492be")
 	)
 	(pad "1" smd roundrect
-		(at 0 1.55)
-		(size 0.93 0.9)
+		(at 0 1.25)
+		(size 1 1.5)
 		(layers "F.Cu" "F.Mask" "F.Paste")
 		(roundrect_rratio 0.15)
-		(uuid "7f3b2873-7b91-5192-b760-e1355fe8b71a")
-	)
-	(pad "" smd roundrect
-		(at 0.215 0)
-		(size 0.5 0.9)
-		(layers "F.Cu" "F.Mask" "F.Paste")
-		(roundrect_rratio 0.15)
-		(uuid "2edd47c5-90ab-5820-a9e0-852630ecfb88")
+		(uuid "66c16da1-b29d-5a82-a09b-930af6e38582")
 	)
 	(fp_rect
-		(start -0.5 -1.6)
-		(end 0.5 1.6)
+		(start -0.3 -1.075)
+		(end 0.3 1.075)
 		(stroke
 			(width 0.1)
 			(type solid)
 		)
 		(fill no)
 		(layer "F.Fab")
-		(uuid "0d5368cf-5505-5390-834d-583da7a38e2f")
+		(uuid "b096f9b0-27ab-5890-813b-d11e4f8649fd")
 	)
 	(fp_line
-		(start -0.5 -0.8)
-		(end -1 -0.4)
+		(start -0.3 -0.85)
+		(end -0.75 -0.45)
 		(stroke
 			(width 0.1)
 			(type solid)
 		)
 		(layer "F.Fab")
-		(uuid "8afdb138-644d-5889-b075-ecff92c2f907")
+		(uuid "62792689-718d-5d9d-a865-57453da1abb7")
 	)
 	(fp_line
-		(start -1 -0.4)
-		(end -1 0.4)
+		(start -0.75 -0.45)
+		(end -0.75 0.45)
 		(stroke
 			(width 0.1)
 			(type solid)
 		)
 		(layer "F.Fab")
-		(uuid "0dd90f65-96bf-5f50-bd1a-aa4dd6e90ede")
+		(uuid "e0134244-3ff7-5114-865f-f1b749f68fb9")
 	)
 	(fp_line
-		(start -1 0.4)
-		(end -0.5 0.8)
+		(start -0.75 0.45)
+		(end -0.3 0.85)
 		(stroke
 			(width 0.1)
 			(type solid)
 		)
 		(layer "F.Fab")
-		(uuid "4f4eb34b-c1f5-5f89-acc3-fa9b597bab71")
+		(uuid "768b8980-905b-513e-9711-368b10ca7cfb")
 	)
 	(fp_line
-		(start 0.75 -2.3)
-		(end 0.75 2.3)
+		(start 0.75 -2.1)
+		(end 0.75 2.1)
 		(stroke
 			(width 0.12)
 			(type solid)
 		)
 		(layer "F.SilkS")
-		(uuid "e0674f49-a424-540d-a4d1-ceed5c4a2075")
+		(uuid "438c11a9-a2cb-548d-8efc-497d6b3de09d")
 	)
 	(fp_line
-		(start -0.6 2.35)
-		(end 0.75 2.35)
+		(start -0.65 2.25)
+		(end 0.75 2.25)
 		(stroke
 			(width 0.12)
 			(type solid)
 		)
 		(layer "F.SilkS")
-		(uuid "7c76b02f-9bba-5155-b289-f4d48c4e7f4a")
+		(uuid "8956967c-4dd4-5a1b-9db6-91d10c6f8a31")
 	)
 	(fp_rect
-		(start -1.25 -2.25)
+		(start -1 -2.25)
 		(end 0.85 2.25)
 		(stroke
 			(width 0.05)
@@ -145,9 +138,9 @@
 		)
 		(fill no)
 		(layer "F.CrtYd")
-		(uuid "c36aae10-8fe6-54b5-a77e-5c510f8f3619")
+		(uuid "1d839e7e-fb7c-5d79-9f50-2728812823d1")
 	)
-	(model "${KIPRJMOD}/lib/ld405.3dshapes/LED_SideView_XL-3210.wrl"
+	(model "${KIPRJMOD}/lib/ld405.3dshapes/LED_SideView_LTST-S220.wrl"
 		(offset
 			(xyz 0 0 0)
 		)

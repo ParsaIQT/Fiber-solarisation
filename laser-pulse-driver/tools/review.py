@@ -130,6 +130,12 @@ def draw_footprint(ax, ref, rot=0.0, labels=True, nets=True, dims=True, fab=True
     pads = [p for p in fp.Pads() if p.IsOnLayer(pcbnew.F_Cu) or p.IsOnLayer(pcbnew.B_Cu)
             or p.GetAttribute() == pcbnew.PAD_ATTRIB_NPTH]
     centres = [(p.GetPosition().x / 1e6, p.GetPosition().y / 1e6) for p in pads]
+    # two columns of numbered pads (SOT-23, SOIC, DPAK, relay): net names go outwards
+    numbered = [p for p in pads if p.GetNumber()[:1].isdigit()]
+    cols = sorted(set(round(p.GetPosition().x / 1e6, 1) for p in numbered))
+    columns = len(cols) == 2 and len(numbered) >= 3
+    xmid = (cols[0] + cols[-1]) / 2 if cols else 0.0
+    texts = []
 
     def crowded(x, y, w, dy):
         """another pad centre within the label's slot above (dy < 0) or below (dy > 0)?"""
@@ -162,9 +168,10 @@ def draw_footprint(ax, ref, rot=0.0, labels=True, nets=True, dims=True, fab=True
             if dims:
                 txt = f"Ø{dx:g}" if abs(dx - dy) < 1e-6 else f"{dx:g}×{dy:g}"
                 if crowded(x, y, pw, ph / 2 + 2.2):          # no room below: put it on the left
-                    ax.text(x - pw / 2 - 0.2, y, txt, ha="right", va="center", fontsize=6.5, color=MUTED, zorder=5)
+                    t = ax.text(x - pw / 2 - 0.2, y, txt, ha="right", va="center", fontsize=6.5, color=MUTED, zorder=5)
                 else:
-                    ax.text(x, y + ph / 2 + 0.2, txt, ha="center", va="top", fontsize=6.5, color=MUTED, zorder=5)
+                    t = ax.text(x, y + ph / 2 + 0.2, txt, ha="center", va="top", fontsize=6.5, color=MUTED, zorder=5)
+                texts.append(t)
         num = p.GetNumber()
         if labels and num:
             ax.text(x, y, num, ha="center", va="center", fontsize=8.5, weight="bold", color=INK, zorder=6)
@@ -173,15 +180,32 @@ def draw_footprint(ax, ref, rot=0.0, labels=True, nets=True, dims=True, fab=True
             n = "NC" if n.startswith("unconnected") else n
             kw = dict(fontsize=6.5, color="#1f5fa8" if n != "NC" else MUTED, zorder=6,
                       bbox=dict(fc="white", ec="none", pad=0.4, alpha=0.85))
-            if crowded(x, y, pw, -(ph / 2 + 2.2)):           # no room above: put it on the right
-                ax.text(x + pw / 2 + 0.25, y, n, ha="left", va="center", **kw)
+            if columns and x < xmid:
+                t = ax.text(x - pw / 2 - 0.3, y, n, ha="right", va="center", **kw)
+            elif columns:
+                t = ax.text(x + pw / 2 + 0.3, y, n, ha="left", va="center", **kw)
+            elif crowded(x, y, pw, -(ph / 2 + 2.2)):           # no room above: put it on the right
+                t = ax.text(x + pw / 2 + 0.25, y, n, ha="left", va="center", **kw)
             else:
-                ax.text(x, y - 0.32 - ph / 2, n, ha="center", va="bottom", **kw)
+                t = ax.text(x, y - 0.32 - ph / 2, n, ha="center", va="bottom", **kw)
+            texts.append(t)
     e = np.array(ext)
     m = 1.2
-    ax.set_xlim(e[:, 0].min() - m, e[:, 0].max() + m)
-    ax.set_ylim(e[:, 1].max() + m, e[:, 1].min() - m)
+    x0, x1, y0, y1 = e[:, 0].min() - m, e[:, 0].max() + m, e[:, 1].min() - m, e[:, 1].max() + m
+    ax.set_xlim(x0, x1)
+    ax.set_ylim(y1, y0)
     ax.set_aspect("equal")
+    # widen the view until every label fits inside the frame
+    for _ in range(2):
+        ax.figure.canvas.draw()
+        r = ax.figure.canvas.get_renderer()
+        inv = ax.transData.inverted()
+        for t in texts:
+            b = t.get_window_extent(r).transformed(inv)
+            x0, x1 = min(x0, b.x0 - 0.3), max(x1, b.x1 + 0.3)
+            y0, y1 = min(y0, min(b.y0, b.y1) - 0.3), max(y1, max(b.y0, b.y1) + 0.3)
+        ax.set_xlim(x0, x1)
+        ax.set_ylim(y1, y0)
     ax.grid(True, color="#eef0f3", lw=0.5, zorder=0)
     ax.tick_params(labelsize=7)
     ax.set_xlabel("mm (footprint coordinates, top view)", fontsize=7, color=MUTED)
@@ -194,7 +218,7 @@ def card_footprints():
     specs = [
         ("fp_relay_K1", "K1", 0, "K1 relay G6K-2F-Y: pads and nets (after fix)"),
         ("fp_toggle_SW1", "SW1", 0, "SW1 toggle 1MS1T2B4M7QES: pads, holes, nets"),
-        ("fp_led_D3", "D3", 0, "D3 side-view LED XL-3210 (lens towards -X): pads and nets"),
+        ("fp_led_D3", "D3", 0, "D3 side-view LED Lite-On LTST-S220 (lens towards -X): pads and nets"),
         ("fp_bnc_J2", "J2", 0, "J2 BNC DOSIN-801-0080: pads and holes"),
         ("fp_dcjack_J1", "J1", 0, "J1 DC jack DC-005: slots and nets"),
         ("fp_jack35_J6", "J6", 0, "J6 3.5 mm jack PJ-320D: pads and nets"),
@@ -706,18 +730,16 @@ def prim_section(kind, g, plane, c):
             if min(p0[ic], p1[ic]) <= c <= max(p0[ic], p1[ic]):
                 return [("circle", p0[ia], p0[ib], r)]
             return []
-        if max(ax) > 0.999:                                # axis in the plane: a strip
+        if ax[ic] < 1e-6:                                  # axis parallel to the plane
             off = abs(c - p0[ic])
             if off > r:
                 return []
             h = math.sqrt(r * r - off * off)
-            k = [i for i in (ia, ib) if ax[i] > 0.999][0]
-            o = ib if k == ia else ia
-            lo, hi = min(p0[k], p1[k]), max(p0[k], p1[k])
-            if k == ia:
-                return [("rect", lo, p0[o] - h, hi, p0[o] + h)]
-            return [("rect", p0[o] - h, lo, p0[o] + h, hi)]
-        return []                                          # tilted (toggle lever): not drawn
+            ua, ub = d[ia] / L, d[ib] / L
+            na, nb = -ub * h, ua * h
+            return [("poly", [(p0[ia] + na, p0[ib] + nb), (p1[ia] + na, p1[ib] + nb),
+                              (p1[ia] - na, p1[ib] - nb), (p0[ia] - na, p0[ib] - nb)])]
+        return []                                          # oblique to the plane: not drawn
     if kind == "dsub":
         x, z, w, h, y0, y1 = g
         if plane == "x" and abs(c - x) <= w / 2:
@@ -775,63 +797,137 @@ def draw_scad(ax, polys_, fc, z=1, flipx=False, ec=None):
     ax.add_patch(PathPatch(Path(verts, codes), fc=fc, ec=ec or fc, lw=0.6, zorder=z))
 
 
-def section_x(c, title, yr, zr, prims, name, notes=()):
-    """Side section through X = c: enclosure parts from OpenSCAD, PCB, part primitives."""
-    fig, ax = plt.subplots(figsize=(9, 9 * (zr[1] - zr[0]) / (yr[1] - yr[0]) + 0.8))
-    for mod, col, z in (("base", PART_COL["enclosure"], 1), ("front_panel", PART_COL["panel"], 1),
-                        ("rear_panel", PART_COL["panel"], 1), ("lid", PART_COL["lid"], 1)):
-        draw_scad(ax, scad_section(mod, "x", c), col, z)
-    # PCB slab (full board depth: Y 0..100)
+def ycyl(x, y0, y1, z, r):
+    """A cylinder along Y in enclosure coordinates (for nuts, knobs and plugs)."""
+    return ((x, y0, z), (x, y1, z), r)
+
+
+def section_x(c, title, yr, zr, prims, name, labels=(), extras=(), ghosts=(), note=None):
+    """Side section through X = c: enclosure parts sliced from the STLs, the PCB, the
+    parts at datasheet dimensions, `extras` (nuts, washers: solid) and `ghosts` (a
+    typical mating plug or knob: dashed).  `labels` = (text, (Y, Z) pointed at, (Y, Z) of the text)."""
+    fig, ax = plt.subplots(figsize=(9.5, 9.5 * (zr[1] - zr[0]) / (yr[1] - yr[0]) + 0.9))
+    for mod, col in (("base", PART_COL["enclosure"]), ("front_panel", PART_COL["panel"]),
+                     ("rear_panel", PART_COL["panel"]), ("lid", PART_COL["lid"])):
+        draw_scad(ax, scad_section(mod, "x", c), col, 1)
     ax.add_patch(Rectangle((0, Z_PCB - 1.6), 100, 1.6, fc=PART_COL["pcb"], ec="none", zorder=2))
     for ref, kind, rgb, g in prims:
         for sh in prim_section(kind, g, "x", c):
             draw_shape(ax, sh, hexcol(rgb), "#222", lw=0.6, z=3)
+    for kind, rgb, g in extras:
+        for sh in prim_section(kind, g, "x", c):
+            draw_shape(ax, sh, hexcol(rgb), "#222", lw=0.6, z=4)
+    for kind, g in ghosts:
+        for sh in prim_section(kind, g, "x", c):
+            if sh[0] == "rect":
+                _, a0, b0, a1, b1 = sh
+                ax.add_patch(Rectangle((a0, b0), a1 - a0, b1 - b0, fill=False, ec=ACCENT, lw=1.0, ls=(0, (4, 3)), zorder=5))
+            elif sh[0] == "poly":
+                ax.add_patch(Polygon(sh[1], closed=True, fill=False, ec=ACCENT, lw=1.0, ls=(0, (4, 3)), zorder=5))
     ax.axhline(Z_LID, color=ACCENT, lw=0.8, ls=":", zorder=6)
+    for t, (px, py), (tx, ty) in labels:
+        ax.annotate(t, (px, py), xytext=(tx, ty), textcoords="data", fontsize=8, color=INK, zorder=9,
+                    ha="center", va="center",
+                    arrowprops=dict(arrowstyle="-", color="#4b5864", lw=0.7, shrinkA=0, shrinkB=0),
+                    bbox=dict(fc="white", ec="#c9d0d6", pad=2.2, alpha=0.95))
     ax.set_xlim(*yr); ax.set_ylim(*zr); ax.set_aspect("equal")
     ax.grid(True, color="#e3e6ea", lw=0.5, zorder=0)
     ax.set_xlabel("Y (mm): 0 = rear panel inner face, 100 = front panel inner face", fontsize=8, color=MUTED)
     ax.set_ylabel("Z (mm) above the base underside", fontsize=8, color=MUTED)
     ax.set_title(title, fontsize=10, color=INK, loc="left")
-    for (x, y, t) in notes:
-        ax.annotate(t, (x, y), xytext=(8, 8), textcoords="offset points", fontsize=7.5, color=INK, zorder=9,
-                    arrowprops=dict(arrowstyle="-", color=MUTED, lw=0.6),
-                    bbox=dict(fc="white", ec="#ccd", pad=2, alpha=0.9))
+    if note:
+        ax.text(0.01, 0.015, note, transform=ax.transAxes, fontsize=7.5, color=MUTED, va="bottom", zorder=9,
+                bbox=dict(fc="white", ec="none", pad=1.5, alpha=0.9))
     ax.tick_params(labelsize=7)
     save(fig, name)
 
 
 def card_enclosure():
     prims = board_prims()
-    F = GE.front
-    zp = Z_PCB
-    yf = 100.0
-    # front panel sections (Y from 75 to 112)
-    secs = [
-        ("sec_front_bnc", F["bnc"][0][0], "Section through J2 (TTL IN) axis: BNC flange against the panel, M12 thread through the Ø12.4 hole",
-         [(yf + 1.2, zp + 9.8 + 6.2, "Ø12.4 hole, 2.5 mm panel"), (yf - 3, zp + 15, "BNC body 15 mm tall"),
-          (yf - 0.5, Z_LID, "lid underside: BNC flange top clears by ~2.2 mm")]),
-        ("sec_front_pot", F["pot"][0][0], "Section through RV1 (PULSE) shaft: bushing through the Ø9.5 hole, 0.5 mm spot face",
-         [(yf + 2, zp + 6.5 + 4.75, "Ø9.5 hole + Ø17 spot face"), (yf - 0.3, zp + 0.5, "anti-rotation lug pocket")]),
-        ("sec_front_toggle", F["toggle"][0][0], "Section through SW1 bushing (Ø6.8 hole); lever drawn up = ENABLE",
-         [(yf + 1, zp + 6.46 + 3.4, "Ø6.8 hole for the 1/4\" bushing")]),
-        ("sec_front_led", F["led"][0][0], "Section through D3 (POWER) side-view LED and its 3.2 x 1.9 mm window",
-         [(yf + 1, zp + 0.9, "LED lens behind the window")]),
-    ]
-    for name, c, title, notes in secs:
-        section_x(c, title, (76, 112), (0, 34), prims, name, notes)
-    R = GE.rear
-    rsecs = [
-        ("sec_rear_dsub", R["dsub"][0], "Section through J5 (LD OUT) centre: flange in the 0.6 mm recess, shell into the outside pocket",
-         [(-1.0, zp + 12.6, "flange recess 0.6 mm"), (-3.6, zp + 6.25 + 3, "outside pocket: plug can mate fully")]),
-        ("sec_rear_dsub_post", R["dsub"][0] + 12.495, "Section through a J5 4-40 jack post (Ø6.3 clearance hole)",
-         [(-3, zp + 6.25 + 3, "jack post through the panel")]),
-        ("sec_rear_jack35", R["jack35"][0], "Section through J6 (INTERLOCK) 3.5 mm jack: Ø8.6 hole + Ø12 counterbore for the plug body",
-         [(-3, zp + 2.5 + 4.3, "Ø8.6 hole")]),
-        ("sec_rear_dc", R["dcjack"][0], "Section through J1 (9V DC) jack: Ø11 hole in front of the jack face",
-         [(-3, zp + 6.5 + 5.5, "Ø11 hole")]),
-    ]
-    for name, c, title, notes in rsecs:
-        section_x(c, title, (-12, 24), (0, 34), prims, name, notes)
+    F, R = GE.front, GE.rear
+    zp, yf = Z_PCB, 100.0
+    pt = PANEL_T
+    STEEL, BRASS = (0.72, 0.74, 0.77), (0.80, 0.68, 0.38)
+    common_f = [("front panel", (yf + pt / 2, 27.5), (yf + 9, 32.2)), ("lid", (84, Z_LID + 1.2), (80, 32.2)),
+                ("base", (84, 1.5), (80, 4.5)), ("PCB", (84, zp - 0.8), (80, zp - 3.6))]
+    common_r = [("rear panel", (-pt / 2, 27.5), (-10, 32.2)), ("lid", (12, Z_LID + 1.2), (16, 32.2)),
+                ("base", (12, 1.5), (16, 4.5)), ("PCB", (12, zp - 0.8), (16, zp - 3.6))]
+    note = "Solid: printed parts, PCB and parts at datasheet dimensions.  Dashed red: a typical mating plug or knob."
+
+    # --- J2 (BNC)
+    x = F["bnc"][0][0]; z = zp + GE.H_BNC
+    section_x(x, "J2 (TTL IN) BNC: flange inside the panel, nut and washer outside", (72, 124), (0, 34), prims,
+              "sec_front_bnc",
+              common_f + [("BNC body", (94, zp + 6), (86, zp + 3)),
+                          ("Ø14 flange", (99.5, z + 6.5), (93, 28.4)),
+                          ("M12 thread through Ø12.4 hole", (101.2, z + 6.0), (110, 31.3)),
+                          ("washer + nut", (104, z - 7.0), (106, 5.6)),
+                          ("bayonet", (114, z - 4.8), (113, 8.0)),
+                          ("cable plug (typical)", (118, z + 7.5), (118, 31.3))],
+              extras=[("cyl", STEEL, ycyl(x, yf + pt, yf + pt + 0.5, z, 6.9)),
+                      ("cyl", BRASS, ycyl(x, yf + pt + 0.5, yf + pt + 2.5, z, 7.6))],
+              ghosts=[("cyl", ycyl(x, yf + pt + 9.5, yf + pt + 30, z, 7.5))], note=note)
+    # --- RV1 (pot)
+    x = F["pot"][0][0]; z = zp + GE.H_POT
+    section_x(x, "RV1 (PULSE) pot: M9 bushing through Ø9.5, nut in the 0.5 mm spot face", (72, 124), (0, 34), prims,
+              "sec_front_pot",
+              common_f + [("pot body", (95, zp + 5), (86, zp + 3)),
+                          ("M9 bushing", (103.5, z + 4.5), (105, 28.4)),
+                          ("6 mm shaft", (112, z + 3), (116, 25.5)),
+                          ("washer + nut", (103.3, z - 6.5), (109, 6.2)),
+                          ("anti-rotation lug pocket", (yf + 0.1, zp + 1.0), (91, 8.4)),
+                          ("knob (typical)", (113, z - 7.5), (119, 12.5))],
+              extras=[("cyl", STEEL, ycyl(x, yf + pt - 0.5, yf + pt, z, 5.6)),
+                      ("cyl", BRASS, ycyl(x, yf + pt, yf + pt + 2.0, z, 6.5))],
+              ghosts=[("cyl", ycyl(x, yf + 5.5, yf + 16, z, 7.5))], note=note)
+    # --- SW1 (toggle)
+    x = F["toggle"][0][0]; z = zp + GE.H_TOGGLE
+    section_x(x, "SW1 (ENABLE) toggle: bushing through a Ø7.4 hole, lever up = ENABLE", (72, 124), (0, 34), prims,
+              "sec_front_toggle",
+              common_f + [("switch body", (92, zp + 9), (86, zp + 14.5)),
+                          ("bracket, soldered to the PCB", (98.3, zp - 0.5), (90, 6.0)),
+                          ("¼\" bushing (no nut)", (103, z - 3.1), (108, 8.4)),
+                          ("lever, up = ENABLE", (107.5, z + 1.6), (113, 22.5)),
+                          ("terminals 1 (low) - 2 - 3 (high)\nbend down into the PCB", (80.6, zp + 10.9), (79.5, 27.0))],
+              note=note)
+    # --- D3 (LED)
+    x = F["led"][0][0]
+    section_x(x, "D3 (POWER) side-view LED behind its 3.2 × 1.9 mm window", (72, 124), (0, 34), prims,
+              "sec_front_led",
+              common_f + [("LED, lens facing the window", (99.6, zp + 0.5), (93, zp + 6)),
+                          ("window", (yf + pt / 2, zp + 0.65), (110, zp + 6)),
+                          ("standoff + M3 screw", (85.5, 5), (92, 5.2))],
+              note=note)
+    # --- J5 (DE-9)
+    x = R["dsub"][0]; z = zp + GE.H_DSUB
+    section_x(x, "J5 (LD OUT) DE-9 centre: flange in its recess; a mating plug's shell slides over the socket shell",
+              (-30, 22), (0, 34), prims, "sec_rear_dsub",
+              common_r + [("socket body", (6, zp + 6), (10, zp + 15.5)),
+                          ("steel flange in 0.6 mm recess", (0, zp + 11.5), (-9, 29.0)),
+                          ("socket shell", (-4, z - 3.0), (-6, 6.6)),
+                          ("plug (typical): its flange stops ~6 mm out", (-16, z + 6.6), (-14, 25.6))],
+              ghosts=[("cyl", ycyl(x, -0.4, -6.5, z, 4.75)),
+                      ("box", (x - 15.5, -7.5, z - 6.25, x + 15.5, -6.5, z + 6.25)),
+                      ("box", (x - 16, -30, z - 7.8, x + 16, -7.5, z + 7.8))], note=note)
+    section_x(x + 12.495, "J5 jack post: 4-40 hex post through a Ø6.3 hole; the plug's jack screw threads into it",
+              (-30, 22), (0, 34), prims, "sec_rear_dsub_post",
+              common_r + [("hex jack post", (-3, z + 2.9), (-6, 24.5)),
+                          ("jack screw (typical)", (-14, z), (-18, 8.0))],
+              ghosts=[("cyl", ycyl(x + 12.495, -2.0, -30, z, 1.42))], note=note)
+    # --- J6 (3.5 mm)
+    x = R["jack35"][0]; z = zp + GE.H_JACK35
+    section_x(x, "J6 (INTERLOCK) 3.5 mm jack: plug through an Ø8.6 hole with an Ø12 counterbore", (-30, 22), (0, 34),
+              prims, "sec_rear_jack35",
+              common_r + [("jack", (8, zp + 4), (10, zp + 9.5)),
+                          ("plug (typical): Ø3.5 into the jack, body Ø6", (-12, z + 3), (-12, 22.0))],
+              ghosts=[("cyl", ycyl(x, 0, 14, z, 1.75)), ("cyl", ycyl(x, 0, -20, z, 3.0))], note=note)
+    # --- J1 (DC)
+    x = R["dcjack"][0]; z = zp + GE.H_DCJACK
+    section_x(x, "J1 (9V DC) jack: plug axis 7.0 mm above the PCB, Ø11 hole on the same axis", (-30, 22), (0, 34),
+              prims, "sec_rear_dc",
+              common_r + [("jack (axis 4.0 below its top)", (10, zp + 9), (11, 25.8)),
+                          ("plug (typical): Ø5.5 barrel, body Ø10", (-12, z + 5), (-12, 26.5))],
+              ghosts=[("cyl", ycyl(x, 0, 9.5, z, 2.75)), ("cyl", ycyl(x, 0, -22, z, 5.0))], note=note)
     panel_face("front", prims)
     panel_face("rear", prims)
     lid_clearance(prims)
@@ -967,28 +1063,30 @@ def card_diagrams():
     ax.set_xlim(-20, 20); ax.set_ylim(-17, 10); ax.set_aspect("equal"); ax.axis("off")
     save(fig, "j5_face")
 
-    # --- toggle: lever direction and contacts
-    fig, ax = plt.subplots(figsize=(10, 4.6))
+    # --- toggle: lever direction and contacts (geometry from the Dailywell M7 drawing)
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    z = GE.H_TOGGLE
     ax.add_patch(Rectangle((-8, -1.6), 40, 1.6, fc=PART_COL["pcb"], ec="none"))
     ax.text(31.5, -0.8, "PCB", color="white", fontsize=8, ha="right", va="center")
-    ax.add_patch(Rectangle((-4.5, -1.6), 2.5, 17, fc=PART_COL["panel"], ec="none", alpha=0.85, zorder=3))
-    ax.text(-3.25, 15.9, "front\npanel", ha="center", va="bottom", fontsize=8, color=PART_COL["panel"])
-    ax.add_patch(Rectangle((0, 0), 12.7, 12.8, fc="#c0392b", ec="#7b241c"))
-    ax.add_patch(Rectangle((-7.31, 6.46 - 3.11), 7.31, 6.22, fc="#bdc3c7", ec="#7f8c8d"))
+    ax.add_patch(Rectangle((-4.5, -1.6), 2.5, 17.5, fc=PART_COL["panel"], ec="none", alpha=0.85, zorder=3))
+    ax.text(-3.25, 16.2, "front\npanel", ha="center", va="bottom", fontsize=8, color=PART_COL["panel"])
+    ax.add_patch(Rectangle((-0.76, -2.6), 0.76, 15.3, fc="#bdc3c7", ec="#7f8c8d"))          # bracket and legs
+    ax.add_patch(Rectangle((0, 0), 10.1, 12.7, fc="#c0392b", ec="#7b241c"))
+    ax.add_patch(Rectangle((-7.31, z - 3.11), 7.31, 6.22, fc="#bdc3c7", ec="#7f8c8d", zorder=4))
     a = math.radians(18)
     for sgn, ls, al in ((1, "-", 1.0), (-1, "--", 0.5)):
-        ax.plot([-7.0, -7.31 - 11 * math.cos(a)], [6.46, 6.46 + sgn * 11 * math.sin(a)], color="#7f8c8d", lw=4,
-                ls=ls, alpha=al, solid_capstyle="round")
-    ax.text(-20.5, 6.46 + 11 * math.sin(a) + 2.4, "lever UP = ENABLE", fontsize=9.5, color=INK, weight="bold", ha="left")
-    ax.text(-19.5, 6.46 - 11 * math.sin(a) - 2.2, "lever down = off", fontsize=9, color=MUTED, ha="left")
-    for n, x, h in ((1, 12.70, 2.5), (2, 16.51, 6.4), (3, 20.32, 10.3)):
-        ax.plot([12.7, x, x], [h, h, -1.6], color="#7f8c8d", lw=2.2)
+        ax.plot([-6.5, -7.31 - 6.46], [z, z + sgn * 6.46 * math.tan(a) * 1.0], color="#7f8c8d", lw=4.5,
+                ls=ls, alpha=al, solid_capstyle="round", zorder=5)
+    ax.text(-20.5, z + 4.6, "lever UP = ENABLE", fontsize=9.5, color=INK, weight="bold", ha="left")
+    ax.text(-20.5, z - 5.4, "lever down = off", fontsize=9, color=MUTED, ha="left")
+    for n, x, h in ((1, 12.70, 2.3), (2, 16.51, 6.5), (3, 20.32, 10.9)):
+        ax.plot([10.1, x, x], [h, h, -3.18], color="#7f8c8d", lw=2.2)
         ax.text(x + 0.6, h + 0.5, str(n), fontsize=10, weight="bold", color=INK)
-    ax.text(22.5, 9.5, "terminals leave the body\n1 lowest, 3 highest;\nPCB pads 1, 2, 3 from the panel back",
+    ax.text(22.5, 12.0, "terminals leave the back of the body,\n1 lowest and 3 highest, and bend down\n"
+            "at 12.70, 16.51 and 20.32 mm (pads 1, 2, 3)", fontsize=8.5, color=INK, va="top")
+    ax.text(22.5, 4.4, "lever up: 2-1 closed -> EN_SW to GND -> enabled\nlever down: 2-3 closed (3 unused) -> off",
             fontsize=8.5, color=INK, va="top")
-    ax.text(22.5, 3.0, "UP: 2-1 closed -> EN_SW to GND -> enabled\ndown: 2-3 closed (3 is unconnected) -> off",
-            fontsize=8.5, color=INK, va="top")
-    ax.set_xlim(-21, 44); ax.set_ylim(-3, 19); ax.set_aspect("equal"); ax.axis("off")
+    ax.set_xlim(-21, 46); ax.set_ylim(-4, 19.5); ax.set_aspect("equal"); ax.axis("off")
     ax.set_title("SW1 toggle seen from the side (panel on the left): which way is ENABLE", fontsize=11, color=INK, loc="left")
     save(fig, "toggle_function")
 
