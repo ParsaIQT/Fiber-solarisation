@@ -30,6 +30,12 @@ LAYERS = "F.Cu,In1.Cu,In2.Cu,B.Cu,F.Paste,B.Paste,F.SilkS,B.SilkS,F.Mask,B.Mask,
 JLC_ROT = [(r"^SOT-23", 180), (r"^SOIC-", 270), (r"^CP_Elec_", 180),
            (r"^BNC_DOSIN_801-0080", 90), (r"^Potentiometer_Alps_RK09L", 270),
            (r"^Toggle_Dailywell", 270), (r"^DSUB-9_Socket", 270)]
+# Parts whose JLCPCB library footprint is drawn differently from others in the same
+# package (seen in the placement preview): offset by LCSC number, replacing the rule above.
+JLC_ROT_PART = {"C72497": 0,       # C1, C2 220 uF: '+' already on the left at 0 deg
+                "C47190": 270,     # K1 G6K-2F-Y: library pins run horizontally
+                "C2585": 90,       # Q2 IRFR9024N: library drawn with the leads down
+                "C7502690": 270}   # D10 BAT54A: library body turned 90 deg from other SOT-23s
 
 
 def run(*cmd):
@@ -102,12 +108,16 @@ def cpl():
     with open(pos) as fi, open(out, "w", newline="") as fo:
         w = csv.writer(fo)
         w.writerow(["Designator", "Mid X", "Mid Y", "Layer", "Rotation"])
+        lcsc = {p["ref"]: p.get("lcsc") for p in design.PARTS}
         for r in csv.DictReader(fi):
             rot = float(r["Rot"])
-            for pat, off in JLC_ROT:
-                if re.search(pat, r["Package"]):
-                    rot += off
-                    break
+            if lcsc.get(r["Ref"]) in JLC_ROT_PART:
+                rot += JLC_ROT_PART[lcsc[r["Ref"]]]
+            else:
+                for pat, off in JLC_ROT:
+                    if re.search(pat, r["Package"]):
+                        rot += off
+                        break
             rot %= 360
             w.writerow([r["Ref"], f"{float(r['PosX']):.4f}mm", f"{float(r['PosY']):.4f}mm",
                         "Top" if r["Side"] == "top" else "Bottom", f"{rot:g}"])

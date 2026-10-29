@@ -73,8 +73,10 @@ PCB Assembly options (switch on *PCB Assembly* below *Advanced Options*):
   pin-1/polarity marks agree for: U1–U14, Q1–Q11, diodes D1–D16, the LEDs
   (D3, D8, D12, D16 – lenses must face the board edge), C1/C2 (electrolytic)
   and K1. The CPL already contains the usual KiCad→JLC rotation offsets
-  (SOT-23 +180°, SOIC +270°, electrolytics +180°) and offsets for the panel
-  parts (BNCs +90°, pots, toggle and DE-9 +270°). In the 3D preview the BNC
+  (SOT-23 +180°, SOIC +270°, electrolytics +180°), offsets for the panel
+  parts (BNCs +90°, pots, toggle and DE-9 +270°) and per-part corrections
+  found in the preview (C1/C2, K1, Q2, D10). Compare the pink markers with
+  `docs/review/jlc_markers_overview.png`. In the 3D preview the BNC
   bayonets, pot shafts and toggle lever must stick out over the front edge,
   and the DE-9, 3.5 mm jack and DC jack must open over the rear edge; rotate
   anything that still looks wrong.
