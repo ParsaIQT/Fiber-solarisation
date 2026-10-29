@@ -73,8 +73,11 @@ PCB Assembly options (switch on *PCB Assembly* below *Advanced Options*):
   pin-1/polarity marks agree for: U1–U14, Q1–Q11, diodes D1–D16, the LEDs
   (D3, D8, D12, D16 – lenses must face the board edge), C1/C2 (electrolytic)
   and K1. The CPL already contains the usual KiCad→JLC rotation offsets
-  (SOT-23 +180°, SOIC +270°, electrolytics +180°); rotate anything that
-  still looks wrong in the preview.
+  (SOT-23 +180°, SOIC +270°, electrolytics +180°) and offsets for the panel
+  parts (BNCs +90°, pots, toggle and DE-9 +270°). In the 3D preview the BNC
+  bayonets, pot shafts and toggle lever must stick out over the front edge,
+  and the DE-9, 3.5 mm jack and DC jack must open over the rear edge; rotate
+  anything that still looks wrong.
 * All 69 BOM lines were in stock at JLCPCB/LCSC on 28 Oct 2026 (32 are
   "extended" parts, which carry JLCPCB's per-part setup fee). Expect roughly
   £200–300 for 2 assembled boards + 3 bare boards including shipping; the

@@ -24,9 +24,12 @@ SCH = os.path.join(HW, NAME + ".kicad_sch")
 LAYERS = "F.Cu,In1.Cu,In2.Cu,B.Cu,F.Paste,B.Paste,F.SilkS,B.SilkS,F.Mask,B.Mask,Edge.Cuts"
 
 # JLCPCB's placement machines use the LCSC/EasyEDA footprint orientation; these
-# offsets map KiCad's library orientation onto it (same table as the widely used
-# KiCad->JLC plugins).  Always confirm in JLCPCB's placement preview.
-JLC_ROT = [(r"^SOT-23", 180), (r"^SOIC-", 270), (r"^CP_Elec_", 180)]
+# offsets map KiCad's library orientation onto it (the first three as in the widely
+# used KiCad->JLC plugins; the panel parts read off JLCPCB's placement preview, where
+# they came out a quarter-turn off).  Always confirm in JLCPCB's placement preview.
+JLC_ROT = [(r"^SOT-23", 180), (r"^SOIC-", 270), (r"^CP_Elec_", 180),
+           (r"^BNC_DOSIN_801-0080", 90), (r"^Potentiometer_Alps_RK09L", 270),
+           (r"^Toggle_Dailywell", 270), (r"^DSUB-9_Socket", 270)]
 
 
 def run(*cmd):
