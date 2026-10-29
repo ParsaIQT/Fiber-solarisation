@@ -1146,10 +1146,89 @@ def card_3d():
         subprocess.run(cmd + [pcb], check=True, capture_output=True)
         print("  ", name + ".png")
 
+
+# ------------------------------------------------------------------ JLCPCB preview markers
+JLC_PINK = "#e600e6"
+
+
+def jlc_marks(fp):
+    """Where JLCPCB's placement preview draws its pink markers on a correctly placed part:
+    a dot on pin 1 (ICs, transistors, relay, SOT-23 diodes), '+' on the anode and '-' on
+    the cathode (diodes, LEDs), '+' and '-' on the electrolytics."""
+    kind = polarity_kind(fp)
+    if not kind:
+        return []
+    pads = {p.GetNumber(): mm(p.GetPosition()) for p in fp.Pads() if p.GetNumber()}
+    if kind == "1":
+        return [("dot", pads["1"])]
+    if kind == "+":                                   # electrolytic: pad 1 = +
+        return [("+", pads["1"]), ("-", pads["2"])]
+    return [("+", pads["2"]), ("-", pads["1"])]       # diode / LED: pad 1 = cathode
+
+
+def draw_jlc_marks(ax, fp, size=0.55):
+    for kind, (x, y) in jlc_marks(fp):
+        if kind == "dot":
+            ax.add_patch(Circle((x, y), size * 0.55, fc=JLC_PINK, ec="white", lw=0.6, zorder=8))
+        elif kind == "+":
+            ax.plot([x - size, x + size], [y, y], color=JLC_PINK, lw=2.6, zorder=8, solid_capstyle="butt")
+            ax.plot([x, x], [y - size, y + size], color=JLC_PINK, lw=2.6, zorder=8, solid_capstyle="butt")
+        else:
+            ax.plot([x - size, x + size], [y, y], color=JLC_PINK, lw=2.6, zorder=8, solid_capstyle="butt")
+
+
+def draw_jlc_board(ax, box):
+    draw_outline(ax)
+    b = board()
+    x0, y0, x1, y1 = box
+    for fp in b.GetFootprints():
+        fx, fy = mm(fp.GetPosition())
+        if not (x0 - 15 < fx < x1 + 15 and y0 - 15 < fy < y1 + 15):
+            continue
+        kind = polarity_kind(fp)
+        lines, _ = item_lines(fp.GraphicalItems(), pcbnew.F_SilkS)
+        for ln in lines:
+            ax.plot(*zip(*ln), color="#9aa3ad", lw=0.6, zorder=1)
+        lines, _ = item_lines(fp.GraphicalItems(), pcbnew.F_Fab)
+        for ln in lines:
+            ax.plot(*zip(*ln), color=INK if kind else "#b7bec7", lw=0.9 if kind else 0.5, zorder=2)
+        for p in fp.Pads():
+            if not (p.IsOnLayer(pcbnew.F_Cu) or p.IsOnLayer(pcbnew.B_Cu)):
+                continue
+            for pts in pad_polys(p, pcbnew.F_Cu if p.IsOnLayer(pcbnew.F_Cu) else pcbnew.B_Cu):
+                ax.add_patch(Polygon(pts, closed=True, fc="#d9b56a" if kind else "#e9dcc0", ec="#7a5a12" if kind else "none",
+                                     lw=0.3, zorder=3))
+            if p.HasHole():
+                d = p.GetDrillSize()
+                if d.x == d.y:
+                    ax.add_patch(Circle(mm(p.GetPosition()), d.x / 2e6, fc="white", ec="none", zorder=4))
+        if kind:
+            draw_jlc_marks(ax, fp)
+            cx, cy = pad_centre(fp)
+            bbx = fp.GetBoundingBox(False, False)
+            ax.text(cx, bbx.GetBottom() / 1e6 + 0.6, fp.GetReference(), color="#1f5fa8", fontsize=8, weight="bold",
+                    ha="center", va="top", zorder=9, bbox=dict(fc="white", ec="none", pad=0.4, alpha=0.8))
+
+
+def card_jlc_markers():
+    """Reference for JLCPCB's placement preview: where each pink marker belongs."""
+    full = (96, 96, 264, 204)
+    fig, ax, _ = board_axes(full, 12)
+    draw_jlc_board(ax, full)
+    ax.text(180, 97.6, "JLCPCB 2D view, Top: pink dot = pin 1;  + / - = anode / cathode (diodes, LEDs) or + / - terminal (C1, C2)",
+            ha="center", va="center", fontsize=9.5, color=INK, zorder=9)
+    save(fig, "jlc_markers_overview", tight=False)
+    for i, (name, box) in enumerate(QUADS):
+        fig, ax, _ = board_axes(box, 11)
+        draw_jlc_board(ax, box)
+        ax.text(box[0] + 1, box[1] + 1.5, f"{i + 1}  {name}: where JLCPCB's pink markers belong", fontsize=10,
+                color=INK, va="top", zorder=9, bbox=dict(fc="white", ec="none", alpha=0.85))
+        save(fig, f"jlc_markers_{i + 1}", tight=False)
+
 if __name__ == "__main__":
     names = sys.argv[1:]
     for fn in [card_footprints, card_smd_pinouts, card_polarity, card_layout, card_enclosure, card_diagrams,
-               card_schematic, card_3d]:
+               card_schematic, card_3d, card_jlc_markers]:
         if not names or fn.__name__ in names:
             print(fn.__name__)
             fn()

@@ -7,6 +7,7 @@ check against the manufacturer's drawing; the checklist and the reasoning are in
 
 | files | what they show |
 |---|---|
+| `jlc_markers_overview.png`, `jlc_markers_1.png` … `jlc_markers_4.png` | where JLCPCB's pink preview markers belong on every polarised part: dot on pin 1, + / − on anode / cathode and on C1/C2's terminals |
 | `polarity_overview.png`, `polarity_1.png` … `polarity_4.png`, `polarity.json` | pin 1 / cathode / + of all 40 polarised parts (red rings) and the JLC CPL rotation of each, for comparison with JLCPCB's placement preview |
 | `fp_relay_K1.png` | K1 G6K-2F-Y pads and nets (normally-closed contacts 2 and 7 to GND) |
 | `fp_smd_1.png` … `fp_smd_4.png` | SOT-23 MOSFETs, SOT-23 diodes and REF3030, SOT-23-5/6 ICs, DPAKs: pad numbers and nets |
