@@ -875,7 +875,7 @@ def card_enclosure():
                           ("M9 bushing", (103.5, z + 4.5), (105, 28.4)),
                           ("6 mm shaft", (112, z + 3), (116, 25.5)),
                           ("washer + nut", (103.3, z - 6.5), (109, 6.2)),
-                          ("anti-rotation lug pocket", (yf + 0.1, zp + 1.0), (91, 8.4)),
+                          ("anti-rotation lug notch (through)", (yf + pt / 2, zp + 0.1), (90, 8.4)),
                           ("knob (typical)", (113, z - 7.5), (119, 12.5))],
               extras=[("cyl", STEEL, ycyl(x, yf + pt - 0.5, yf + pt, z, 5.6)),
                       ("cyl", BRASS, ycyl(x, yf + pt, yf + pt + 2.0, z, 6.5))],

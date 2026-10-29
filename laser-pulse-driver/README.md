@@ -99,7 +99,9 @@ STL files in [`enclosure/stl/`](enclosure/stl/), already in print orientation:
 
 * **JLC3DP** (same JLCPCB account, "3D Printing" tab): *MJF PA12 nylon*
   (black) is strong, dimensionally accurate and needs no tuning. Add it to the
-  PCB order to share shipping.
+  PCB order to share shipping. Its thin-wall heatmap should show nothing under
+  1.2 mm except inside the engraved lettering (the narrow ridges between
+  letters), which is normal for engraved text.
 * UK alternatives: Protolabs (Telford, MJF/SLS), 3DPrintUK (London, SLS nylon),
   or the Craftcloud marketplace.
 * In-house FDM: PETG or ASA, 0.2 mm layers, 4 perimeters, 30 % infill, no
@@ -121,7 +123,7 @@ holes follow the connectors if the layout changes.
 | diode cable | 2-core screened cable or a twisted pair, ≤ 2.5 m | keep the pair twisted to the diode |
 | interlock plug | 3.5 mm **mono** jack plug | shorting plug, or wired to a door/enclosure interlock |
 | knobs | 2 × knob for **6 mm D (flatted) shaft**, 15 mm shaft length | |
-| screws | 4 × M3×12 pan head + 4 × M3 nut (PCB); 4 × M3×10 countersunk + 4 × M3 nut (lid) | stainless A2 |
+| screws | 4 × M3×16 countersunk + 4 × M3 nut (PCB); 4 × M3×10 countersunk + 4 × M3 nut (lid) | stainless A2 |
 | feet | 4 × self-adhesive rubber feet, ≤ 10 mm diameter | |
 
 The BNC nuts and washers come with the connectors; the pots normally come with
@@ -156,9 +158,9 @@ enclosure and beam dumps appropriate for a Class 4 source.
 3. **Enclosure.** Push 4 × M3 nuts into the side slots at the tops of the
    lid posts. Fit the front panel onto the board (BNC nuts and washers on the
    outside; pot nuts on the outside, the pot's small anti-rotation lug sits in
-   the pocket on the inside of the panel), and the rear panel over the DB9
-   shell. Lower board + panels into the base so the panels drop into their
-   grooves, then fix the board with 4 × M3×12 screws from below and nuts on top.
+   the notch below its hole), and the rear panel over the DB9 shell. Lower
+   board + panels into the base so the panels drop into their grooves, then fix
+   the board with 4 × M3×16 countersunk screws from below and nuts on top.
    Fit the knobs, put the lid on, 4 × M3×10 countersunk screws.
 
 The ENABLE toggle is held by the board only (its bushing just passes through

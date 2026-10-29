@@ -7,7 +7,7 @@
 //
 // Parts: base (floor, side walls, PCB standoffs, lid posts), front panel, rear
 // panel, lid.  The panels drop into grooves in the base and are held by the lid.
-// Hardware: 4x M3x12 pan head + 4x M3 nut (PCB), 4x M3x10 countersunk + 4x M3
+// Hardware: 4x M3x16 countersunk + 4x M3 nut (PCB), 4x M3x10 countersunk + 4x M3
 // nut (lid), 4x adhesive rubber feet <= 10 mm.
 //
 // render one part:  openscad -D 'part="base"' -o base.stl ld405_enclosure.scad
@@ -43,7 +43,7 @@ lip = 1.5;                          // walls stand proud of the panels
 yo0 = yr - panel_t - lip;  yo1 = yf + panel_t + lip;
 g_side = 1.2;  g_floor = 1.5;  g_lid = 1.2;  clr = 0.2;
 posts = [[-4, 8], [-4, pcb_d - 8], [pcb_w + 4, 8], [pcb_w + 4, pcb_d - 8]];
-post_d = 7.5;
+post_d = 7.5;  post_w = 10;         // lid posts: 7.5 mm deep (X), 10 mm along the wall (Y)
 engrave = 0.6;
 font = "Liberation Sans:style=Bold";
 
@@ -82,8 +82,9 @@ module front_panel() {
             yhole(p[0], z_pcb + h_pot, 9.5);
             // spot face: leaves 2.0 mm for washer + nut on the 5 mm bushing
             translate([p[0], yf + panel_t - 0.5, z_pcb + h_pot]) rotate([-90, 0, 0]) cylinder(d = 17, h = 2);
-            // anti-rotation lug (2 x 0.8 mm, 6 mm below the shaft) - pocket on the inside
-            yslot(p[0], z_pcb + h_pot - 6.0, 2.8, 1.8, yf - 1, yf + 1.2);
+            // anti-rotation lug (2 x 0.8 mm, 6 mm below the shaft): a notch down from the
+            // bushing hole, cut right through so no thin web or skin is left (behind the knob)
+            yslot(p[0], z_pcb + h_pot - 4.5, 2.8, 4.8, yf - 1, yf + panel_t + 1);
             front_text(p[1], p[0], z_pcb + h_pot + 10.5, 3.0);
             // clockwise (towards terminal 3) raises the setting
             front_text("0", p[0] + 7.0, z_pcb + h_pot - 7.6, 1.8);
@@ -107,12 +108,18 @@ module rear_panel() {
         panel_blank(yr - panel_t);
         // DE-9 (CONNFLY DS1037, "7.2 mm" type): the 31 x 12.5 mm steel flange stands
         // 0.4 mm proud of the board edge -> 0.6 mm recess on the inside; the 4-40 hex
-        // jack posts (5 mm A/F, 4.8 mm tall) pass through; outside pocket leaves 1.1 mm
-        // so the cable plug mates fully.
+        // jack posts (5 mm A/F, 4.8 mm tall) pass through.  The cable plug's shell
+        // slides over the socket shell into the D opening, so the panel needs no pocket
+        // outside.  The post holes run into the D opening (they would leave slivers of
+        // under 1 mm between them otherwise), widening towards it so that no corner of
+        // the panel is sharper than 90 degrees.
         translate([dsub[0], 0, zd]) rotate([90, 0, 0]) linear_extrude(10, center = true) dshape(20.2, 17.6, 11.4, 1.6);
-        for (s = [-12.5, 12.5]) yhole(dsub[0] + s, zd, 6.3);
+        translate([0, yr + 1, zd]) rotate([90, 0, 0]) linear_extrude(panel_t + 2)
+            for (s = [-1, 1]) hull() {
+                translate([dsub[0] + 12.5 * s, 0]) circle(d = 6.3);
+                translate([dsub[0] + 8.5 * s, 0]) square([0.01, 7.6], center = true);
+            }
         translate([dsub[0] - 16.2, yr - 0.6, z_pcb - 0.6]) cube([32.4, 1, 13.8]);
-        translate([dsub[0] - 17.5, yr - panel_t - 1, zd - 8]) cube([35, 1 + 0.8, 16]);
         rear_text(dsub[1], dsub[0], zd + 10.6, 3.2);
         rear_text("8 = LD anode   3 = LD cathode   1-5 = interlock loop", dsub[0], zd - 10.3, 2.0);
         // 3.5 mm interlock jack: plug body must reach the jack face
@@ -134,22 +141,20 @@ module base() {
             translate([xo0, yo0, 0]) cube([xo1 - xo0, yo1 - yo0, floor_t]);
             for (x = [xo0, xi1]) translate([x, yo0, 0]) cube([wall, yo1 - yo0, z_top]);
             for (h = mount_holes) translate([h[0], h[1], 0]) cylinder(d = 7, h = floor_t + so_h);
-            for (p = posts) {
-                translate([p[0], p[1], 0]) cylinder(d = post_d, h = z_top);
-                // web to the side wall
-                translate([p[0] < 0 ? xi0 - 0.01 : p[0], p[1] - post_d / 2, 0])
-                    cube([abs(p[0] - (p[0] < 0 ? xi0 : xi1)) + 0.01, post_d, z_top]);
-            }
+            for (p = posts)                 // lid post, a block joined to the side wall
+                translate([p[0] < 0 ? xi0 - 0.01 : p[0] - post_d / 2, p[1] - post_w / 2, 0])
+                    cube([abs(p[0] - (p[0] < 0 ? xi0 : xi1)) + post_d / 2 + 0.01, post_w, z_top]);
         }
         // panel grooves (floor + both side walls)
         for (y0 = [yf - clr, yr - panel_t - clr])
             translate([xi0 - g_side, y0, floor_t - g_floor]) cube([xi1 - xi0 + 2 * g_side, panel_t + 2 * clr, z_top]);
-        // PCB screws from below: M3 through hole + counterbore for the pan head
+        // PCB screws from below: M3 countersunk, flush with the underside (a pan-head
+        // counterbore would leave a 1 mm web beside the rear panel groove at H3)
         for (h = mount_holes) {
             translate([h[0], h[1], -1]) cylinder(d = 3.4, h = 50);
-            translate([h[0], h[1], -1]) cylinder(d = 6.6, h = 1 + 2.0);
+            translate([h[0], h[1], -0.01]) cylinder(d1 = 6.4, d2 = 3.4, h = 1.51);
         }
-        // lid posts: M3 hole + side-entry nut slot (open towards the PCB)
+        // lid posts: M3 hole + side-entry nut slot (open towards the PCB, 2 mm walls)
         for (p = posts) {
             translate([p[0], p[1], z_top - 12]) cylinder(d = 3.4, h = 13);
             translate([p[0], p[1], z_top - 6.0]) rotate([0, 0, p[0] < 0 ? 0 : 180])
@@ -157,11 +162,11 @@ module base() {
         }
         // ventilation slots in the floor (under the logic / analogue area)
         for (i = [0:7]) translate([30 + i * 12, 30, -1]) cube([2.5, 40, floor_t + 2]);
-        // rubber feet recesses
-        for (x = [xo0 + 9, xo1 - 9], y = [yo0 + 9, yo1 - 9]) translate([x, y, -0.01]) cylinder(d = 10.5, h = 0.8);
+        // rubber feet recesses, clear of the PCB screws and the panel grooves
+        for (x = [xo0 + 8, xo1 - 8], y = [yo0 + 17, yo1 - 11]) translate([x, y, -0.01]) cylinder(d = 10.5, h = 0.8);
         // engraved label underneath
         translate([pcb_w / 2, yo1 - 16, -0.01]) mirror([1, 0, 0]) linear_extrude(engrave)
-            text("LD405 driver - lid: 4x M3x10 csk, PCB: 4x M3x12 + nuts", size = 3, font = font, halign = "center");
+            text("LD405 driver - lid: 4x M3x10 csk, PCB: 4x M3x16 csk + nuts", size = 3, font = font, halign = "center");
     }
 }
 
@@ -183,7 +188,8 @@ module lid() {
             translate([xi0 - g_side, y0, z_top - 1]) cube([xi1 - xi0 + 2 * g_side, panel_t + 2 * clr, 1 + g_lid]);
         for (p = posts) {
             translate([p[0], p[1], z_top - 1]) cylinder(d = 3.4, h = 10);
-            translate([p[0], p[1], H - 1.7]) cylinder(d1 = 3.4, d2 = 6.8, h = 1.71);
+            // 1.5 mm deep: leaves 1 mm of plain bore, so the countersink's edge is not thin
+            translate([p[0], p[1], H - 1.5]) cylinder(d1 = 3.4, d2 = 6.4, h = 1.51);
         }
         // vents above the regulator and the pass transistor
         for (i = [0:5]) translate([128 + i * 4.5, 36, z_top - 1]) cube([2.2, 22, lid_t + 2]);

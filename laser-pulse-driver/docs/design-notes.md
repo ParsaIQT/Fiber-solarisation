@@ -198,15 +198,26 @@ stability with `run_sims.py`.
 
 `tools/gen_enclosure.py` writes `enclosure/ld405_enclosure.scad` with the
 connector positions taken from `placement.py` and the axis heights from the
-datasheets (BNC 9.8 mm, pots 6.5 mm, toggle 6.46 mm, DE-9 6.25 mm, DC jack
-6.5 mm, 3.5 mm jack 2.5 mm above the PCB). The front/rear panels are
+datasheets (BNC 9.8 mm, pots 6.5 mm, toggle 6.45 mm, DE-9 6.25 mm, DC jack
+7.0 mm, 3.5 mm jack 2.5 mm above the PCB). The front/rear panels are
 separate 2.5 mm plates held in grooves by the base and lid, so they can be
 fitted to the board's connectors before the board goes into the base. The
-panel is thinned to 2.0 mm around the pots (M9 × 0.75 bushing, 5 mm long), to
-1.3 mm around the 3.5 mm jack, and to 1.1 mm around the DE-9 (whose steel
-flange stands 0.4 mm proud of the board edge and sits in a recess on the inside
-of the panel; its 4-40 hex jack posts pass through the panel) so plugs mate
-fully.
+panel is thinned to 2.0 mm around the pots (M9 × 0.75 bushing, 5 mm long) for
+the washer and nut, and to 1.3 mm around the 3.5 mm jack so the plug reaches
+the jack. The DE-9's steel flange stands 0.4 mm proud of the board edge and
+sits in a 0.6 mm recess on the inside of the rear panel; its 4-40 hex jack
+posts pass through the panel. A mating plug's shell slides over the socket
+shell into the D opening, so the panel needs no thinning there.
+
+No printed wall is thinner than 1.2 mm, the limit of JLC3DP's thin-wall check.
+The lid posts are 10 mm wide, so the walls beside the M3 nut slots are 2 mm.
+The pots' anti-rotation lug notch runs into the bushing hole, and the DE-9
+jack-post holes run into the D opening, so neither leaves a sliver. The PCB
+screws are countersunk from below, because a pan-head counterbore at H3 would
+leave a 1 mm web beside the rear panel groove. All countersinks are 1.5 mm
+deep, which leaves 1 mm of plain bore in the 2.5 mm lid. The rubber-foot
+recesses keep clear of the screws and the panel grooves. The only features
+under 1.2 mm are the ridges between engraved letters.
 
 ## 6. Limitations and options
 
@@ -233,7 +244,7 @@ outside, the lid clearance, the diode cable and the switch/knob directions.
 whose KiCad library has none (BNC, toggle, pots, DC jack, 3.5 mm jack, side
 LEDs, 1812 fuse); they are used for the renders and the fit checks only.
 
-Found and fixed while checking against the datasheets:
+Found and fixed in review:
 
 * K1: the normally-closed contacts are pins 2 and 7 (Omron "Terminal
   Arrangement", top view); the first version had them elsewhere, which would
@@ -256,8 +267,21 @@ Found and fixed while checking against the datasheets:
 * The DE-9 shell axis (6.25 mm) agrees with KiCad's own 3D model of the
   footprint. A mating plug's shell slides over the socket shell through the
   panel cut-out, so the plug flange sits ~6 mm outside the socket flange.
+* Enclosure: JLC3DP's thin-wall heatmap flagged the base's lid posts. The
+  walls beside the M3 nut slots were only 0.75 mm, and the posts are now 10 mm
+  wide. Checking all four parts found more spots under 1.2 mm, all now removed.
+  The check used voxel thickness (largest inscribed ball, and solid runs along
+  X, Y and Z) plus a look at where cuts meet. The spots were:
+  * the 0.35 mm web between each pot hole and its lug pocket;
+  * the 1.1 mm pocket around the DE-9 on the outside of the rear panel, which
+    was not needed;
+  * slivers between the D opening and the jack-post holes;
+  * 0.7 mm of floor where the foot recesses ran under the panel grooves;
+  * the 1 mm web between the H3 counterbore and the rear groove, removed by
+    countersinking the PCB screws (now M3×16 countersunk);
+  * the lip under the lid's countersinks (now 1.5 mm deep instead of 1.7).
 
-Still to be confirmed by eye: the JLC rotation offsets (SOT-23 +180°,
-SOIC +270°, electrolytics +180°, side LEDs unchanged) in the placement
-preview, and that "lever up" on SW1 is the 2–1 position (inferred from the
-terminal order).
+The JLC rotation offsets (per package and per part, `tools/export_fab.py`)
+were checked in JLCPCB's placement preview. JLC's polarity markers are mapped in
+`docs/review/jlc_markers_*.png`. Still to be confirmed by eye: that "lever up"
+on SW1 is the 2–1 position (inferred from the terminal order).
