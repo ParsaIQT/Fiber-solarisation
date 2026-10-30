@@ -253,6 +253,7 @@ aligning onto the trap without firing pulses.
 | `artiq/` | ARTIQ experiment for ablation loading with the pulsed 405 nm laser |
 | `sim/` | ngspice testbench and corner simulations (`get_models.sh` fetches the vendor models) |
 | `docs/` | design notes, simulation plots and the design-review renders (`docs/review/`) |
+| `review_package/` | for an outside reviewer: `LD405_design_review.pdf` (design review document with schematic) and `LD405_review_pack.zip` (that PDF plus KiCad project, JLCPCB files, layer plots, ERC/DRC reports, simulation, enclosure and review renders) |
 | `tools/` | the generators: everything in `hardware/`, `hardware/fab/` and `enclosure/` is produced by these scripts |
 
 Regenerating from source (KiCad 9 with its Python module, numpy, scipy, poppler,
@@ -268,6 +269,7 @@ python3 export_fab.py          # Gerbers, drill, BOM, CPL, PDFs, renders
 python3 gen_enclosure.py       # OpenSCAD model and STLs
 python3 review.py              # review renders in docs/review/
 cd ../sim && ./get_models.sh && python3 run_sims.py
+cd ../tools && python3 make_review_pack.py   # review_package/ (needs node + Playwright for the PDF)
 ```
 
 `design.py` is the single source of truth for parts, values, LCSC numbers and
